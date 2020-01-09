@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.ExampleSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -14,10 +15,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ExampleCommand extends CommandBase {
-    private final ExampleSubsystem example;
+    ExampleSubsystem example = RobotContainer.exampleSubsystem;
 
-    public ExampleCommand(ExampleSubsystem example) {
-        this.example = example;
+    public ExampleCommand() {
         addRequirements(example);
     }
 

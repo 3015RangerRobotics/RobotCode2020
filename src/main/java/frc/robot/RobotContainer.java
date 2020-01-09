@@ -12,9 +12,9 @@ public class RobotContainer {
     public static XboxController driver = new XboxController(0);
     public static XboxController codriver = new XboxController(1);
 
-    private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+    public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 
-    private final ExampleCommand exampleCommand = new ExampleCommand(exampleSubsystem);
+    private final ExampleCommand exampleCommand = new ExampleCommand();
 
     public RobotContainer() {
         configureButtonBindings();
