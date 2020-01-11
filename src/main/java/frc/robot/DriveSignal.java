@@ -7,17 +7,16 @@
 
 package frc.robot;
 
-public final class Constants {
-    public static final int exampleTalon = 5;
-    public static final int rightDriveMaster = 1;
-    public static final int rightDriveFollower = 2;
-    public static final int leftDriveMaster = 3;
-    public static final int leftDriveFollower = 4;
+/**
+ * Add your docs here.
+ */
+public class DriveSignal {
 
-    public static final double driveP = 0;
-    public static final double driveI = 0;
-    public static final double driveD = 0;
-    public static final double driveF = 0;
-    
-    
+    public double leftSignal;
+    public double rightSignal;
+
+    public DriveSignal(double leftSignal, double rightSignal) {
+        this.leftSignal = leftSignal;
+        this.rightSignal = rightSignal;
+    }
 }
