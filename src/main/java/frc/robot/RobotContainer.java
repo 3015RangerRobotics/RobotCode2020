@@ -2,7 +2,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import frc.robot.commands.TurretDefaultPosition;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -11,13 +13,19 @@ public class RobotContainer {
     public static XboxController driver = new XboxController(0);
     public static XboxController codriver = new XboxController(1);
 
-    public static final Drive drive = new Drive();
+    public static Drive drive;
+    public static Turret turret;
+
+    public static JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
 
     public RobotContainer() {
+        // drive = new Drive();
+        turret = new Turret();
         configureButtonBindings();
     }
 
     private void configureButtonBindings() {
+        driverA.whenActive(new TurretDefaultPosition());
         // normal button
         // new JoystickButton(driver, XboxController.Button.kB.value).whenActive(exampleCommand);
         // // trigger button
