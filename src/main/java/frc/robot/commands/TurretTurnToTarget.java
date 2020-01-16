@@ -21,7 +21,8 @@ public class TurretTurnToTarget extends CommandBase {
      * Creates a new TurretTurnToTarget.
      */
 
-     private PIDController pidController;
+    private PIDController pidController;
+    private double limelight;
 
     public TurretTurnToTarget() {
         // Use addRequirements() here to declare subsystem dependencies.
@@ -32,13 +33,23 @@ public class TurretTurnToTarget extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        limelight = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double percent = pidController.calculate(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0), 0);
-        RobotContainer.turret.set(ControlMode.PercentOutput, percent);
+        double percent = pidController.calculate(RobotContainer.turret.getMotorPosition(), limelight);
+        System.out.println("[Limelight] Motor output: " + (percent));
+        if (Math.abs(percent) >= Constants.turretMaxSpeedLL) {
+            if (percent >= 0) {
+                RobotContainer.turret.set(ControlMode.PercentOutput, Constants.turretMaxSpeedLL);
+            } else {
+                RobotContainer.turret.set(ControlMode.PercentOutput, -Constants.turretMaxSpeedLL);
+            }
+        } else {
+            RobotContainer.turret.set(ControlMode.PercentOutput, percent);
+        }
     }
 
     // Called once the command ends or is interrupted.

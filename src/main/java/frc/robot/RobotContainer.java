@@ -2,8 +2,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import frc.robot.commands.TempShooterStart;
+import frc.robot.commands.TempShooterStop;
 import frc.robot.commands.TurretDefaultPosition;
+import frc.robot.commands.TurretTurnToTarget;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.TempShooter;
 import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -15,17 +19,25 @@ public class RobotContainer {
 
     public static Drive drive;
     public static Turret turret;
+    public static TempShooter tempShooter;
 
     public static JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
+    public static JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
+    public static JoystickButton driverX = new JoystickButton(driver, XboxController.Button.kX.value);
+    public static JoystickButton driverY = new JoystickButton(driver, XboxController.Button.kY.value);
 
     public RobotContainer() {
         // drive = new Drive();
         turret = new Turret();
+        tempShooter = new TempShooter();
         configureButtonBindings();
     }
 
     private void configureButtonBindings() {
-        driverA.whenActive(new TurretDefaultPosition());
+        driverA.whileActiveContinuous(new TurretDefaultPosition());
+        driverY.whileActiveContinuous(new TurretTurnToTarget());
+        driverB.whenActive(new TempShooterStart());
+        driverX.whenActive(new TempShooterStop());
         // normal button
         // new JoystickButton(driver, XboxController.Button.kB.value).whenActive(exampleCommand);
         // // trigger button

@@ -41,16 +41,19 @@ public class Turret extends SubsystemBase {
         turretMotor.configReverseSoftLimitEnable(true);
         turretMotor.configReverseSoftLimitThreshold((int) Math.round(Constants.turretSoftLimitReverse / Constants.degreesPerPulse));
 
-        turretMotor.config_kP(0, Constants.turretP);
-        turretMotor.config_kI(0, Constants.turretI);
-        turretMotor.config_kD(0, Constants.turretD);
-        turretMotor.config_kF(0, Constants.turretF);
+        turretMotor.setInverted(true);
+        turretMotor.setSelectedSensorPosition(0);
+        turretMotor.setSensorPhase(true);
+
+        // turretMotor.configNominalOutputForward(0.5);
+        // turretMotor.configNominalOutputReverse(0.5);
+
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        System.out.println(getMotorPosition());
+        // System.out.println("Turret Angle: "getMotorPosition());
     }
 
     public double getMotorPosition() {
@@ -59,6 +62,7 @@ public class Turret extends SubsystemBase {
 
     public void set(ControlMode mode, double value) { 
         turretMotor.set(mode, value);
+        // System.out.println(value);
     }
 
     public void resetEncoder() {
