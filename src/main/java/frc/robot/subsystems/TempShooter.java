@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -7,25 +7,26 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class ExampleSubsystem extends SubsystemBase {
-    TalonFX talon;
+public class TempShooter extends SubsystemBase {
+  /**
+   * Creates a new TempShooter.
+   */
+  private VictorSP spinningShooter;
 
-    public ExampleSubsystem() {
-        talon = new TalonFX(Constants.exampleTalon);
-    }
+  public TempShooter() {
+    spinningShooter = new VictorSP(Constants.spinningShooter);
+  }
 
-    @Override
-    public void periodic() {
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 
-    }
-
-    public void setMotor(ControlMode mode, double value){
-        talon.set(mode, value);
-    }
+  public void set(double speed){
+      spinningShooter.set(speed);
+  }
 }
