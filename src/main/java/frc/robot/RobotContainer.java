@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import frc.robot.subsystems.BallHandler;
 import frc.robot.commands.TempShooterStart;
 import frc.robot.commands.TempShooterStop;
 import frc.robot.commands.TurretToPosition;
@@ -17,10 +18,11 @@ public class RobotContainer {
     public static XboxController driver = new XboxController(0);
     public static XboxController codriver = new XboxController(1);
 
+    public static BallHandler ballHandler;
     public static Drive drive;
     public static Turret turret;
     public static TempShooter tempShooter;
-
+  
     public static JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     public static JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
     public static JoystickButton driverX = new JoystickButton(driver, XboxController.Button.kX.value);
@@ -32,6 +34,7 @@ public class RobotContainer {
         // drive = new Drive();
         turret = new Turret();
         tempShooter = new TempShooter();
+        ballHandler = new BallHandler();
         configureButtonBindings();
     }
 
