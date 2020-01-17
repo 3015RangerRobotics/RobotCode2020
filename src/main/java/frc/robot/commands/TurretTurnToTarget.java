@@ -10,7 +10,6 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 
@@ -21,13 +20,11 @@ public class TurretTurnToTarget extends CommandBase {
      * Creates a new TurretTurnToTarget.
      */
 
-    private PIDController pidController;
     private double limelight;
 
     public TurretTurnToTarget() {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(RobotContainer.turret);
-        pidController = new PIDController(Constants.turretP, Constants.turretI, Constants.turretD);
     }
 
     // Called when the command is initially scheduled.
@@ -39,17 +36,8 @@ public class TurretTurnToTarget extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double percent = pidController.calculate(RobotContainer.turret.getMotorPosition(), limelight);
-        System.out.println("[Limelight] Motor output: " + (percent));
-        if (Math.abs(percent) >= Constants.turretMaxSpeedLL) {
-            if (percent >= 0) {
-                RobotContainer.turret.set(ControlMode.PercentOutput, Constants.turretMaxSpeedLL);
-            } else {
-                RobotContainer.turret.set(ControlMode.PercentOutput, -Constants.turretMaxSpeedLL);
-            }
-        } else {
-            RobotContainer.turret.set(ControlMode.PercentOutput, percent);
-        }
+        double pos = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0) / Constants.degreesPerPulse;
+        RobotContainer.turret.set(ControlMode.Position, (int) (pos - RobotContainer.turret.getMotorPosition()));
     }
 
     // Called once the command ends or is interrupted.

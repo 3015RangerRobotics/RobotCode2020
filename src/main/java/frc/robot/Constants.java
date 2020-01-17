@@ -20,16 +20,17 @@ public final class Constants {
     public static final double driveD = 0;
     public static final double driveF = 0;
     
-    public static final double turretP = .1;
-    public static final double turretI = 0;
-    public static final double turretD = 0.004; // 0.004
-    public static final double turretF = 0;
+    public static final double turretP = 0.3; // 0.1
+    public static final double turretI = 0; // 0
+    public static final double turretD = 0; // 0.004
+    public static final double turretF = 0; // 0
 
     public static final double degreesPerPulse = 1 / (5600.0 / 90.0);
     public static final int turretSoftLimitForward = 90;
     public static final int turretSoftLimitReverse = -90;
-    public static final double turretMaxSpeedZero = 0.5;
-    public static final double turretMaxSpeedLL = 0.5;
+    public static final double turretMaxSpeed = 0.7;
+    public static final double turretMinSpeed = 0.15;
+    public static final double turretDegreeMargin = 0.1;
     
     public static final int spinningShooter = 1;
 }

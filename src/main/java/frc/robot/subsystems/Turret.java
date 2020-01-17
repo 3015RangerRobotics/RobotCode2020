@@ -45,15 +45,24 @@ public class Turret extends SubsystemBase {
         turretMotor.setSelectedSensorPosition(0);
         turretMotor.setSensorPhase(true);
 
-        // turretMotor.configNominalOutputForward(0.5);
-        // turretMotor.configNominalOutputReverse(0.5);
+        turretMotor.configPeakOutputForward(Constants.turretMaxSpeed);
+        turretMotor.configPeakOutputReverse(-Constants.turretMaxSpeed);
+        turretMotor.configNominalOutputForward(Constants.turretMinSpeed);
+        turretMotor.configNominalOutputReverse(-Constants.turretMinSpeed);
+
+        turretMotor.configAllowableClosedloopError(0, (int) Math.round((1 / Constants.degreesPerPulse) / 4));
+
+        turretMotor.config_kP(0, Constants.turretP);
+        turretMotor.config_kI(0, Constants.turretI);
+        turretMotor.config_kD(0, Constants.turretD);
+        turretMotor.config_kF(0, Constants.turretF);
 
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        // System.out.println("Turret Angle: "getMotorPosition());
+        System.out.println("Turret Angle: "  + getMotorPosition() + " Motor Speed: " + turretMotor.getMotorOutputPercent());
     }
 
     public double getMotorPosition() {

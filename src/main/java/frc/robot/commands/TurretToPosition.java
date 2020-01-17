@@ -9,21 +9,20 @@ package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class TurretDefaultPosition extends CommandBase {
+public class TurretToPosition extends CommandBase {
     /**
      * Creates a new TurretDefaultPosition.
      */
-    private PIDController pidController;
+    public double angle;
 
-    public TurretDefaultPosition() {
+    public TurretToPosition(double angle) {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(RobotContainer.turret);
-        pidController = new PIDController(Constants.turretP, Constants.turretI, Constants.turretD);
+        this.angle = angle;
     }
 
     // Called when the command is initially scheduled.
@@ -34,19 +33,7 @@ public class TurretDefaultPosition extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      double percent = pidController.calculate(RobotContainer.turret.getMotorPosition(), 0);
-      
-      if(Math.abs(percent) >= Constants.turretMaxSpeedZero) {
-          if(percent >= 0) {
-            RobotContainer.turret.set(ControlMode.PercentOutput, Constants.turretMaxSpeedZero);
-          }
-          else {
-              RobotContainer.turret.set(ControlMode.PercentOutput, -Constants.turretMaxSpeedZero);
-          }
-      }
-      else {
-          RobotContainer.turret.set(ControlMode.PercentOutput, percent);
-      }
+    RobotContainer.turret.set(ControlMode.Position, (angle / Constants.degreesPerPulse));
   }
 
     // Called once the command ends or is interrupted.
