@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.BallHandler;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -13,7 +15,8 @@ public class RobotContainer {
     public static XboxController codriver = new XboxController(1);
 
     public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-
+    public static final BallHandler ballHandler = new BallHandler();
+    
     private final ExampleCommand exampleCommand = new ExampleCommand();
 
     public RobotContainer() {
