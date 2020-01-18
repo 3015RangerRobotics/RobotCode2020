@@ -18,7 +18,7 @@ public class RobotContainer {
     public static Turret turret;
     public static Limelight limelight;
     public static TempShooter tempShooter;
-  
+
     public static JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     public static JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
     public static JoystickButton driverX = new JoystickButton(driver, XboxController.Button.kX.value);
@@ -28,6 +28,7 @@ public class RobotContainer {
     public static JoystickButton driverST = new JoystickButton(driver, XboxController.Button.kStart.value);
     public static JoystickButton driverBK = new JoystickButton(driver, XboxController.Button.kBack.value);
     public static TriggerButton driverLT;
+
     public RobotContainer() {
         // drive = new Drive();
         turret = new Turret();
@@ -49,37 +50,32 @@ public class RobotContainer {
         driverBK.whenActive(new TempShooterStop());
         driverLT.whileActiveContinuous(new TurretTurnToInner());
         // normal button
-        // new JoystickButton(driver, XboxController.Button.kB.value).whenActive(exampleCommand);
+        // new JoystickButton(driver,
+        // XboxController.Button.kB.value).whenActive(exampleCommand);
         // // trigger button
         // new TriggerButton(driver, Hand.kRight).whileActiveContinuous(exampleCommand);
         // // double button
         // new JoystickButton(driver, XboxController.Button.kA.value)
-        //         .and(new JoystickButton(codriver, XboxController.Button.kA.value)).whenActive(exampleCommand);
+        // .and(new JoystickButton(codriver,
+        // XboxController.Button.kA.value)).whenActive(exampleCommand);
     }
 
     public Command getAutonomousCommand() {
         return null;
     }
-    public static double getDriverLeftStickY()
-    {
-        if(Math.abs(driver.getY(Hand.kLeft)) > 0.05)
-        {
+
+    public static double getDriverLeftStickY() {
+        if (Math.abs(driver.getY(Hand.kLeft)) > 0.05) {
             return -driver.getY(Hand.kLeft);
-        }
-        else
-        {
+        } else {
             return 0;
         }
     }
 
-    public static double getDriverLeftStickX()
-    {
-        if(Math.abs(driver.getX(Hand.kLeft)) > 0.05)
-        {
+    public static double getDriverLeftStickX() {
+        if (Math.abs(driver.getX(Hand.kLeft)) > 0.05) {
             return driver.getX(Hand.kLeft);
-        }
-        else
-        {
+        } else {
             return 0;
         }
     }
@@ -95,7 +91,7 @@ public class RobotContainer {
 
         @Override
         public boolean get() {
-            return controller.getTriggerAxis(hand) >= 50;
+            return controller.getTriggerAxis(hand) >= 0.5;
         }
     }
 }

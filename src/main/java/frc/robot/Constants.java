@@ -33,8 +33,8 @@ public final class Constants {
     public static final int turretSoftLimitForward = 90;
     public static final int turretSoftLimitReverse = -90;
     public static final double turretMaxSpeed = 0.7;
-    public static final double turretMinSpeed = 0.12;
-    public static final double turretDegreeMargin = 0.1;
+    public static final double turretMinSpeed = 0.15;
+    public static final double turretDegreeMargin = Math.round((1 / Constants.degreesPerPulse) * 0.25);
     
     public static final int spinningShooter = 5;
 }

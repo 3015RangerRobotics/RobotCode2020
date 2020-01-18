@@ -29,7 +29,7 @@ public class TurretTurnToTarget extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.limelight.setPipeline(1);
+        RobotContainer.limelight.setPipeline(0);
         RobotContainer.limelight.setStreamingMode(Limelight.StreamingMode.STANDARD);
         RobotContainer.limelight.setLEDMode(Limelight.LEDMode.PIPELINE);
         RobotContainer.limelight.setCameraMode(Limelight.CameraMode.VISION_PROCESSING);
@@ -38,7 +38,7 @@ public class TurretTurnToTarget extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double pos = RobotContainer.limelight.getAngleToOuterGoalX();
+        double pos = RobotContainer.turret.getMotorPosition() + RobotContainer.limelight.getTargetAngleX();
         RobotContainer.turret.set(ControlMode.Position, pos / Constants.degreesPerPulse);
         System.out.println(("Current Pos: " + RobotContainer.turret.getMotorPosition() + " Turn To: " + pos));
     }
