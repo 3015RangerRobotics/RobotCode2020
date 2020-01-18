@@ -18,6 +18,11 @@ public final class Constants {
     public static final double driveI = 0;
     public static final double driveD = 0;
     public static final double driveF = 0;
+    public static final double drivePulsesPerFoot = 1;
+    public static final double driveMaxVelocity = 12;
+    public static final double driveMaxAcceleration = 8;
+    public static final double driveMaxMotionError = 0.1 * drivePulsesPerFoot;
+    public static final int timeStep = 10;
     
     public static final double turretP = 2.5; // 0.3
     public static final double turretI = 0; // 0
