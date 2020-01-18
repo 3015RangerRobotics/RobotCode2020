@@ -30,11 +30,11 @@ public class BallHandler extends SubsystemBase {
     private DigitalInput switch5;
 
     private PowerDistributionPanel pdp;
-    public final double MOTOR_IN_SPEED1 = .25;
-    public final double MOTOR_IN_SPEED2 = .68;
-    public final double MOTOR_IN_SPEED3 = .62;
-    public final double MOTOR_IN_SPEED4 = .55;
-    public final double MOTOR_IN_SPEED5 = .5;
+    public final double MOTOR_IN_SPEED1 = .75; //.75
+    public final double MOTOR_IN_SPEED2 = .68;  //.68
+    public final double MOTOR_IN_SPEED3 = .62;  //.62
+    public final double MOTOR_IN_SPEED4 = .55;  //.55
+    public final double MOTOR_IN_SPEED5 = .5;   //.5
     public final double MOTOR_SHOOT_SPEED = 1.0;
     public final double MOTOR_OFF_SPEED = 0.0;
     public final double MOTOR_OUT_SPEED = -.5;
@@ -52,7 +52,7 @@ public class BallHandler extends SubsystemBase {
         kFillTo5,
         kOff
     }
-    public State state;
+    public State state = State.kOff;
 
     public BallHandler() {
         motor1 = new VictorSP(0); //Motor closest to shooter, used to push balls up to turret
@@ -146,7 +146,7 @@ public class BallHandler extends SubsystemBase {
                 }else{
                     break;
                 }    
-                break;
+                // break;
             case kFillTo5:
                 //Fill balls until 5 is pressed
                 speeds = new double[]

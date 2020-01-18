@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.BallHandler;
+import frc.robot.subsystems.BallHandler.State;
 
 public class BallHandlerShoot extends CommandBase {
   BallHandler  ballHandler = RobotContainer.ballHandler;
@@ -22,23 +23,23 @@ public class BallHandlerShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(!ballHandler.isSwitch1Pressed())//If the first ball is no longer on the first switch, fire ball 2.
+    if(!ballHandler.isSwitch1Pressed() && ballHandler.getState() == State.kShootBall1)//If the first ball is no longer on the first switch, fire ball 2.
     {
       ballHandler.setState(BallHandler.State.kShootBall2);
     }
-    else if(ballHandler.isSwitch1Pressed() && !ballHandler.isSwitch2Pressed())
+    else if(ballHandler.getState() == State.kShootBall2 && !ballHandler.isSwitch2Pressed())
     {
       //If the second ball hits the first switch 
       //while firing and the second ball is no longer on the second switch, fire ball 3.  
       ballHandler.setState(BallHandler.State.kShootBall3);
     }
-    else if(ballHandler.isSwitch2Pressed()&& !ballHandler.isSwitch3Pressed())
+    else if(ballHandler.getState() == State.kShootBall3 && !ballHandler.isSwitch3Pressed())
     {
        //If the third ball hits the second switch 
       //while firing and the third ball is no longer on the third switch, fire ball 4.  
       ballHandler.setState(BallHandler.State.kShootBall4);
     }
-    else if(ballHandler.isSwitch3Pressed()&& !ballHandler.isSwitch4Pressed())
+    else if(ballHandler.getState() == State.kShootBall4 && !ballHandler.isSwitch4Pressed())
     {
       //If the third ball hits the third switch 
       //while firing and the fourth ball is no longer on the fourth switch, fire ball 5.  

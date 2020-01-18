@@ -15,10 +15,12 @@ public class TempShooter extends SubsystemBase {
   /**
    * Creates a new TempShooter.
    */
-  private VictorSP spinningShooter;
+  private VictorSP shooter1;
+  private VictorSP shooter2;
 
   public TempShooter() {
-    spinningShooter = new VictorSP(Constants.spinningShooter);
+    shooter1 = new VictorSP(Constants.spinningShooter);
+    shooter2 = new VictorSP(9);
   }
 
   @Override
@@ -27,6 +29,7 @@ public class TempShooter extends SubsystemBase {
   }
 
   public void set(double speed){
-      spinningShooter.set(speed);
+      shooter1.set(speed);
+      shooter2.set(-speed);
   }
 }

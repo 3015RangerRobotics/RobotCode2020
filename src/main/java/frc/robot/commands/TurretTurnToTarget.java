@@ -36,8 +36,9 @@ public class TurretTurnToTarget extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double pos = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0) / Constants.degreesPerPulse;
-        RobotContainer.turret.set(ControlMode.Position, (int) (pos - RobotContainer.turret.getMotorPosition()));
+        double pos = RobotContainer.turret.getMotorPosition() + NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+        RobotContainer.turret.set(ControlMode.Position, pos / Constants.degreesPerPulse);
+        System.out.println(("Current Pos: " + RobotContainer.turret.getMotorPosition() + " Turn To: " + pos));
     }
 
     // Called once the command ends or is interrupted.

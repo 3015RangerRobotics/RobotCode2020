@@ -50,7 +50,7 @@ public class Turret extends SubsystemBase {
         turretMotor.configNominalOutputForward(Constants.turretMinSpeed);
         turretMotor.configNominalOutputReverse(-Constants.turretMinSpeed);
 
-        turretMotor.configAllowableClosedloopError(0, (int) Math.round((1 / Constants.degreesPerPulse) / 4));
+        turretMotor.configAllowableClosedloopError(0, (int) Math.round((1 / Constants.degreesPerPulse) / 2));
 
         turretMotor.config_kP(0, Constants.turretP);
         turretMotor.config_kI(0, Constants.turretI);
@@ -62,7 +62,7 @@ public class Turret extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        System.out.println("Turret Angle: "  + getMotorPosition() + " Motor Speed: " + turretMotor.getMotorOutputPercent());
+        // System.out.println("Turret Angle: "  + getMotorPosition() + " Motor Speed: " + turretMotor.getMotorOutputPercent());
     }
 
     public double getMotorPosition() {

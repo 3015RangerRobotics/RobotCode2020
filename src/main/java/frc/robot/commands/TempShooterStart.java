@@ -22,7 +22,7 @@ public class TempShooterStart extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-      RobotContainer.tempShooter.set(.95);
+      RobotContainer.tempShooter.set(.875);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
