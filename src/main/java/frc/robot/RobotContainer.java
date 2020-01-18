@@ -3,15 +3,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.subsystems.BallHandler;
-import frc.robot.commands.BallHandlerHarvest;
-import frc.robot.commands.BallHandlerShoot;
-import frc.robot.commands.TempShooterStart;
-import frc.robot.commands.TempShooterStop;
-import frc.robot.commands.TurretToPosition;
-import frc.robot.commands.TurretTurnToTarget;
-import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.TempShooter;
-import frc.robot.subsystems.Turret;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -23,6 +16,7 @@ public class RobotContainer {
     public static BallHandler ballHandler;
     public static Drive drive;
     public static Turret turret;
+    public static Limelight limelight;
     public static TempShooter tempShooter;
   
     public static JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
@@ -33,12 +27,14 @@ public class RobotContainer {
     public static JoystickButton driverRB = new JoystickButton(driver, XboxController.Button.kBumperRight.value);
     public static JoystickButton driverST = new JoystickButton(driver, XboxController.Button.kStart.value);
     public static JoystickButton driverBK = new JoystickButton(driver, XboxController.Button.kBack.value);
-
+    public static TriggerButton driverLT;
     public RobotContainer() {
         // drive = new Drive();
         turret = new Turret();
+        limelight = new Limelight();
         tempShooter = new TempShooter();
         ballHandler = new BallHandler();
+        driverLT = new TriggerButton(driver, Hand.kLeft);
         configureButtonBindings();
     }
 
@@ -51,6 +47,7 @@ public class RobotContainer {
         driverRB.whileActiveContinuous(new TurretToPosition(45));
         driverST.whenActive(new TempShooterStart());
         driverBK.whenActive(new TempShooterStop());
+        driverLT.whileActiveContinuous(new TurretTurnToInner());
         // normal button
         // new JoystickButton(driver, XboxController.Button.kB.value).whenActive(exampleCommand);
         // // trigger button

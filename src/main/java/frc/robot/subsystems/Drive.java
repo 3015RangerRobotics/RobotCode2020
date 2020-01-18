@@ -7,11 +7,19 @@
 
 package frc.robot.subsystems;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+
+import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
+import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.DriveHelper;
@@ -67,12 +75,32 @@ public class Drive extends SubsystemBase {
         leftMaster.config_kD(0, Constants.driveD);
         leftMaster.config_kF(0, Constants.driveF);
 
+        leftMaster.configMotionCruiseVelocity((int) Math.round(Constants.driveMaxVelocity/10));
+        rightMaster.configMotionCruiseVelocity((int) Math.round(Constants.driveMaxVelocity/10));
+        leftMaster.configMotionAcceleration((int) Math.round(Constants.driveMaxAcceleration/10));
+        rightMaster.configMotionAcceleration((int) Math.round(Constants.driveMaxAcceleration/10));
+        leftMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.driveMaxMotionError));
+        rightMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.driveMaxMotionError));
+
+
+
+        resetEncoders();
+
         this.setDefaultCommand(new DriveWithGamepad());
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+    }
+
+    public void resetEncoders(){
+        leftMaster.setSelectedSensorPosition(0);
+        rightMaster.setSelectedSensorPosition(0);
+    }
+
+    public ControlMode getControlMode(){
+        return leftMaster.getControlMode();
     }
 
     public void setMotorOutputs(ControlMode mode, double leftMotor, double rightMotor) {
@@ -85,4 +113,69 @@ public class Drive extends SubsystemBase {
         setMotorOutputs(ControlMode.PercentOutput, ds.leftSignal, ds.rightSignal);
     }
 
+    public BufferedTrajectoryPointStream createBuffer(double[][] profile) {
+        BufferedTrajectoryPointStream buffer = new BufferedTrajectoryPointStream();
+
+        for (int i = 0; i < profile.length; i++) {
+            TrajectoryPoint point = new TrajectoryPoint();
+            double position = profile[i][0];
+            double velocity = profile[i][1];
+
+            point.timeDur = Constants.timeStep;
+            point.position = position * Constants.drivePulsesPerFoot;
+            point.velocity = velocity * Constants.drivePulsesPerFoot / 10;
+
+            point.auxiliaryPos = 0;
+            point.auxiliaryVel = 0;
+            point.profileSlotSelect0 = 0;
+            point.profileSlotSelect1 = 1;
+            point.zeroPos = (i == 0);
+            point.isLastPoint = ((i + 1) == profile.length);
+            point.arbFeedFwd = 0;
+
+            buffer.Write(point);
+
+        }
+        return buffer;
+    }
+    public boolean isClosedLoopOnTarget () {
+        return Math.abs(leftMaster.getClosedLoopError()) <= Constants.driveMaxMotionError 
+        && Math.abs(rightMaster.getClosedLoopError()) <= Constants.driveMaxMotionError;
+    }
+
+    public void startMotionProfile(BufferedTrajectoryPointStream left, BufferedTrajectoryPointStream right) {
+        leftMaster.startMotionProfile(left, 10, ControlMode.MotionProfile);
+        rightMaster.startMotionProfile(right, 10, ControlMode.MotionProfile);
+
+    }
+
+    public boolean isMotionProfileFinished() {
+        return leftMaster.isMotionProfileFinished() && rightMaster.isMotionProfileFinished();
+    }
+
+    public double[][] loadProfile(String profileName) {
+        double[][] profile = new double[][] {};
+        try (BufferedReader br = new BufferedReader(
+                new FileReader(new File(Filesystem.getDeployDirectory(), "paths/" + profileName + ".csv")))) {
+            ArrayList<double[]> points = new ArrayList<double[]>();
+
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                String[] pointString = line.split(",");
+                double[] point = new double[2];
+                for (int i = 0; i < 2; i++) {
+                    point[i] = Double.parseDouble(pointString[i]);
+                }
+                points.add(point);
+            }
+            profile = new double[points.size()][2];
+            for (int i = 0; i < points.size(); i++) {
+                profile[i][0] = points.get(i)[0];
+                profile[i][1] = points.get(i)[1];
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return profile;
+    }
 }
