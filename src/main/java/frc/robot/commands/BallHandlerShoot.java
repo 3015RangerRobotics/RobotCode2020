@@ -23,26 +23,23 @@ public class BallHandlerShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(!ballHandler.isSwitch1Pressed() && ballHandler.getState() == State.kShootBall1)//If the first ball is no longer on the first switch, fire ball 2.
+    if(ballHandler.getState() == State.kShootBall1 && !ballHandler.isSwitch1Pressed()) //If the first ball is no longer on the first switch and currently the kShootball1 state is being executed, fire ball 2.
     {
       ballHandler.setState(BallHandler.State.kShootBall2);
     }
     else if(ballHandler.getState() == State.kShootBall2 && !ballHandler.isSwitch2Pressed())
     {
-      //If the second ball hits the first switch 
-      //while firing and the second ball is no longer on the second switch, fire ball 3.  
+      //If currently the kShootball2 state is being executed and the second ball is no longer on the second switch, fire ball 3
       ballHandler.setState(BallHandler.State.kShootBall3);
     }
     else if(ballHandler.getState() == State.kShootBall3 && !ballHandler.isSwitch3Pressed())
     {
-       //If the third ball hits the second switch 
-      //while firing and the third ball is no longer on the third switch, fire ball 4.  
+       //If currently the kShootball3 state is being executed and the third ball is no longer on the third switch, fire ball 4
       ballHandler.setState(BallHandler.State.kShootBall4);
     }
     else if(ballHandler.getState() == State.kShootBall4 && !ballHandler.isSwitch4Pressed())
     {
-      //If the third ball hits the third switch 
-      //while firing and the fourth ball is no longer on the fourth switch, fire ball 5.  
+      //If the currently the kShootball4 state is being executed and the fourth ball is no longer on the fourth switch, fire ball 5 
       ballHandler.setState(BallHandler.State.kShootBall5);
     }
   }

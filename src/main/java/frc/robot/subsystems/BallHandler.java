@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -29,15 +30,22 @@ public class BallHandler extends SubsystemBase {
     private DigitalInput switch4;
     private DigitalInput switch5;
 
+    private DoubleSolenoid tiltControl;
+
     private PowerDistributionPanel pdp;
     public final double MOTOR_IN_SPEED1 = .75; //.75
     public final double MOTOR_IN_SPEED2 = .68;  //.68
     public final double MOTOR_IN_SPEED3 = .62;  //.62
     public final double MOTOR_IN_SPEED4 = .55;  //.55
     public final double MOTOR_IN_SPEED5 = .5;   //.5
+    public final double MOTOR_OUT_SPEED1 = -.5; 
+    public final double MOTOR_OUT_SPEED2 = -.55;
+    public final double MOTOR_OUT_SPEED3 = -.62;
+    public final double MOTOR_OUT_SPEED4 = -.68;
+    public final double MOTOR_OUT_SPEED5 = -.75;
+
     public final double MOTOR_SHOOT_SPEED = 1.0;
     public final double MOTOR_OFF_SPEED = 0.0;
-    public final double MOTOR_OUT_SPEED = -.5;
     public enum State{
         kPurge,
         kShootBall1,
@@ -59,7 +67,9 @@ public class BallHandler extends SubsystemBase {
         motor2 = new VictorSP(1); //2nd motor closest to shooter
         motor3 = new VictorSP(2); //3rd motor closest to shooter 
         motor4 = new VictorSP(3); //4th motor closest to shooter
-        motor5 = new VictorSP(4); //Motor farthest from shooter
+        motor5 = new VictorSP(4); //5th motor closest to shooter
+
+        tiltControl = new DoubleSolenoid(0,1);
 
         switch1 = new DigitalInput(0); //assigned to motor 1
         switch2 = new DigitalInput(1); //assigned to motor 2
@@ -78,7 +88,7 @@ public class BallHandler extends SubsystemBase {
             case kPurge:
                 //Run everything in reverse(spit out balls)
                 speeds = new double[]
-                    {MOTOR_OUT_SPEED,MOTOR_OUT_SPEED,MOTOR_OUT_SPEED,MOTOR_OUT_SPEED,MOTOR_OUT_SPEED};
+                    {MOTOR_OUT_SPEED1,MOTOR_OUT_SPEED2,MOTOR_OUT_SPEED3,MOTOR_OUT_SPEED4,MOTOR_OUT_SPEED5};
                 break;
             case kShootBall1:
                 //Fires the first ball
@@ -104,7 +114,7 @@ public class BallHandler extends SubsystemBase {
                 //Fires 1-5
                 speeds = new double[]
                     {MOTOR_SHOOT_SPEED,MOTOR_SHOOT_SPEED,MOTOR_SHOOT_SPEED,MOTOR_SHOOT_SPEED,MOTOR_SHOOT_SPEED};
-                break;    
+                break; 
             case kFillTo1:
                 //Fill balls until 1 is pressed
                 speeds = new double[]
@@ -241,6 +251,7 @@ public class BallHandler extends SubsystemBase {
             return true;
         }
     }
+    
     /**
      * Used to determine the state of the fourth switch closest to the shooter (a.k.a switch 4)
      * @return state of switch, true if pressed.
@@ -252,6 +263,7 @@ public class BallHandler extends SubsystemBase {
             return true;
         }
     }
+    
     /**
      * Used to determine the state of the farthest switch from the shooter (a.k.a switch 5)
      * @return state of switch, true if pressed.
@@ -264,4 +276,12 @@ public class BallHandler extends SubsystemBase {
         }
     }
 
+    public void harvesterIn()
+    {
+        tiltControl.set(DoubleSolenoid.Value.kForward);
+    }
+    public void harvsterOut()
+    {
+        tiltControl.set(DoubleSolenoid.Value.kReverse);
+    }
 }
