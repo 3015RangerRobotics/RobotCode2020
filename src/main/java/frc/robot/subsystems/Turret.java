@@ -50,7 +50,7 @@ public class Turret extends SubsystemBase {
         turretMotor.configNominalOutputForward(Constants.turretMinSpeed);
         turretMotor.configNominalOutputReverse(-Constants.turretMinSpeed);
 
-        turretMotor.configAllowableClosedloopError(0, (int) Math.round((1 / Constants.degreesPerPulse) / 2));
+        turretMotor.configAllowableClosedloopError(0, (int) Constants.turretDegreeMargin);
 
         turretMotor.config_kP(0, Constants.turretP);
         turretMotor.config_kI(0, Constants.turretI);

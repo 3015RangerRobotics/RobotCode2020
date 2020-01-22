@@ -20,6 +20,8 @@ public class TurretTurnToInner extends CommandBase {
      * Creates a new TurretTurnToInner.
      */
 
+     private double pos;
+
     public TurretTurnToInner() {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(RobotContainer.turret, RobotContainer.limelight);
@@ -28,16 +30,19 @@ public class TurretTurnToInner extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.limelight.setPipeline(2);
+        RobotContainer.limelight.setPipeline(1);
         RobotContainer.limelight.setStreamingMode(Limelight.StreamingMode.STANDARD);
         RobotContainer.limelight.setLEDMode(Limelight.LEDMode.PIPELINE);
         RobotContainer.limelight.setCameraMode(Limelight.CameraMode.VISION_PROCESSING);
+        pos = RobotContainer.limelight.getTargetAngleX();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double pos = RobotContainer.limelight.getInnerTargetAngleX();
+        // if(Math.abs(RobotContainer.limelight.getTargetAngleX()) <= Constants.turretDegreeMargin) {
+        //     RobotContainer.limelight.setPipeline(1);
+        // }
         RobotContainer.turret.set(ControlMode.Position, pos / Constants.degreesPerPulse);
         System.out.println(("Current Pos: " + RobotContainer.turret.getMotorPosition() + " Turn To: " + pos));
     }

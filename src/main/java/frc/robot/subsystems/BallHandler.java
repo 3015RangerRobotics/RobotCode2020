@@ -30,7 +30,7 @@ public class BallHandler extends SubsystemBase {
     private DigitalInput switch4;
     private DigitalInput switch5;
 
-    private DoubleSolenoid tiltControl;
+    // private DoubleSolenoid tiltControl;
 
     private PowerDistributionPanel pdp;
     public final double MOTOR_IN_SPEED1 = .75; //.75
@@ -69,7 +69,7 @@ public class BallHandler extends SubsystemBase {
         motor4 = new VictorSP(3); //4th motor closest to shooter
         motor5 = new VictorSP(4); //5th motor closest to shooter
 
-        tiltControl = new DoubleSolenoid(0,1);
+        // tiltControl = new DoubleSolenoid(0,1);
 
         switch1 = new DigitalInput(0); //assigned to motor 1
         switch2 = new DigitalInput(1); //assigned to motor 2
