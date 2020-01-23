@@ -42,15 +42,13 @@ public class RobotContainer {
     }
 
     private void configureButtonBindings() {
-        driverA.whileActiveContinuous(new TurretToPosition(0));
+        driverA.whileActiveContinuous(new HarvesterOfBalls()).whenInactive(new BallHarvesterIn());
+        driverX.whileActiveContinuous(new TurretToPosition(0));
         driverY.whileActiveContinuous(new TurretTurnToTarget());
-        driverB.whileActiveOnce(new BallHandlerHarvest());
-        driverX.whileActiveOnce(new BallHandlerShoot());
         driverLB.whileActiveContinuous(new TurretToPosition(-45));
         driverRB.whileActiveContinuous(new TurretToPosition(45));
-        driverST.whenActive(new ShooterStart());
-        driverBK.whenActive(new ShooterStop());
         driverLT.whileActiveContinuous(new TurretTurnToInner());
+        driverRT.whileActiveContinuous(new FireZeMissiles());
         // normal button
         // new JoystickButton(driver,
         // XboxController.Button.kB.value).whenActive(exampleCommand);
