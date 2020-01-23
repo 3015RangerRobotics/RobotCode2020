@@ -28,6 +28,7 @@ public class RobotContainer {
     public static JoystickButton driverST = new JoystickButton(driver, XboxController.Button.kStart.value);
     public static JoystickButton driverBK = new JoystickButton(driver, XboxController.Button.kBack.value);
     public static TriggerButton driverLT;
+    public static TriggerButton driverRT;
 
     public RobotContainer() {
         // drive = new Drive();
@@ -36,6 +37,7 @@ public class RobotContainer {
         tempShooter = new TempShooter();
         ballHandler = new BallHandler();
         driverLT = new TriggerButton(driver, Hand.kLeft);
+        driverRT = new TriggerButton(driver, Hand.kRight);
         configureButtonBindings();
     }
 

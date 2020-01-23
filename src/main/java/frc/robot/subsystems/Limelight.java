@@ -147,12 +147,12 @@ public class Limelight extends SubsystemBase {
         return (targetHeight - limelightHeight) / Math.tan(Math.toRadians(limelightAngle + getTargetAngleY()));
     }
 
-    // public double getlimelightToOuterTargetDistance(){
+    // public double getlimelightToOuterTargetDistance() {
     //     double d2 = Math.pow(getRobotToOuterTargetDistance(), 2);
     //     return Math.sqrt(d2 + ((targetHeight - limelightHeight)*(targetHeight - limelightHeight)));
     // }
 
-    // public double getInnerTargetAngleX(){
+    // public double getInnerTargetAngleX() {
     //     double a = outerToInnerTargetDistance;
     //     double b = getlimelightToOuterTargetDistance();
     //     double c = Math.sqrt((a * a) + (b * b)- (2*a*b * Math.cos(Math.toRadians(get3DSolution()[4] + 90)))); 
