@@ -8,11 +8,45 @@
 package frc.robot;
 
 public final class Constants {
+    //CTRE CAN Motor Cotnroller ID's
     public static final int rightDriveMaster = 1;
     public static final int rightDriveFollower = 2;
     public static final int leftDriveMaster = 3;
     public static final int leftDriveFollower = 4;
-    public static final int turretMotor = 1;
+    public static final int turretMotor = 5;
+
+    //PWM Motor Controllers
+    public static final int BALLHANDLER_MOTOR1 = 0; // Motor closet to turret
+    public static final int BALLHANDLER_MOTOR2 = 1; // Secound motor closet to turret
+    public static final int BALLHANDLER_MOTOR3 = 2; // third motor closet to turret
+    public static final int BALLHANDLER_MOTOR4 = 3; // fourth motor closet to turret
+    public static final int BALLHANDLER_MOTOR5 = 4; // fifth motor closet to turret
+
+    //DIO channels
+    public static final int BALLHANDLER_SWITCH1 = 0; // Switch closet to turret
+    public static final int BALLHANDLER_SWITCH2 = 1; // Second switch closet to turret
+    public static final int BALLHANDLER_SWITCH3 = 2; // Third switch closet to turret
+    public static final int BALLHANDLER_SWITCH4 = 3; // Fourth switch closet to turret
+    public static final int BALLHANDLER_SWITCH5 = 4; // Fifth switch closet to turret
+
+    //Solenoid channels
+    public static final int BALLHANDLER_SOLENOID_FWD = 0;
+    public static final int BALLHANDLER_SOLENOID_REV = 1;
+
+    public static final double BALLHANDLER_MOTOR_IN_SPEED1 = .75; //.75
+    public static final double BALLHANDLER_MOTOR_IN_SPEED2 = .68;  //.68
+    public static final double BALLHANDLER_MOTOR_IN_SPEED3 = .62;  //.62
+    public static final double BALLHANDLER_MOTOR_IN_SPEED4 = .55;  //.55
+    public static final double BALLHANDLER_MOTOR_IN_SPEED5 = .5;   //.5
+
+    public static final double BALLHANDLER_MOTOR_OUT_SPEED1 = -.5; 
+    public static final double BALLHANDLER_MOTOR_OUT_SPEED2 = -.55;
+    public static final double BALLHANDLER_MOTOR_OUT_SPEED3 = -.62;
+    public static final double BALLHANDLER_MOTOR_OUT_SPEED4 = -.68;
+    public static final double BALLHANDLER_MOTOR_OUT_SPEED5 = -.75;
+
+    public static final double BALLHANDLER_MOTOR_SHOOT_SPEED = 1.0;
+    public static final double BALLHANDLER_MOTOR_OFF_SPEED = 0.0;
 
     public static final double driveP = 0;
     public static final double driveI = 0;
