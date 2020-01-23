@@ -7,27 +7,31 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class TempShooterStop extends CommandBase {
+public class ShooterStart extends CommandBase {
+    double rpm = 1000;
   /**
-   * Creates a new TempShooterStop.
+   * Creates a new ShooterStart.
    */
-  public TempShooterStop() {
+  public ShooterStart() {
+      addRequirements(RobotContainer.shooter);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.tempShooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-      RobotContainer.tempShooter.set(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+      RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.shooterPulsesPerRotation);
   }
 
   // Called once the command ends or is interrupted.

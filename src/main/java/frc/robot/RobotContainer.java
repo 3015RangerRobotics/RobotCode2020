@@ -2,7 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import frc.robot.subsystems.BallHandler;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,7 +16,8 @@ public class RobotContainer {
     public static Drive drive;
     public static Turret turret;
     public static Limelight limelight;
-    public static TempShooter tempShooter;
+    public static Shooter shooter;
+
 
     public static JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     public static JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
@@ -33,7 +33,7 @@ public class RobotContainer {
         // drive = new Drive();
         turret = new Turret();
         limelight = new Limelight();
-        tempShooter = new TempShooter();
+        shooter = new Shooter();
         ballHandler = new BallHandler();
         driverLT = new TriggerButton(driver, Hand.kLeft);
         configureButtonBindings();
@@ -46,8 +46,8 @@ public class RobotContainer {
         driverX.whileActiveOnce(new BallHandlerShoot());
         driverLB.whileActiveContinuous(new TurretToPosition(-45));
         driverRB.whileActiveContinuous(new TurretToPosition(45));
-        driverST.whenActive(new TempShooterStart());
-        driverBK.whenActive(new TempShooterStop());
+        driverST.whenActive(new ShooterStart());
+        driverBK.whenActive(new ShooterStop());
         driverLT.whileActiveContinuous(new TurretTurnToInner());
         // normal button
         // new JoystickButton(driver,
