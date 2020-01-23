@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.subsystems.BallHandler;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -18,6 +19,7 @@ public class RobotContainer {
     public static Turret turret;
     public static Limelight limelight;
     public static TempShooter tempShooter;
+    public static DriverRumble driverRumble;
 
     public static JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     public static JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
@@ -36,6 +38,7 @@ public class RobotContainer {
         tempShooter = new TempShooter();
         ballHandler = new BallHandler();
         driverLT = new TriggerButton(driver, Hand.kLeft);
+        driverRumble = new DriverRumble();
         configureButtonBindings();
     }
 
@@ -79,6 +82,37 @@ public class RobotContainer {
             return 0;
         }
     }
+
+    /**
+     * Sets the left(soft) rumble on the driver's controller 
+     * @param left a value from 0 to 1 representing the power 
+     */
+    public static void setDriverRumbleLeft(double left) {
+        driver.setRumble(RumbleType.kLeftRumble, left);
+    }
+    /**
+     * Sets the right(hard) rumble on the driver's controller
+     * @param right a value from 0 to 1 representing the power
+     */
+    public static void setDriverRumbleRight(double right) {
+        driver.setRumble(RumbleType.kRightRumble, right);
+    }
+    /**
+     * Sets the left(soft) rumble on the drivers controller
+     * @param left a value from 0 to 1 representing the power
+     */
+    public static void setCoDriverRumbleLeft(double left) {
+        codriver.setRumble(RumbleType.kLeftRumble, left);
+    }
+    /**
+     * Sets the right(hard) rumble on the drivers controller
+     * @param right a value from 0 to 1 representing the power
+     */
+    public static void setCoDriverRumbleRight(double right) {
+        codriver.setRumble(RumbleType.kRightRumble, right);
+    }
+
+
 
     private class TriggerButton extends Trigger {
         Hand hand;
