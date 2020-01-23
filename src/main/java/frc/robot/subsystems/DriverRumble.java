@@ -7,29 +7,18 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
-public class TempShooter extends SubsystemBase {
+public class DriverRumble extends SubsystemBase {
   /**
-   * Creates a new TempShooter.
+   * Creates a new DriverRumble.
    */
-  private VictorSP shooter1;
-  private VictorSP shooter2;
+  public DriverRumble() {
 
-  public TempShooter() {
-    shooter1 = new VictorSP(Constants.spinningShooter);
-    shooter2 = new VictorSP(9);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-  }
-
-  public void set(double speed){
-      shooter1.set(speed);
-      shooter2.set(-speed);
   }
 }

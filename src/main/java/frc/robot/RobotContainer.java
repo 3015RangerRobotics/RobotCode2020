@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.subsystems.BallHandler;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -17,7 +18,9 @@ public class RobotContainer {
     public static Drive drive;
     public static Turret turret;
     public static Limelight limelight;
-    public static TempShooter tempShooter;
+    public static DriverRumble driverRumble;
+    public static Shooter shooter;
+
 
     public static JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     public static JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
@@ -28,27 +31,28 @@ public class RobotContainer {
     public static JoystickButton driverST = new JoystickButton(driver, XboxController.Button.kStart.value);
     public static JoystickButton driverBK = new JoystickButton(driver, XboxController.Button.kBack.value);
     public static TriggerButton driverLT;
+    public static TriggerButton driverRT;
 
     public RobotContainer() {
         // drive = new Drive();
         turret = new Turret();
         limelight = new Limelight();
-        tempShooter = new TempShooter();
+        shooter = new Shooter();
         ballHandler = new BallHandler();
+        driverRumble = new DriverRumble();
         driverLT = new TriggerButton(driver, Hand.kLeft);
+        driverRT = new TriggerButton(driver, Hand.kRight);
         configureButtonBindings();
     }
 
     private void configureButtonBindings() {
-        driverA.whileActiveContinuous(new TurretToPosition(0));
+        driverA.whileActiveContinuous(new HarvesterOfBalls()).whenInactive(new BallHarvesterIn());
+        driverX.whileActiveContinuous(new TurretToPosition(0));
         driverY.whileActiveContinuous(new TurretTurnToTarget());
-        driverB.whileActiveOnce(new BallHandlerHarvest());
-        driverX.whileActiveOnce(new BallHandlerShoot());
         driverLB.whileActiveContinuous(new TurretToPosition(-45));
         driverRB.whileActiveContinuous(new TurretToPosition(45));
-        driverST.whenActive(new TempShooterStart());
-        driverBK.whenActive(new TempShooterStop());
         driverLT.whileActiveContinuous(new TurretTurnToInner());
+        driverRT.whileActiveContinuous(new FireZeMissiles());
         // normal button
         // new JoystickButton(driver,
         // XboxController.Button.kB.value).whenActive(exampleCommand);
@@ -79,6 +83,37 @@ public class RobotContainer {
             return 0;
         }
     }
+
+    /**
+     * Sets the left(soft) rumble on the driver's controller 
+     * @param left a value from 0 to 1 representing the power 
+     */
+    public static void setDriverRumbleLeft(double left) {
+        driver.setRumble(RumbleType.kLeftRumble, left);
+    }
+    /**
+     * Sets the right(hard) rumble on the driver's controller
+     * @param right a value from 0 to 1 representing the power
+     */
+    public static void setDriverRumbleRight(double right) {
+        driver.setRumble(RumbleType.kRightRumble, right);
+    }
+    /**
+     * Sets the left(soft) rumble on the drivers controller
+     * @param left a value from 0 to 1 representing the power
+     */
+    public static void setCoDriverRumbleLeft(double left) {
+        codriver.setRumble(RumbleType.kLeftRumble, left);
+    }
+    /**
+     * Sets the right(hard) rumble on the drivers controller
+     * @param right a value from 0 to 1 representing the power
+     */
+    public static void setCoDriverRumbleRight(double right) {
+        codriver.setRumble(RumbleType.kRightRumble, right);
+    }
+
+
 
     private class TriggerButton extends Trigger {
         Hand hand;
