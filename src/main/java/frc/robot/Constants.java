@@ -37,4 +37,11 @@ public final class Constants {
     public static final double turretDegreeMargin = Math.round((1 / Constants.degreesPerPulse) * 0.25);
     
     public static final int spinningShooter = 5;
+
+    public static final double shooterP = 0;
+    public static final double shooterI = 0; // 0
+    public static final double shooterD = 0; // 0
+    public static final double shooterF = 0; // 0
+
+    public static final double shooterPulsesPerRotation = 2048;
 }
