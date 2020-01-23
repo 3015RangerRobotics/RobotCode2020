@@ -276,12 +276,18 @@ public class BallHandler extends SubsystemBase {
         }
     }
 
+    /**
+     * Uses a double solonoid to redirect air into a piston. This piston causes the arm to move in or out.
+     * 
+     */
     public void harvesterIn()
     {
-        // tiltControl.set(DoubleSolenoid.Value.kForward);
+        //TODO: change kForward to kReverse if havesterIn() causes the piston arm to out
+        tiltControl.set(DoubleSolenoid.Value.kForward);
     }
     public void harvsterOut()
     {
-        // tiltControl.set(DoubleSolenoid.Value.kReverse);
+        //TODO: change kRelease to kForward if havesterIn() causes the piston arm to in
+        tiltControl.set(DoubleSolenoid.Value.kReverse);
     }
 }
