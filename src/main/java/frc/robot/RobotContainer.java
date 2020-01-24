@@ -7,6 +7,7 @@ import frc.robot.subsystems.BallHandler;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -34,25 +35,26 @@ public class RobotContainer {
     public static TriggerButton driverRT;
 
     public RobotContainer() {
-        // drive = new Drive();
-        turret = new Turret();
-        limelight = new Limelight();
-        shooter = new Shooter();
-        ballHandler = new BallHandler();
-        driverRumble = new DriverRumble();
-        driverLT = new TriggerButton(driver, Hand.kLeft);
-        driverRT = new TriggerButton(driver, Hand.kRight);
+        drive = new Drive();
+        CommandScheduler.getInstance().setDefaultCommand(drive, new DriveWithGamepad());
+        // turret = new Turret();
+        // limelight = new Limelight();
+        // shooter = new Shooter();
+        // ballHandler = new BallHandler();
+        // driverRumble = new DriverRumble();
+        // driverLT = new TriggerButton(driver, Hand.kLeft);
+        // driverRT = new TriggerButton(driver, Hand.kRight);
         configureButtonBindings();
     }
 
     private void configureButtonBindings() {
-        driverA.whileActiveContinuous(new HarvesterOfBalls()).whenInactive(new BallHarvesterIn());
-        driverX.whileActiveContinuous(new TurretToPosition(0));
-        driverY.whileActiveContinuous(new TurretTurnToTarget());
-        driverLB.whileActiveContinuous(new TurretToPosition(-45));
-        driverRB.whileActiveContinuous(new TurretToPosition(45));
-        driverLT.whileActiveContinuous(new TurretTurnToInner());
-        driverRT.whileActiveContinuous(new FireZeMissiles());
+        // driverA.whileActiveContinuous(new HarvesterOfBalls()).whenInactive(new BallHarvesterIn());
+        // driverX.whileActiveContinuous(new TurretToPosition(0));
+        // driverY.whileActiveContinuous(new TurretTurnToTarget());
+        // driverLB.whileActiveContinuous(new TurretToPosition(-45));
+        // driverRB.whileActiveContinuous(new TurretToPosition(45));
+        // driverLT.whileActiveContinuous(new TurretTurnToInner());
+        // driverRT.whileActiveContinuous(new FireZeMissiles());
         // normal button
         // new JoystickButton(driver,
         // XboxController.Button.kB.value).whenActive(exampleCommand);

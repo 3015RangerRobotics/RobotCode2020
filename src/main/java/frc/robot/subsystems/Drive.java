@@ -49,10 +49,14 @@ public class Drive extends SubsystemBase {
         leftFollower.follow(leftMaster);
 
         rightMaster.setInverted(true);
+        rightFollower.setInverted(true);//must be explicit, inverting master will not invert follower.
         leftMaster.setInverted(false);
+        leftFollower.setInverted(false);
 
-        rightMaster.setNeutralMode(NeutralMode.Brake);
-        leftMaster.setNeutralMode(NeutralMode.Brake);
+        rightMaster.setNeutralMode(NeutralMode.Coast);
+        rightFollower.setNeutralMode(NeutralMode.Coast);
+        leftMaster.setNeutralMode(NeutralMode.Coast);
+        leftFollower.setNeutralMode(NeutralMode.Coast);
 
         rightMaster.enableVoltageCompensation(true);
         rightMaster.configVoltageCompSaturation(12.5);
@@ -86,7 +90,7 @@ public class Drive extends SubsystemBase {
 
         resetEncoders();
 
-        this.setDefaultCommand(new DriveWithGamepad());
+        // this.setDefaultCommand(new DriveWithGamepad());
     }
 
     @Override
