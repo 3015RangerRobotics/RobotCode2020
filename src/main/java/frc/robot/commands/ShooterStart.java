@@ -31,7 +31,7 @@ public class ShooterStart extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.shooterPulsesPerRotation);
+      RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.SHOOTER_PULSES_PER_ROTATION);
   }
 
   // Called once the command ends or is interrupted.

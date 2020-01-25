@@ -43,7 +43,7 @@ public class TurretTurnToInner extends CommandBase {
         // if(Math.abs(RobotContainer.limelight.getTargetAngleX()) <= Constants.turretDegreeMargin) {
         //     RobotContainer.limelight.setPipeline(1);
         // }
-        RobotContainer.turret.set(ControlMode.Position, pos / Constants.degreesPerPulse);
+        RobotContainer.turret.set(ControlMode.Position, pos / Constants.TURRET_DEGREES_PER_PULSE);
         System.out.println(("Current Pos: " + RobotContainer.turret.getMotorPosition() + " Turn To: " + pos));
     }
 

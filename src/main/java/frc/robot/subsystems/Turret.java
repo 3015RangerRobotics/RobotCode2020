@@ -7,8 +7,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.function.DoubleSupplier;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -24,7 +22,7 @@ public class Turret extends SubsystemBase {
     private TalonSRX turretMotor;
 
     public Turret() {
-        this.turretMotor = new TalonSRX(Constants.turretMotor);
+        this.turretMotor = new TalonSRX(Constants.TURRET_MOTOR);
 
         turretMotor.configFactoryDefault();
 
@@ -36,26 +34,26 @@ public class Turret extends SubsystemBase {
         turretMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
         turretMotor.configForwardSoftLimitEnable(true);
-        turretMotor.configForwardSoftLimitThreshold((int) Math.round(Constants.turretSoftLimitForward / Constants.degreesPerPulse));
+        turretMotor.configForwardSoftLimitThreshold((int) Math.round(Constants.TURRET_SOFT_LIMIT_FORWARD / Constants.TURRET_DEGREES_PER_PULSE));
 
         turretMotor.configReverseSoftLimitEnable(true);
-        turretMotor.configReverseSoftLimitThreshold((int) Math.round(Constants.turretSoftLimitReverse / Constants.degreesPerPulse));
+        turretMotor.configReverseSoftLimitThreshold((int) Math.round(Constants.TURRET_SOFT_LIMIT_REVERSE / Constants.TURRET_DEGREES_PER_PULSE));
 
         turretMotor.setInverted(true);
         turretMotor.setSelectedSensorPosition(0);
         turretMotor.setSensorPhase(true);
 
-        turretMotor.configPeakOutputForward(Constants.turretMaxSpeed);
-        turretMotor.configPeakOutputReverse(-Constants.turretMaxSpeed);
-        turretMotor.configNominalOutputForward(Constants.turretMinSpeed);
-        turretMotor.configNominalOutputReverse(-Constants.turretMinSpeed);
+        turretMotor.configPeakOutputForward(Constants.TURRET_MAX_SPEED);
+        turretMotor.configPeakOutputReverse(-Constants.TURRET_MAX_SPEED);
+        turretMotor.configNominalOutputForward(Constants.TURRET_MIN_SPEED);
+        turretMotor.configNominalOutputReverse(-Constants.TURRET_MIN_SPEED);
 
-        turretMotor.configAllowableClosedloopError(0, (int) Constants.turretDegreeMargin);
+        turretMotor.configAllowableClosedloopError(0, (int) Constants.TURRET_DEGREE_MARGIN);
 
-        turretMotor.config_kP(0, Constants.turretP);
-        turretMotor.config_kI(0, Constants.turretI);
-        turretMotor.config_kD(0, Constants.turretD);
-        turretMotor.config_kF(0, Constants.turretF);
+        turretMotor.config_kP(0, Constants.TURRET_P);
+        turretMotor.config_kI(0, Constants.TURRET_I);
+        turretMotor.config_kD(0, Constants.TURRET_D);
+        turretMotor.config_kF(0, Constants.TURRET_F);
 
     }
 
@@ -66,7 +64,7 @@ public class Turret extends SubsystemBase {
     }
 
     public double getMotorPosition() {
-        return (turretMotor.getSelectedSensorPosition() * Constants.degreesPerPulse);
+        return (turretMotor.getSelectedSensorPosition() * Constants.TURRET_DEGREES_PER_PULSE);
     }
 
     public void set(ControlMode mode, double value) { 

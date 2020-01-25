@@ -8,40 +8,37 @@
 package frc.robot;
 
 public final class Constants {
-    public static final int rightDriveMaster = 1;
-    public static final int rightDriveFollower = 2;
-    public static final int leftDriveMaster = 3;
-    public static final int leftDriveFollower = 4;
-    public static final int turretMotor = 1;
 
-    public static final double driveP = 0;
-    public static final double driveI = 0;
-    public static final double driveD = 0;
-    public static final double driveF = 0;
-    public static final double drivePulsesPerFoot = 1;
-    public static final double driveMaxVelocity = 12;
-    public static final double driveMaxAcceleration = 8;
-    public static final double driveMaxMotionError = 0.1 * drivePulsesPerFoot;
-    public static final int timeStep = 10;
+    public static final int DRIVE_RIGHT_MASTER = 1;
+    public static final int DRIVE_RIGHT_FOLLOWER = 2;
+    public static final int DRIVE_LEFT_MASTER = 3;
+    public static final int DRIVE_LEFT_FOLLOWER = 4;
+    public static final double DRIVE_P = 0;
+    public static final double DRIVE_I = 0;
+    public static final double DRIVE_D = 0;
+    public static final double DRIVE_F = 0;
+    public static final double DRIVE_PULSES_PER_FOOT = 1;
+    public static final double DRIVE_MAX_VELOCITY = 12;
+    public static final double DRIVE_MAX_ACCELERATION = 8;
+    public static final double DRIVE_MAX_MOTION_ERROR = 0.1 * DRIVE_PULSES_PER_FOOT;
+    public static final int DRIVE_TIME_STEP = 10;
+
+    public static final int TURRET_MOTOR = 1;
+    public static final double TURRET_P = 2.5; // 0.3
+    public static final double TURRET_I = 0; // 0
+    public static final double TURRET_D = 75; // 0
+    public static final double TURRET_F = 0; // 0
+    public static final double TURRET_DEGREES_PER_PULSE = 1 / (5600.0 / 90.0);
+    public static final int TURRET_SOFT_LIMIT_FORWARD = 90;
+    public static final int TURRET_SOFT_LIMIT_REVERSE = -90;
+    public static final double TURRET_MAX_SPEED = 0.7;
+    public static final double TURRET_MIN_SPEED = 0.15;
+    public static final double TURRET_DEGREE_MARGIN = Math.round((1 / Constants.TURRET_DEGREES_PER_PULSE) * 0.25);
     
-    public static final double turretP = 2.5; // 0.3
-    public static final double turretI = 0; // 0
-    public static final double turretD = 75; // 0
-    public static final double turretF = 0; // 0
-
-    public static final double degreesPerPulse = 1 / (5600.0 / 90.0);
-    public static final int turretSoftLimitForward = 90;
-    public static final int turretSoftLimitReverse = -90;
-    public static final double turretMaxSpeed = 0.7;
-    public static final double turretMinSpeed = 0.15;
-    public static final double turretDegreeMargin = Math.round((1 / Constants.degreesPerPulse) * 0.25);
-    
-    public static final int spinningShooter = 5;
-
-    public static final double shooterP = 0;
-    public static final double shooterI = 0; // 0
-    public static final double shooterD = 0; // 0
-    public static final double shooterF = 0; // 0
-
-    public static final double shooterPulsesPerRotation = 2048;
+    public static final int SHOOTER_MOTOR = 5;
+    public static final double SHOOTER_P = 0;
+    public static final double SHOOTER_I = 0; // 0
+    public static final double SHOOTER_D = 0; // 0
+    public static final double SHOOTER_F = 0; // 0
+    public static final double SHOOTER_PULSES_PER_ROTATION = 2048;
 }

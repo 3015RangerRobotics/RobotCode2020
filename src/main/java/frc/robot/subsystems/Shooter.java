@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase {
      * Creates a new Shooter.
      */
     public Shooter() {
-        shooter = new TalonFX(Constants.spinningShooter);
+        shooter = new TalonFX(Constants.SHOOTER_MOTOR);
         shooter.configFactoryDefault();
 
         shooter.setNeutralMode(NeutralMode.Coast);
@@ -36,10 +36,10 @@ public class Shooter extends SubsystemBase {
         shooter.setSelectedSensorPosition(0);
         shooter.setSensorPhase(false);
 
-        shooter.config_kP(0, Constants.shooterP);
-        shooter.config_kI(0, Constants.shooterI);
-        shooter.config_kD(0, Constants.shooterD);
-        shooter.config_kF(0, Constants.shooterF);
+        shooter.config_kP(0, Constants.SHOOTER_P);
+        shooter.config_kI(0, Constants.SHOOTER_I);
+        shooter.config_kD(0, Constants.SHOOTER_D);
+        shooter.config_kF(0, Constants.SHOOTER_F);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public double getRPM() {
-        return (shooter.getSelectedSensorVelocity() * 10 * 60 / Constants.shooterPulsesPerRotation);
+        return (shooter.getSelectedSensorVelocity() * 10 * 60 / Constants.SHOOTER_PULSES_PER_ROTATION);
     }
 
     public void set(ControlMode mode, double value) { 

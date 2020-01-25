@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.DriveHelper;
 import frc.robot.DriveSignal;
-import frc.robot.commands.DriveWithGamepad;
 
 public class Drive extends SubsystemBase {
     /**
@@ -37,10 +36,10 @@ public class Drive extends SubsystemBase {
     private TalonFX leftFollower;
 
     public Drive() {
-        this.rightMaster = new TalonFX(Constants.rightDriveMaster);
-        this.rightFollower = new TalonFX(Constants.rightDriveFollower);
-        this.leftMaster = new TalonFX(Constants.leftDriveMaster);
-        this.leftFollower = new TalonFX(Constants.leftDriveFollower);
+        this.rightMaster = new TalonFX(Constants.DRIVE_RIGHT_MASTER);
+        this.rightFollower = new TalonFX(Constants.DRIVE_RIGHT_FOLLOWER);
+        this.leftMaster = new TalonFX(Constants.DRIVE_LEFT_MASTER);
+        this.leftFollower = new TalonFX(Constants.DRIVE_LEFT_FOLLOWER);
 
         rightMaster.configFactoryDefault();
         leftMaster.configFactoryDefault();
@@ -69,22 +68,22 @@ public class Drive extends SubsystemBase {
         rightMaster.setSensorPhase(true);
         leftMaster.setSensorPhase(false);
 
-        rightMaster.config_kP(0, Constants.driveP);
-        rightMaster.config_kI(0, Constants.driveI);
-        rightMaster.config_kD(0, Constants.driveD);
-        rightMaster.config_kF(0, Constants.driveF);
+        rightMaster.config_kP(0, Constants.DRIVE_P);
+        rightMaster.config_kI(0, Constants.DRIVE_I);
+        rightMaster.config_kD(0, Constants.DRIVE_D);
+        rightMaster.config_kF(0, Constants.DRIVE_F);
 
-        leftMaster.config_kP(0, Constants.driveP);
-        leftMaster.config_kI(0, Constants.driveI);
-        leftMaster.config_kD(0, Constants.driveD);
-        leftMaster.config_kF(0, Constants.driveF);
+        leftMaster.config_kP(0, Constants.DRIVE_P);
+        leftMaster.config_kI(0, Constants.DRIVE_I);
+        leftMaster.config_kD(0, Constants.DRIVE_D);
+        leftMaster.config_kF(0, Constants.DRIVE_F);
 
-        leftMaster.configMotionCruiseVelocity((int) Math.round(Constants.driveMaxVelocity/10));
-        rightMaster.configMotionCruiseVelocity((int) Math.round(Constants.driveMaxVelocity/10));
-        leftMaster.configMotionAcceleration((int) Math.round(Constants.driveMaxAcceleration/10));
-        rightMaster.configMotionAcceleration((int) Math.round(Constants.driveMaxAcceleration/10));
-        leftMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.driveMaxMotionError));
-        rightMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.driveMaxMotionError));
+        leftMaster.configMotionCruiseVelocity((int) Math.round(Constants.DRIVE_MAX_VELOCITY /10));
+        rightMaster.configMotionCruiseVelocity((int) Math.round(Constants.DRIVE_MAX_VELOCITY /10));
+        leftMaster.configMotionAcceleration((int) Math.round(Constants.DRIVE_MAX_ACCELERATION /10));
+        rightMaster.configMotionAcceleration((int) Math.round(Constants.DRIVE_MAX_ACCELERATION /10));
+        leftMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.DRIVE_MAX_MOTION_ERROR));
+        rightMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.DRIVE_MAX_MOTION_ERROR));
 
 
 
@@ -125,9 +124,9 @@ public class Drive extends SubsystemBase {
             double position = profile[i][0];
             double velocity = profile[i][1];
 
-            point.timeDur = Constants.timeStep;
-            point.position = position * Constants.drivePulsesPerFoot;
-            point.velocity = velocity * Constants.drivePulsesPerFoot / 10;
+            point.timeDur = Constants.DRIVE_TIME_STEP;
+            point.position = position * Constants.DRIVE_PULSES_PER_FOOT;
+            point.velocity = velocity * Constants.DRIVE_PULSES_PER_FOOT / 10;
 
             point.auxiliaryPos = 0;
             point.auxiliaryVel = 0;
@@ -143,8 +142,8 @@ public class Drive extends SubsystemBase {
         return buffer;
     }
     public boolean isClosedLoopOnTarget () {
-        return Math.abs(leftMaster.getClosedLoopError()) <= Constants.driveMaxMotionError 
-        && Math.abs(rightMaster.getClosedLoopError()) <= Constants.driveMaxMotionError;
+        return Math.abs(leftMaster.getClosedLoopError()) <= Constants.DRIVE_MAX_MOTION_ERROR
+        && Math.abs(rightMaster.getClosedLoopError()) <= Constants.DRIVE_MAX_MOTION_ERROR;
     }
 
     public void startMotionProfile(BufferedTrajectoryPointStream left, BufferedTrajectoryPointStream right) {

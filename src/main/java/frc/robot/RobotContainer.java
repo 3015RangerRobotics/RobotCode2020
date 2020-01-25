@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
     public static XboxController driver = new XboxController(0);
-    public static XboxController codriver = new XboxController(1);
+    public static XboxController coDriver = new XboxController(1);
 
     public static BallHandler ballHandler;
     public static Drive drive;
@@ -33,6 +33,16 @@ public class RobotContainer {
     public static JoystickButton driverBK = new JoystickButton(driver, XboxController.Button.kBack.value);
     public static TriggerButton driverLT;
     public static TriggerButton driverRT;
+    public static JoystickButton coDriverA = new JoystickButton(coDriver, XboxController.Button.kA.value);
+    public static JoystickButton coDriverB = new JoystickButton(coDriver, XboxController.Button.kB.value);
+    public static JoystickButton coDriverX = new JoystickButton(coDriver, XboxController.Button.kX.value);
+    public static JoystickButton coDriverY = new JoystickButton(coDriver, XboxController.Button.kY.value);
+    public static JoystickButton coDriverLB = new JoystickButton(coDriver, XboxController.Button.kBumperLeft.value);
+    public static JoystickButton coDriverRB = new JoystickButton(coDriver, XboxController.Button.kBumperRight.value);
+    public static JoystickButton coDriverST = new JoystickButton(coDriver, XboxController.Button.kStart.value);
+    public static JoystickButton coDriverBK = new JoystickButton(coDriver, XboxController.Button.kBack.value);
+    public static TriggerButton coDriverLT;
+    public static TriggerButton coDriverRT;
 
     public RobotContainer() {
         drive = new Drive();
