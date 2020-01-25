@@ -115,14 +115,14 @@ public class RobotContainer {
      * @param left a value from 0 to 1 representing the power
      */
     public static void setCoDriverRumbleLeft(double left) {
-        codriver.setRumble(RumbleType.kLeftRumble, left);
+        coDriver.setRumble(RumbleType.kLeftRumble, left);
     }
     /**
      * Sets the right(hard) rumble on the drivers controller
      * @param right a value from 0 to 1 representing the power
      */
     public static void setCoDriverRumbleRight(double right) {
-        codriver.setRumble(RumbleType.kRightRumble, right);
+        coDriver.setRumble(RumbleType.kRightRumble, right);
     }
 
 
