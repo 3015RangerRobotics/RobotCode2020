@@ -1,0 +1,25 @@
+drive_train_right, 0, 0
+drive_train_right, 2, 3
+drive_train_right, 10, 13
+drive_train_right, 20, 20
+drive_train_right, 8, 9
+drive_train_right, 2, 5
+shooter, 1, .5
+shooter, 2, 3
+shooter, 15, 12
+drive_train_left, 1, 2
+shooter, 15, 15
+shooter, 15, 15
+shooter, 9, 6
+shooter, 0, 0
+drive_train_left, 3, 4
+drive_train_left, 80, 9
+turret, 90, 91
+turret, 170, 160
+turret, 270, 250
+turret, 270, 268
+turret, 155, 144
+turret, 80, 12
+turret, 0, 8
+
+
