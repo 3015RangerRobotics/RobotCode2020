@@ -14,28 +14,17 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class FireZeMissiles extends ParallelCommandGroup {
-  /**
-   * Creates a new FireZeMissiles.
-   */
-  public FireZeMissiles() {
+public class FireZeMissiles extends SequentialCommandGroup {
+    /**
+     * Creates a new FireZeMissiles.
+     */
+    public FireZeMissiles() {
+        addCommands(
+            // new LimelightWaitForTarget(),
+            new BallHandlerShoot()
+        );
 
-    addCommands(
-        new ShooterStart(),
-        new SequentialCommandGroup(
-            new WaitCommand(3),
-            new LimelightWaitForTarget(),
-            new ParallelCommandGroup(
-                new TurretTurnToTarget(),
-                    new SequentialCommandGroup(
-                        new WaitCommand(1),
-                        new BallHandlerShoot()
-                    )
-            )
-        )
-    );
-
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());super();
-  }
+        // Add your commands in the super() call, e.g.
+        // super(new FooCommand(), new BarCommand());super();
+    }
 }

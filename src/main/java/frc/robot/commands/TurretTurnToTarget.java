@@ -39,7 +39,7 @@ public class TurretTurnToTarget extends CommandBase {
     public void execute() {
         double pos = RobotContainer.turret.getMotorPosition() + RobotContainer.limelight.getTargetAngleX();
         RobotContainer.turret.set(ControlMode.Position, pos / Constants.TURRET_DEGREES_PER_PULSE);
-        System.out.println(("Current Pos: " + RobotContainer.turret.getMotorPosition() + " Turn To: " + pos));
+        // System.out.println(("Current Pos: " + RobotContainer.turret.getMotorPosition() + " Turn To: " + pos));
     }
 
     // Called once the command ends or is interrupted.

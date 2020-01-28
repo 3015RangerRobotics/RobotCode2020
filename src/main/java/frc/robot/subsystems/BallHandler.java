@@ -37,14 +37,18 @@ public class BallHandler extends SubsystemBase {
     public final double MOTOR_IN_SPEED2 = .68;  //.68
     public final double MOTOR_IN_SPEED3 = .62;  //.62
     public final double MOTOR_IN_SPEED4 = .55;  //.55
-    public final double MOTOR_IN_SPEED5 = .5;   //.5
+    public final double MOTOR_IN_SPEED5 = .75;   //.5
     public final double MOTOR_OUT_SPEED1 = -.5; 
     public final double MOTOR_OUT_SPEED2 = -.55;
     public final double MOTOR_OUT_SPEED3 = -.62;
     public final double MOTOR_OUT_SPEED4 = -.68;
     public final double MOTOR_OUT_SPEED5 = -.75;
 
-    public final double MOTOR_SHOOT_SPEED = 1.0;
+    public final double MOTOR_SHOOT_SPEED1 = 1.0;
+    public final double MOTOR_SHOOT_SPEED2 = 0.5;
+    public final double MOTOR_SHOOT_SPEED3 = 0.4;
+    public final double MOTOR_SHOOT_SPEED4 = 0.4;
+    public final double MOTOR_SHOOT_SPEED5 = 0.4;
     public final double MOTOR_OFF_SPEED = 0.0;
     public enum State{
         kPurge,
@@ -69,15 +73,20 @@ public class BallHandler extends SubsystemBase {
         motor4 = new VictorSP(3); //4th motor closest to shooter
         motor5 = new VictorSP(4); //5th motor closest to shooter
 
-        tiltControl = new DoubleSolenoid(0,1);
+        tiltControl = new DoubleSolenoid(7,6);
 
-        switch1 = new DigitalInput(0); //assigned to motor 1
-        switch2 = new DigitalInput(1); //assigned to motor 2
-        switch3 = new DigitalInput(2); //assigned to motor 3
-        switch4 = new DigitalInput(3); //assigned to motor 4
-        switch5 = new DigitalInput(4); //assigned to motor 5
+        switch1 = new DigitalInput(2); //assigned to motor 1
+        switch2 = new DigitalInput(3); //assigned to motor 2
+        switch3 = new DigitalInput(4); //assigned to motor 3
+        switch4 = new DigitalInput(5); //assigned to motor 4
+        switch5 = new DigitalInput(6); //assigned to motor 5
 
         pdp = new PowerDistributionPanel(0);
+
+        motor2.setInverted(true);
+        motor3.setInverted(true);
+        motor4.setInverted(true);
+        motor5.setInverted(true);
     }
 
     @Override
@@ -93,27 +102,27 @@ public class BallHandler extends SubsystemBase {
             case kShootBall1:
                 //Fires the first ball
                 speeds = new double[]
-                    {MOTOR_SHOOT_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED};
+                    {MOTOR_SHOOT_SPEED1,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED};
                 break;
             case kShootBall2:
                 //Fires balls 1 and 2
                 speeds = new double[]
-                    {MOTOR_SHOOT_SPEED,MOTOR_SHOOT_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED};
+                    {MOTOR_SHOOT_SPEED1,MOTOR_SHOOT_SPEED2,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED};
                 break; 
             case kShootBall3:
                 //Fires balls 1 - 3
                 speeds = new double[]
-                    {MOTOR_SHOOT_SPEED,MOTOR_SHOOT_SPEED,MOTOR_SHOOT_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED};
+                    {MOTOR_SHOOT_SPEED1,MOTOR_SHOOT_SPEED2,MOTOR_SHOOT_SPEED3,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED};
                 break;
             case kShootBall4:
                 //Fires balls 1-4
                 speeds = new double[]
-                    {MOTOR_SHOOT_SPEED,MOTOR_SHOOT_SPEED,MOTOR_SHOOT_SPEED,MOTOR_SHOOT_SPEED,MOTOR_OFF_SPEED};
+                    {MOTOR_SHOOT_SPEED1,MOTOR_SHOOT_SPEED2,MOTOR_SHOOT_SPEED3,MOTOR_SHOOT_SPEED4,MOTOR_OFF_SPEED};
                 break;   
             case kShootBall5:
                 //Fires 1-5
                 speeds = new double[]
-                    {MOTOR_SHOOT_SPEED,MOTOR_SHOOT_SPEED,MOTOR_SHOOT_SPEED,MOTOR_SHOOT_SPEED,MOTOR_SHOOT_SPEED};
+                    {MOTOR_SHOOT_SPEED1,MOTOR_SHOOT_SPEED2,MOTOR_SHOOT_SPEED3,MOTOR_SHOOT_SPEED4,MOTOR_SHOOT_SPEED5};
                 break; 
             case kFillTo1:
                 //Fill balls until 1 is pressed

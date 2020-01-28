@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -20,9 +21,13 @@ public class Turret extends SubsystemBase {
      */
 
     private TalonSRX turretMotor;
+    private DigitalInput leftLimit;
+    private DigitalInput rightLimit;
 
     public Turret() {
         this.turretMotor = new TalonSRX(Constants.TURRET_MOTOR);
+        this.leftLimit = new DigitalInput(Constants.TURRET_LEFT_LIMIT);
+        this.rightLimit = new DigitalInput(Constants.TURRET_RIGHT_LIMIT);
 
         turretMotor.configFactoryDefault();
 
@@ -33,15 +38,15 @@ public class Turret extends SubsystemBase {
 
         turretMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
-        turretMotor.configForwardSoftLimitEnable(true);
-        turretMotor.configForwardSoftLimitThreshold((int) Math.round(Constants.TURRET_SOFT_LIMIT_FORWARD / Constants.TURRET_DEGREES_PER_PULSE));
+        // turretMotor.configForwardSoftLimitEnable(true);
+        // turretMotor.configForwardSoftLimitThreshold((int) Math.round(Constants.TURRET_SOFT_LIMIT_FORWARD / Constants.TURRET_DEGREES_PER_PULSE));
 
-        turretMotor.configReverseSoftLimitEnable(true);
-        turretMotor.configReverseSoftLimitThreshold((int) Math.round(Constants.TURRET_SOFT_LIMIT_REVERSE / Constants.TURRET_DEGREES_PER_PULSE));
+        // turretMotor.configReverseSoftLimitEnable(true);
+        // turretMotor.configReverseSoftLimitThreshold((int) Math.round(Constants.TURRET_SOFT_LIMIT_REVERSE / Constants.TURRET_DEGREES_PER_PULSE));
 
-        turretMotor.setInverted(true);
+        turretMotor.setInverted(false);
         turretMotor.setSelectedSensorPosition(0);
-        turretMotor.setSensorPhase(true);
+        turretMotor.setSensorPhase(false);
 
         turretMotor.configPeakOutputForward(Constants.TURRET_MAX_SPEED);
         turretMotor.configPeakOutputReverse(-Constants.TURRET_MAX_SPEED);
@@ -67,12 +72,23 @@ public class Turret extends SubsystemBase {
         return (turretMotor.getSelectedSensorPosition() * Constants.TURRET_DEGREES_PER_PULSE);
     }
 
-    public void set(ControlMode mode, double value) { 
-        turretMotor.set(mode, value);
-        // System.out.println(value);
+    public void set(ControlMode mode, double value) {
+        if(!leftLimit.get() || !rightLimit.get()){
+            turretMotor.set(ControlMode.PercentOutput, 0);
+        }else{
+            turretMotor.set(mode, value);
+        }
     }
 
-    public void resetEncoder() {
-        turretMotor.setSelectedSensorPosition(0);
+    public void setEncoder(int value) {
+        turretMotor.setSelectedSensorPosition(value);
+    }
+
+    public boolean getLeftLimit(){
+        return !leftLimit.get();
+    }
+
+    public boolean getRightLimit(){
+        return !rightLimit.get();
     }
 }

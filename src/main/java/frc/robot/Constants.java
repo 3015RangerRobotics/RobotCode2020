@@ -23,7 +23,7 @@ public final class Constants {
     public static final double DRIVE_MAX_MOTION_ERROR = 0.1 * DRIVE_PULSES_PER_FOOT;
     public static final int DRIVE_TIME_STEP = 10;
 
-    public static final int TURRET_MOTOR = 5;
+    public static final int TURRET_MOTOR = 6;
     public static final double TURRET_P = 2.5; // 0.3
     public static final double TURRET_I = 0; // 0
     public static final double TURRET_D = 75; // 0
@@ -34,11 +34,14 @@ public final class Constants {
     public static final double TURRET_MAX_SPEED = 0.7;
     public static final double TURRET_MIN_SPEED = 0.15;
     public static final double TURRET_DEGREE_MARGIN = Math.round((1 / Constants.TURRET_DEGREES_PER_PULSE) * 0.25);
+    public static final int TURRET_LEFT_LIMIT = 0;
+    public static final int TURRET_RIGHT_LIMIT = 1;
+    public static final int TURRET_HOMING_POSITION = (int) Math.round(-90 / TURRET_DEGREES_PER_PULSE);
     
-    public static final int SHOOTER_MOTOR = 6;
+    public static final int SHOOTER_MOTOR = 5;
     public static final double SHOOTER_P = 0;
     public static final double SHOOTER_I = 0; // 0
     public static final double SHOOTER_D = 0; // 0
-    public static final double SHOOTER_F = 0; // 0
+    public static final double SHOOTER_F = 0.06; // 0
     public static final double SHOOTER_PULSES_PER_ROTATION = 3864.3712;
 }

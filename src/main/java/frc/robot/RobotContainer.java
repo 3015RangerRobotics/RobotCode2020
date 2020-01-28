@@ -21,7 +21,8 @@ public class RobotContainer {
     public static Limelight limelight;
     public static DriverRumble driverRumble;
     public static Shooter shooter;
-
+    public static OurCompressor ourCompressor;
+    public static Harvester harvester;
 
     public static JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     public static JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
@@ -31,6 +32,10 @@ public class RobotContainer {
     public static JoystickButton driverRB = new JoystickButton(driver, XboxController.Button.kBumperRight.value);
     public static JoystickButton driverST = new JoystickButton(driver, XboxController.Button.kStart.value);
     public static JoystickButton driverBK = new JoystickButton(driver, XboxController.Button.kBack.value);
+    public static DPadButton driverDUp = new DPadButton(driver, DPadButton.Value.kDPadUp);
+    public static DPadButton driverDDown = new DPadButton(driver, DPadButton.Value.kDPadDown);
+    public static DPadButton driverDLeft = new DPadButton(driver, DPadButton.Value.kDPadLeft);
+    public static DPadButton driverDRight = new DPadButton(driver, DPadButton.Value.kDPadRight);
     public static TriggerButton driverLT;
     public static TriggerButton driverRT;
     public static JoystickButton coDriverA = new JoystickButton(coDriver, XboxController.Button.kA.value);
@@ -41,30 +46,48 @@ public class RobotContainer {
     public static JoystickButton coDriverRB = new JoystickButton(coDriver, XboxController.Button.kBumperRight.value);
     public static JoystickButton coDriverST = new JoystickButton(coDriver, XboxController.Button.kStart.value);
     public static JoystickButton coDriverBK = new JoystickButton(coDriver, XboxController.Button.kBack.value);
+    public static DPadButton coDriverDUp = new DPadButton(coDriver, DPadButton.Value.kDPadUp);
+    public static DPadButton coDriverDDown = new DPadButton(coDriver, DPadButton.Value.kDPadDown);
+    public static DPadButton coDriverDLeft = new DPadButton(coDriver, DPadButton.Value.kDPadLeft);
+    public static DPadButton coDriverDRight = new DPadButton(coDriver, DPadButton.Value.kDPadRight);
     public static TriggerButton coDriverLT;
     public static TriggerButton coDriverRT;
 
     public RobotContainer() {
+        ourCompressor = new OurCompressor();
         drive = new Drive();
         CommandScheduler.getInstance().setDefaultCommand(drive, new DriveWithGamepad());
-        // turret = new Turret();
-        // limelight = new Limelight();
-        // shooter = new Shooter();
-        // ballHandler = new BallHandler();
-        // driverRumble = new DriverRumble();
-        // driverLT = new TriggerButton(driver, Hand.kLeft);
-        // driverRT = new TriggerButton(driver, Hand.kRight);
+         turret = new Turret();
+         limelight = new Limelight();
+         shooter = new Shooter();
+         ballHandler = new BallHandler();
+         harvester = new Harvester();
+         driverRumble = new DriverRumble();
+         driverLT = new TriggerButton(driver, Hand.kLeft);
+         driverRT = new TriggerButton(driver, Hand.kRight);
+        coDriverLT = new TriggerButton(driver, Hand.kLeft);
+        coDriverRT = new TriggerButton(driver, Hand.kRight);
         configureButtonBindings();
     }
 
     private void configureButtonBindings() {
-        // driverA.whileActiveContinuous(new HarvesterOfBalls()).whenInactive(new BallHarvesterIn());
-        // driverX.whileActiveContinuous(new TurretToPosition(0));
+//        driverA.whileActiveContinuous(new DriverRumbleSet(1,1)).whenInactive(new DriverRumbleOff());
+//        driverB.whileActiveContinuous(new DriverRumbleOscillate(1.0, 0.25)).whenInactive(new DriverRumbleOff());
+        driverA.whileHeld(new HarvesterIn());
+        driverA.whenPressed(new HarvesterOfBalls());
+        driverB.whileActiveContinuous(new BallHandlerPurge());
+        driverX.whileActiveContinuous(new TurretToPosition(0));
         // driverY.whileActiveContinuous(new TurretTurnToTarget());
         // driverLB.whileActiveContinuous(new TurretToPosition(-45));
         // driverRB.whileActiveContinuous(new TurretToPosition(45));
         // driverLT.whileActiveContinuous(new TurretTurnToInner());
-        // driverRT.whileActiveContinuous(new FireZeMissiles());
+        driverLB.whenActive(new TurretHoming());
+        driverDUp.whenPressed(new BallHarvesterIn());
+        driverDDown.whenActive(new BallHarvesterOut());
+        driverLT.whileActiveContinuous(new ReadyToFire()).whenInactive(new TurretToPosition(0));
+        driverRT.whileActiveContinuous(new FireZeMissiles());
+        driverST.whenPressed(new CompressorStart());
+        driverBK.whenPressed(new CompressorStop());
         // normal button
         // new JoystickButton(driver,
         // XboxController.Button.kB.value).whenActive(exampleCommand);

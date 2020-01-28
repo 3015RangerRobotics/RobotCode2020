@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
         shooter.enableVoltageCompensation(true);
         shooter.configVoltageCompSaturation(12.5);
 
-        shooter.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        // shooter.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
         shooter.setInverted(false);
         shooter.setSelectedSensorPosition(0);

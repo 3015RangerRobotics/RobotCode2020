@@ -7,19 +7,13 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
 
-public class ShooterStart extends CommandBase {
-    double rpm = 5000;
+public class CompressorStop extends CommandBase {
   /**
-   * Creates a new ShooterStart.
+   * Creates a new CompressorStop.
    */
-  public ShooterStart() {
-      addRequirements(RobotContainer.shooter);
+  public CompressorStop() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -31,15 +25,11 @@ public class ShooterStart extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      RobotContainer.shooter.set(ControlMode.PercentOutput, 0.57);
-    //   RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.SHOOTER_PULSES_PER_ROTATION);
-      System.out.println(RobotContainer.shooter.getRPM());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.shooter.set(ControlMode.PercentOutput, 0);
   }
 
   // Returns true when the command should end.
