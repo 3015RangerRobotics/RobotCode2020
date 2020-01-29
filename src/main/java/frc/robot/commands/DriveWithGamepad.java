@@ -30,8 +30,25 @@ public class DriveWithGamepad extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double driveValue = RobotContainer.getDriverLeftStickY();
-    double turnValue = RobotContainer.getDriverLeftStickX() / 1.25;
+    double driveValue = 0.0;
+    double turnValue = 0.0;
+    if (Math.abs(RobotContainer.getDriverLeftStickY()) > (Math.abs(RobotContainer.getDriverRightStickY()))){
+      driveValue = RobotContainer.getDriverLeftStickY();
+    }
+    else {
+      driveValue = -RobotContainer.getDriverRightStickY();
+    }
+
+    if (Math.abs(RobotContainer.getDriverLeftStickX()) > (Math.abs(RobotContainer.getDriverRightStickX()))){
+      turnValue = RobotContainer.getDriverLeftStickX() / 1.25;
+
+    }
+    else {
+      turnValue = RobotContainer.getDriverRightStickX() / 1.25;
+    }
+//    double turnValue = RobotContainer.getDriverLeftStickX() / 1.25;
+//    double driveValue = -RobotContainer.getDriverLeftStickY();
+//    double turnValue = RobotContainer.getDriverRightStickX() / 1.25;
 
     RobotContainer.drive.arcadeDrive(driveValue, turnValue, true);
   }

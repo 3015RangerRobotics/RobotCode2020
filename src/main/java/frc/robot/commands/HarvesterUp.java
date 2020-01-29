@@ -9,44 +9,37 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.BallHandler;
+import frc.robot.subsystems.Harvester;
 
-public class BallHandlerHarvest extends CommandBase {
-  BallHandler  ballHandler = RobotContainer.ballHandler;
-  public BallHandlerHarvest() 
-  {
+public class HarvesterUp extends CommandBase {
+  /**
+   * Creates a new BallHarvesterIn.
+   */
+  Harvester harvester = RobotContainer.harvester;
+  public HarvesterUp() {
     // Use addRequirements() here to declare subsystem dependencies.
-      addRequirements(ballHandler);
+    addRequirements(harvester);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize()
-   {
-   if(ballHandler.isPaused()){
-     ballHandler.setPaused(false);
-   }else{
-    ballHandler.setState(BallHandler.State.kFillTo1); //Starts the switch in ball handler, fills the "carousel" with balls
+  public void initialize() {
+    harvester.harvesterUp();
   }
-   }
-
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   
-    }
-  
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) 
-  {
+  public void end(boolean interrupted) {
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ballHandler.getState() == BallHandler.State.kOff; 
+    return true;
   }
 }

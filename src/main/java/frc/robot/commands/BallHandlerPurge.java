@@ -24,7 +24,7 @@ public class BallHandlerPurge extends CommandBase {
   @Override
   public void initialize() {
     ballHandler.setState(BallHandler.State.kPurge);
-    
+    ballHandler.setPaused(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

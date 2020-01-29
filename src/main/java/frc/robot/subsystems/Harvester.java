@@ -7,24 +7,37 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Harvester extends SubsystemBase {
-    VictorSP harvester;
+            VictorSP harvester;
+    private DoubleSolenoid tiltControl;
+
   /**
    * Creates a new Harvester.
    */
   public Harvester() {
      harvester = new VictorSP(5);
-
+     tiltControl = new DoubleSolenoid(7,6);
   }
 
   @Override
   public void periodic() {
+
     // This method will be called once per scheduler run
   }
+    public void harvesterUp()
+    {
+        //TODO: change kForward to kReverse if havesterIn() causes the piston arm to out
+        tiltControl.set(DoubleSolenoid.Value.kForward);
+    }
+    public void harvesterDown()
+    {
 
+        tiltControl.set(DoubleSolenoid.Value.kReverse);
+    }
   public void harvesterIn(){
       harvester.set(-.75);
   }

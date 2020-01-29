@@ -7,10 +7,7 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -30,10 +27,12 @@ public class BallHandler extends SubsystemBase {
     private DigitalInput switch4;
     private DigitalInput switch5;
 
-    private DoubleSolenoid tiltControl;
+    private Timer waitTimer;
+
+    private static boolean isPaused;
 
     private PowerDistributionPanel pdp;
-    public final double MOTOR_IN_SPEED1 = .75; //.75
+    public final double MOTOR_IN_SPEED1 = -.75; //.75
     public final double MOTOR_IN_SPEED2 = .68;  //.68
     public final double MOTOR_IN_SPEED3 = .62;  //.62
     public final double MOTOR_IN_SPEED4 = .55;  //.55
@@ -44,7 +43,7 @@ public class BallHandler extends SubsystemBase {
     public final double MOTOR_OUT_SPEED4 = -.68;
     public final double MOTOR_OUT_SPEED5 = -.75;
 
-    public final double MOTOR_SHOOT_SPEED1 = 1.0;
+    public final double MOTOR_SHOOT_SPEED1 = -1.0;
     public final double MOTOR_SHOOT_SPEED2 = 0.5;
     public final double MOTOR_SHOOT_SPEED3 = 0.4;
     public final double MOTOR_SHOOT_SPEED4 = 0.4;
@@ -62,6 +61,7 @@ public class BallHandler extends SubsystemBase {
         kFillTo3,
         kFillTo4,
         kFillTo5,
+        kWait,
         kOff
     }
     public State state = State.kOff;
@@ -72,8 +72,6 @@ public class BallHandler extends SubsystemBase {
         motor3 = new VictorSP(2); //3rd motor closest to shooter 
         motor4 = new VictorSP(3); //4th motor closest to shooter
         motor5 = new VictorSP(4); //5th motor closest to shooter
-
-        tiltControl = new DoubleSolenoid(7,6);
 
         switch1 = new DigitalInput(2); //assigned to motor 1
         switch2 = new DigitalInput(3); //assigned to motor 2
@@ -175,7 +173,13 @@ public class BallHandler extends SubsystemBase {
                     state = State.kOff;
                 }else{
                     break;
-                }    
+                }
+            case kWait:
+                if(waitTimer.hasPeriodPassed(2))
+                {
+                    setState(state.kOff);
+                }
+
             case kOff:
                 //Turns all motors off
                 speeds = new double[]
@@ -186,14 +190,24 @@ public class BallHandler extends SubsystemBase {
                 speeds = new double[]
                     {MOTOR_OFF_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED};
         }
-        setAllMotors(speeds);
-
+        if(isPaused){
+            speeds = new double[]
+                    {MOTOR_OFF_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED,MOTOR_OFF_SPEED};
+        }
+            setAllMotors(speeds);
 
     }
     /**
      * Sets the state of the motor based on desired operation
-     * @param newState The new State you would like to change to
+     * @param //newState The new State you would like to change to
      */
+    public void startTimer()
+    {
+        waitTimer.reset();
+        waitTimer.start();
+        setState(State.kWait);
+
+    }
     public void setState(State newState)
     {
         this.state = newState;
@@ -206,17 +220,36 @@ public class BallHandler extends SubsystemBase {
     {
         return state;
     }
+    public boolean isPaused()
+    {
+        return isPaused;
+    }
+    public void setPaused(boolean pausedState)
+    {
+        isPaused = pausedState;
+    }
+
     /**
      * Sets all five motors to a specific speed. 
      * @param speeds An array of doubles that has a length of 5 used to set all of the motor speeds
      */
     private void setAllMotors(double[] speeds){
         //set motors for percent ouput
-        motor1.set(speeds[0]);
-        motor2.set(speeds[1]);
-        motor3.set(speeds[2]);
-        motor4.set(speeds[3]);
-        motor5.set(speeds[4]);
+        if(isPaused())
+        {
+            motor1.set(0);
+            motor2.set(0);
+            motor3.set(0);
+            motor4.set(0);
+            motor5.set(0);
+        }
+        else {
+            motor1.set(speeds[0]);
+            motor2.set(speeds[1]);
+            motor3.set(speeds[2]);
+            motor4.set(speeds[3]);
+            motor5.set(speeds[4]);
+        }
         //faux voltage control
         // double voltAdjust = 12/ pdp.getVoltage();
         // motor1.set(speeds[0] * voltAdjust);
@@ -289,14 +322,4 @@ public class BallHandler extends SubsystemBase {
      * Uses a double solonoid to redirect air into a piston. This piston causes the arm to move in or out.
      * 
      */
-    public void harvesterIn()
-    {
-        //TODO: change kForward to kReverse if havesterIn() causes the piston arm to out
-        tiltControl.set(DoubleSolenoid.Value.kForward);
-    }
-    public void harvsterOut()
-    {
-        //TODO: change kRelease to kForward if havesterIn() causes the piston arm to in
-        tiltControl.set(DoubleSolenoid.Value.kReverse);
-    }
 }

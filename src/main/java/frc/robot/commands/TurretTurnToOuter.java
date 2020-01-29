@@ -15,12 +15,12 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Limelight;
 
-public class TurretTurnToTarget extends CommandBase {
+public class TurretTurnToOuter extends CommandBase {
     /**
      * Creates a new TurretTurnToTarget.
      */
 
-    public TurretTurnToTarget() {
+    public TurretTurnToOuter() {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(RobotContainer.turret, RobotContainer.limelight);
     }

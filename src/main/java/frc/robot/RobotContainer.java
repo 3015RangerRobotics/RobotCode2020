@@ -7,7 +7,6 @@ import frc.robot.subsystems.BallHandler;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -56,47 +55,47 @@ public class RobotContainer {
     public RobotContainer() {
         ourCompressor = new OurCompressor();
         drive = new Drive();
-        CommandScheduler.getInstance().setDefaultCommand(drive, new DriveWithGamepad());
+        drive.setDefaultCommand( new DriveWithGamepad());
          turret = new Turret();
          limelight = new Limelight();
          shooter = new Shooter();
          ballHandler = new BallHandler();
+         ballHandler.setDefaultCommand(new BallHandlerDefault());
          harvester = new Harvester();
          driverRumble = new DriverRumble();
          driverLT = new TriggerButton(driver, Hand.kLeft);
          driverRT = new TriggerButton(driver, Hand.kRight);
-        coDriverLT = new TriggerButton(driver, Hand.kLeft);
-        coDriverRT = new TriggerButton(driver, Hand.kRight);
+        coDriverLT = new TriggerButton(coDriver, Hand.kLeft);
+        coDriverRT = new TriggerButton(coDriver, Hand.kRight);
         configureButtonBindings();
     }
 
+
+
     private void configureButtonBindings() {
-//        driverA.whileActiveContinuous(new DriverRumbleSet(1,1)).whenInactive(new DriverRumbleOff());
-//        driverB.whileActiveContinuous(new DriverRumbleOscillate(1.0, 0.25)).whenInactive(new DriverRumbleOff());
-        driverA.whileHeld(new HarvesterIn());
-        driverA.whenPressed(new HarvesterOfBalls());
+        driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         driverB.whileActiveContinuous(new BallHandlerPurge());
         driverX.whileActiveContinuous(new TurretToPosition(0));
-        // driverY.whileActiveContinuous(new TurretTurnToTarget());
-        // driverLB.whileActiveContinuous(new TurretToPosition(-45));
-        // driverRB.whileActiveContinuous(new TurretToPosition(45));
-        // driverLT.whileActiveContinuous(new TurretTurnToInner());
-        driverLB.whenActive(new TurretHoming());
-        driverDUp.whenPressed(new BallHarvesterIn());
-        driverDDown.whenActive(new BallHarvesterOut());
-        driverLT.whileActiveContinuous(new ReadyToFire()).whenInactive(new TurretToPosition(0));
-        driverRT.whileActiveContinuous(new FireZeMissiles());
-        driverST.whenPressed(new CompressorStart());
-        driverBK.whenPressed(new CompressorStop());
-        // normal button
-        // new JoystickButton(driver,
-        // XboxController.Button.kB.value).whenActive(exampleCommand);
-        // // trigger button
-        // new TriggerButton(driver, Hand.kRight).whileActiveContinuous(exampleCommand);
-        // // double button
-        // new JoystickButton(driver, XboxController.Button.kA.value)
-        // .and(new JoystickButton(codriver,
-        // XboxController.Button.kA.value)).whenActive(exampleCommand);
+        driverDLeft.whenActive(new TurretHoming());
+        driverDUp.whenActive(new CG_OhHeck());
+        driverDDown.whenActive(new HarvesterDown());
+        driverLB.whileActiveContinuous(new CG_ReadyToFireInner()).whenInactive(new TurretToPosition(0));
+        driverLT.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new TurretToPosition(0));
+        driverRT.whileActiveContinuous(new CG_FireZeMissiles());
+        driverST.whenActive(new CompressorStart());
+        driverBK.whenActive(new CompressorStop());
+
+        coDriverA.whileActiveContinuous(new CG_HarvesterOfBalls());
+        coDriverB.whileActiveContinuous(new BallHandlerPurge());
+        coDriverX.whileActiveContinuous(new TurretToPosition(0));
+        coDriverDLeft.whenActive(new TurretHoming());
+        coDriverDUp.whenActive(new CG_OhHeck());
+        coDriverDDown.whenActive(new HarvesterDown());
+        coDriverLB.whileActiveContinuous(new CG_ReadyToFireInner()).whenInactive(new TurretToPosition(0));
+        coDriverLT.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new TurretToPosition(0));
+        coDriverRT.whileActiveContinuous(new CG_FireZeMissiles());
+        coDriverST.whenActive(new CompressorStart());
+        coDriverBK.whenActive(new CompressorStop());
     }
 
     public Command getAutonomousCommand() {
@@ -115,6 +114,22 @@ public class RobotContainer {
         if (Math.abs(driver.getX(Hand.kLeft)) > 0.05) {
             return driver.getX(Hand.kLeft);
         } else {
+            return 0;
+        }
+    }
+
+    public static double getDriverRightStickY(){
+        if (Math.abs(driver.getY(Hand.kRight)) > 0.05) {
+            return -driver.getY(Hand.kRight);
+        }else {
+            return 0;
+        }
+    }
+
+    public static double getDriverRightStickX() {
+        if (Math.abs(driver.getX(Hand.kRight)) > 0.05) {
+            return driver.getX(Hand.kRight);
+        }else {
             return 0;
         }
     }

@@ -9,22 +9,23 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.BallHandler;
+import frc.robot.subsystems.Harvester;
 
-public class BallHarvesterOut extends CommandBase {
+public class HarvesterDown extends CommandBase {
   /**
    * Creates a new BallHarvesterIn.
    */
-  BallHandler  ballHandler = RobotContainer.ballHandler;
-  public BallHarvesterOut() {
+  Harvester harvester = RobotContainer.harvester;
+  public HarvesterDown() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(ballHandler);
+    addRequirements(harvester);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    ballHandler.harvsterOut();
+    harvester.harvesterDown();
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -73,11 +73,26 @@ public class Turret extends SubsystemBase {
     }
 
     public void set(ControlMode mode, double value) {
-        if(!leftLimit.get() || !rightLimit.get()){
-            turretMotor.set(ControlMode.PercentOutput, 0);
-        }else{
-            turretMotor.set(mode, value);
+        if(!leftLimit.get()){
+            if(mode == ControlMode.PercentOutput && value < 0){
+                turretMotor.set(ControlMode.PercentOutput, 0);
+                return;
+            }else if(mode == ControlMode.Position && value < turretMotor.getSelectedSensorPosition()){
+                turretMotor.set(ControlMode.PercentOutput, 0);
+                return;
+            }
         }
+        if(!rightLimit.get()){
+            if(mode == ControlMode.PercentOutput && value > 0){
+                turretMotor.set(ControlMode.PercentOutput, 0);
+                return;
+            }else if(mode == ControlMode.Position && value > turretMotor.getSelectedSensorPosition()){
+                turretMotor.set(ControlMode.PercentOutput, 0);
+                return;
+            }
+        }
+
+        turretMotor.set(mode, value);
     }
 
     public void setEncoder(int value) {

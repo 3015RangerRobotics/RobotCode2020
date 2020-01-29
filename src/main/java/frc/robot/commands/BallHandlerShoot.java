@@ -17,7 +17,8 @@ public class BallHandlerShoot extends CommandBase {
   @Override
   public void initialize()
    {
-    ballHandler.setState(BallHandler.State.kShootBall1);//start by shooting first ball
+     ballHandler.setPaused(false);
+     ballHandler.setState(BallHandler.State.kShootBall1);//start by shooting first ball
   }
 
   // Called every time the scheduler runs while the command is scheduled.
