@@ -15,12 +15,14 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Limelight;
 
-public class TurretTurnToOuter extends CommandBase {
+public class TurretTurnToTarget extends CommandBase {
     /**
-     * Creates a new TurretTurnToTarget.
+     * Creates a new TurretTurnToInner.
      */
 
-    public TurretTurnToOuter() {
+     private double pos;
+
+    public TurretTurnToTarget() {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(RobotContainer.turret, RobotContainer.limelight);
     }
@@ -28,18 +30,18 @@ public class TurretTurnToOuter extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.limelight.setPipeline(0);
-        RobotContainer.limelight.setStreamingMode(Limelight.StreamingMode.STANDARD);
-        RobotContainer.limelight.setLEDMode(Limelight.LEDMode.PIPELINE);
-        RobotContainer.limelight.setCameraMode(Limelight.CameraMode.VISION_PROCESSING);
+//        RobotContainer.limelight.setPipeline(1);
+//        RobotContainer.limelight.setStreamingMode(Limelight.StreamingMode.STANDARD);
+//        RobotContainer.limelight.setLEDMode(Limelight.LEDMode.PIPELINE);
+//        RobotContainer.limelight.setCameraMode(Limelight.CameraMode.VISION_PROCESSING);
+        pos = RobotContainer.limelight.getTargetAngleX();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double pos = RobotContainer.turret.getMotorPosition() + RobotContainer.limelight.getTargetAngleX();
         RobotContainer.turret.set(ControlMode.Position, pos / Constants.TURRET_DEGREES_PER_PULSE);
-        // System.out.println(("Current Pos: " + RobotContainer.turret.getMotorPosition() + " Turn To: " + pos));
+//        System.out.println(("Current Pos: " + RobotContainer.turret.getMotorPosition() + " Turn To: " + pos));
     }
 
     // Called once the command ends or is interrupted.

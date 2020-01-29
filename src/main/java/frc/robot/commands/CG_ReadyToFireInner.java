@@ -13,7 +13,7 @@ public class CG_ReadyToFireInner extends SequentialCommandGroup {
                 new WaitCommand(.1),
                 new ParallelCommandGroup(
                         new ShooterStart(),
-                        new TurretTurnToInner()
+                        new TurretTurnToTarget()
                 )
         );
     }

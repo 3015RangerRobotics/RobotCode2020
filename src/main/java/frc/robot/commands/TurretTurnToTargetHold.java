@@ -15,14 +15,12 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Limelight;
 
-public class TurretTurnToInner extends CommandBase {
+public class TurretTurnToTargetHold extends CommandBase {
     /**
-     * Creates a new TurretTurnToInner.
+     * Creates a new TurretTurnToTarget.
      */
 
-     private double pos;
-
-    public TurretTurnToInner() {
+    public TurretTurnToTargetHold() {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(RobotContainer.turret, RobotContainer.limelight);
     }
@@ -30,21 +28,18 @@ public class TurretTurnToInner extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.limelight.setPipeline(1);
-        RobotContainer.limelight.setStreamingMode(Limelight.StreamingMode.STANDARD);
-        RobotContainer.limelight.setLEDMode(Limelight.LEDMode.PIPELINE);
-        RobotContainer.limelight.setCameraMode(Limelight.CameraMode.VISION_PROCESSING);
-        pos = RobotContainer.limelight.getTargetAngleX();
+//        RobotContainer.limelight.setPipeline(0);
+//        RobotContainer.limelight.setStreamingMode(Limelight.StreamingMode.STANDARD);
+//        RobotContainer.limelight.setLEDMode(Limelight.LEDMode.PIPELINE);
+//        RobotContainer.limelight.setCameraMode(Limelight.CameraMode.VISION_PROCESSING);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        // if(Math.abs(RobotContainer.limelight.getTargetAngleX()) <= Constants.turretDegreeMargin) {
-        //     RobotContainer.limelight.setPipeline(1);
-        // }
+        double pos = RobotContainer.turret.getMotorPosition() + RobotContainer.limelight.getTargetAngleX();
         RobotContainer.turret.set(ControlMode.Position, pos / Constants.TURRET_DEGREES_PER_PULSE);
-        System.out.println(("Current Pos: " + RobotContainer.turret.getMotorPosition() + " Turn To: " + pos));
+        // System.out.println(("Current Pos: " + RobotContainer.turret.getMotorPosition() + " Turn To: " + pos));
     }
 
     // Called once the command ends or is interrupted.

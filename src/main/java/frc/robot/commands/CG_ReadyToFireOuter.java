@@ -13,7 +13,7 @@ public class CG_ReadyToFireOuter extends SequentialCommandGroup {
                 new WaitCommand(.1),
                 new ParallelCommandGroup(
                         new ShooterStart(),
-                        new TurretTurnToOuter()
+                        new TurretTurnToTarget()
                 )
         );
     }
