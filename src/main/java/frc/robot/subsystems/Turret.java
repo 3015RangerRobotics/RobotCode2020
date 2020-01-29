@@ -68,12 +68,20 @@ public class Turret extends SubsystemBase {
         // System.out.println("Turret Angle: "  + getMotorPosition() + " Motor Speed: " + turretMotor.getMotorOutputPercent());
     }
 
-    public double getMotorPosition() {
+    /**
+     * @return The position of the turret in degrees
+     */
+    public double getPosition() {
         return (turretMotor.getSelectedSensorPosition() * Constants.TURRET_DEGREES_PER_PULSE);
     }
 
+    /**
+     * Set the output of the turret motor
+     * @param mode The control mode to use
+     * @param value The value to output
+     */
     public void set(ControlMode mode, double value) {
-        if (!leftLimit.get()) {
+        if (getLeftLimit()) {
             if (mode == ControlMode.PercentOutput && value < 0) {
                 turretMotor.set(ControlMode.PercentOutput, 0);
                 return;
@@ -82,7 +90,7 @@ public class Turret extends SubsystemBase {
                 return;
             }
         }
-        if (!rightLimit.get()) {
+        if (getRightLimit()) {
             if (mode == ControlMode.PercentOutput && value > 0) {
                 turretMotor.set(ControlMode.PercentOutput, 0);
                 return;
@@ -95,14 +103,24 @@ public class Turret extends SubsystemBase {
         turretMotor.set(mode, value);
     }
 
+    /**
+     * Set the position of the encoder
+     * @param value The position to set
+     */
     public void setEncoder(int value) {
         turretMotor.setSelectedSensorPosition(value);
     }
 
+    /**
+     * @return is the left limit switch pressed
+     */
     public boolean getLeftLimit() {
         return !leftLimit.get();
     }
 
+    /**
+     * @return is the right limit switch pressed
+     */
     public boolean getRightLimit() {
         return !rightLimit.get();
     }

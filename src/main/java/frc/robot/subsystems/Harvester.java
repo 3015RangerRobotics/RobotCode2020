@@ -29,23 +29,38 @@ public class Harvester extends SubsystemBase {
         // This method will be called once per scheduler run
     }
 
+    /**
+     * Pull the harvester up
+     */
     public void harvesterUp() {
         tiltControl.set(DoubleSolenoid.Value.kReverse);
     }
 
+    /**
+     * Push the harvester down
+     */
     public void harvesterDown() {
         tiltControl.set(DoubleSolenoid.Value.kForward);
     }
 
+    /**
+     * Set the harvester motor to intake balls
+     */
     public void harvesterIn() {
-        harvesterMotor.set(-.75);
+        harvesterMotor.set(-0.75);
     }
 
+    /**
+     * Set the harvester motor to stop
+     */
     public void harvesterStop() {
         harvesterMotor.set(0.0);
     }
 
+    /**
+     * Set the harvester to outtake balls
+     */
     public void harvesterOut() {
-        harvesterMotor.set(.5);
+        harvesterMotor.set(0.5);
     }
 }

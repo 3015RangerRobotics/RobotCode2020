@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Limelight;
 
 public class TurretTurnToTargetHold extends CommandBase {
     /**
@@ -37,7 +36,7 @@ public class TurretTurnToTargetHold extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double pos = RobotContainer.turret.getMotorPosition() + RobotContainer.limelight.getTargetAngleX();
+        double pos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
         RobotContainer.turret.set(ControlMode.Position, pos / Constants.TURRET_DEGREES_PER_PULSE);
         // System.out.println(("Current Pos: " + RobotContainer.turret.getMotorPosition() + " Turn To: " + pos));
     }

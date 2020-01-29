@@ -16,6 +16,10 @@ public class LimelightSwitchPipeline extends CommandBase {
      */
     public int id;
 
+    /**
+     * Command to change the Limelight's current pipeline
+     * @param id The pipeline id to change to
+     */
     public LimelightSwitchPipeline(int id) {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(RobotContainer.limelight);

@@ -87,8 +87,6 @@ public class Drive extends SubsystemBase {
 
 
         resetEncoders();
-
-        // this.setDefaultCommand(new DriveWithGamepad());
     }
 
     @Override
@@ -96,25 +94,49 @@ public class Drive extends SubsystemBase {
         // This method will be called once per scheduler run
     }
 
+    /**
+     * Reset the drive encoders to 0
+     */
     public void resetEncoders() {
         leftMaster.setSelectedSensorPosition(0);
         rightMaster.setSelectedSensorPosition(0);
     }
 
+    /**
+     * Get the current control mode of the drive motors
+     * @return The current control mode
+     */
     public ControlMode getControlMode() {
         return leftMaster.getControlMode();
     }
 
+    /**
+     * Set the output to the drive motors
+     * @param mode The control mode to use
+     * @param leftMotor Output value of the left motor
+     * @param rightMotor Output value of the right motor
+     */
     public void setMotorOutputs(ControlMode mode, double leftMotor, double rightMotor) {
         this.rightMaster.set(mode, rightMotor);
         this.leftMaster.set(mode, leftMotor);
     }
 
+    /**
+     * Set the motors using arcade drive
+     * @param driveValue Forward/Reverse value
+     * @param turnValue Turn value
+     * @param squaredInputs Should the inputs be squared (increases control at low speeds)
+     */
     public void arcadeDrive(double driveValue, double turnValue, boolean squaredInputs) {
         DriveSignal ds = DriveHelper.arcadeDrive(driveValue, turnValue, squaredInputs);
         setMotorOutputs(ControlMode.PercentOutput, ds.leftSignal, ds.rightSignal);
     }
 
+    /**
+     * Create a BufferedTrajectoryPointStream for the drive motors to follow
+     * @param profile The profile to convert
+     * @return The given profile as a BufferedTrajectoryPointStream
+     */
     public BufferedTrajectoryPointStream createBuffer(double[][] profile) {
         BufferedTrajectoryPointStream buffer = new BufferedTrajectoryPointStream();
 
@@ -141,21 +163,38 @@ public class Drive extends SubsystemBase {
         return buffer;
     }
 
+    /**
+     * Get if the closed loop control is on target
+     * @return if the closed loop control is on target
+     */
     public boolean isClosedLoopOnTarget() {
         return Math.abs(leftMaster.getClosedLoopError()) <= Constants.DRIVE_MAX_MOTION_ERROR
                 && Math.abs(rightMaster.getClosedLoopError()) <= Constants.DRIVE_MAX_MOTION_ERROR;
     }
 
+    /**
+     * Start following a motion profile
+     * @param left The profile for the left motors
+     * @param right The profile for the right motors
+     */
     public void startMotionProfile(BufferedTrajectoryPointStream left, BufferedTrajectoryPointStream right) {
         leftMaster.startMotionProfile(left, 10, ControlMode.MotionProfile);
         rightMaster.startMotionProfile(right, 10, ControlMode.MotionProfile);
-
     }
 
+    /**
+     * Get if the motion profile is finished
+     * @return is the motion profile finished
+     */
     public boolean isMotionProfileFinished() {
         return leftMaster.isMotionProfileFinished() && rightMaster.isMotionProfileFinished();
     }
 
+    /**
+     * Load a motion profile from a csv file
+     * @param profileName The name of the profile to load
+     * @return The profile as a BufferedTrajectoryPointStream
+     */
     public BufferedTrajectoryPointStream loadProfile(String profileName) {
         double[][] profile = new double[][]{};
         try (BufferedReader br = new BufferedReader(

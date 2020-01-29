@@ -28,7 +28,7 @@ public class BallHandler extends SubsystemBase {
     private DigitalInput switch4;
     private DigitalInput switch5;
 
-    private static boolean isPaused;
+    private static boolean isPaused = false;
 
     private PowerDistributionPanel pdp;
 
@@ -44,7 +44,6 @@ public class BallHandler extends SubsystemBase {
         kFillTo3,
         kFillTo4,
         kFillTo5,
-        kWait,
         kOff
     }
 
@@ -222,10 +221,18 @@ public class BallHandler extends SubsystemBase {
         return state;
     }
 
+    /**
+     * Get if the ball handler is in a paused state
+     * @return is the ball handler paused
+     */
     public boolean isPaused() {
         return isPaused;
     }
 
+    /**
+     * Set the paused state
+     * @param pausedState Should the ball handler be paused
+     */
     public void setPaused(boolean pausedState) {
         isPaused = pausedState;
     }

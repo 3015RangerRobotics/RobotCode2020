@@ -21,6 +21,10 @@ public class DriveMotionProfile extends CommandBase {
     private BufferedTrajectoryPointStream right;
     private double distance = 0;
 
+    /**
+     * Create a motion profile command to drive a pre-generated path
+     * @param pathName The name of the path to follow
+     */
     public DriveMotionProfile(String pathName) {
         addRequirements(RobotContainer.drive);
         left = RobotContainer.drive.loadProfile(pathName + "_left");
@@ -29,6 +33,10 @@ public class DriveMotionProfile extends CommandBase {
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
+    /**
+     * Create a motion profile command to drive a straight line using motion magic
+     * @param distance The distance to drive
+     */
     public DriveMotionProfile(double distance) {
         addRequirements(RobotContainer.drive);
         this.distance = distance;

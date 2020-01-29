@@ -26,10 +26,16 @@ public class OurCompressor extends SubsystemBase {
         // This method will be called once per scheduler run
     }
 
+    /**
+     * Start the compressor
+     */
     public void startCompressor() {
         compressor.start();
     }
 
+    /**
+     * Stop the compressor
+     */
     public void stopCompressor() {
         compressor.stop();
     }

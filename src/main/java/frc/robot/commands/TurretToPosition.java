@@ -19,6 +19,10 @@ public class TurretToPosition extends CommandBase {
      */
     public double angle;
 
+    /**
+     * Command to turn the turret to a specific angle
+     * @param angle The angle to turn to
+     */
     public TurretToPosition(double angle) {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(RobotContainer.turret);

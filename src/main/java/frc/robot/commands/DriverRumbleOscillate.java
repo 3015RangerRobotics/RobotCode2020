@@ -21,6 +21,7 @@ public class DriverRumbleOscillate extends CommandBase {
      * Creates a new DriverRumbleOscillate.
      *
      * @param power a value from 0 to 1 representing the power of the active rumble
+     * @param period The time required to complete one oscillation
      */
     public DriverRumbleOscillate(double power, double period) {
         this.power = power;

@@ -11,16 +11,13 @@ package frc.robot;
  * Add your docs here.
  */
 public class DriveHelper {
-    private static final double kDeadband = 0.02;
-    private static final double kTurnSensitivity = 1.0;
-
-    private static double quickStopAccumulator = 0.0;
+    private static final double kDeadband = 0.05;
 
     /**
      * Tank drive helper
      *
-     * @param left
-     * @param right
+     * @param left Left speed
+     * @param right Right speed
      * @return Outputs for left and right motors
      */
     public static DriveSignal tankDrive(double left, double right) {
@@ -30,10 +27,10 @@ public class DriveHelper {
     /**
      * Arcade Drive
      *
-     * @param moveValue
-     * @param rotateValue
-     * @param squaredInputs
-     * @return
+     * @param moveValue Forward/Reverse speed
+     * @param rotateValue Turn Speed
+     * @param squaredInputs Should the inputs be squared (Increase control at low speeds)
+     * @return Outputs for left and right motors
      */
     public static DriveSignal arcadeDrive(double moveValue, double rotateValue, boolean squaredInputs) {
         double leftMotorSpeed;
@@ -87,7 +84,7 @@ public class DriveHelper {
      * Limits a number between a given range
      *
      * @param value    The value to limit
-     * @param deadzone The deadzone
+     * @param max The maximum value
      * @return The handled value
      */
     protected static double limit(double value, double max) {

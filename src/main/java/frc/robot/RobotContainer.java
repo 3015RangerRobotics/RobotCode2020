@@ -29,28 +29,29 @@ public class RobotContainer {
     public static JoystickButton driverY = new JoystickButton(driver, XboxController.Button.kY.value);
     public static JoystickButton driverLB = new JoystickButton(driver, XboxController.Button.kBumperLeft.value);
     public static JoystickButton driverRB = new JoystickButton(driver, XboxController.Button.kBumperRight.value);
-    public static JoystickButton driverST = new JoystickButton(driver, XboxController.Button.kStart.value);
-    public static JoystickButton driverBK = new JoystickButton(driver, XboxController.Button.kBack.value);
     public static DPadButton driverDUp = new DPadButton(driver, DPadButton.Value.kDPadUp);
     public static DPadButton driverDDown = new DPadButton(driver, DPadButton.Value.kDPadDown);
     public static DPadButton driverDLeft = new DPadButton(driver, DPadButton.Value.kDPadLeft);
     public static DPadButton driverDRight = new DPadButton(driver, DPadButton.Value.kDPadRight);
-    public static TriggerButton driverLT;
-    public static TriggerButton driverRT;
+    public static TriggerButton driverLT = new TriggerButton(driver, Hand.kLeft);
+    public static TriggerButton driverRT = new TriggerButton(driver, Hand.kRight);
+    public static JoystickButton driverStart = new JoystickButton(driver, XboxController.Button.kStart.value);
+    public static JoystickButton driverBack = new JoystickButton(driver, XboxController.Button.kBack.value);
+
     public static JoystickButton coDriverA = new JoystickButton(coDriver, XboxController.Button.kA.value);
     public static JoystickButton coDriverB = new JoystickButton(coDriver, XboxController.Button.kB.value);
     public static JoystickButton coDriverX = new JoystickButton(coDriver, XboxController.Button.kX.value);
     public static JoystickButton coDriverY = new JoystickButton(coDriver, XboxController.Button.kY.value);
     public static JoystickButton coDriverLB = new JoystickButton(coDriver, XboxController.Button.kBumperLeft.value);
     public static JoystickButton coDriverRB = new JoystickButton(coDriver, XboxController.Button.kBumperRight.value);
-    public static JoystickButton coDriverST = new JoystickButton(coDriver, XboxController.Button.kStart.value);
-    public static JoystickButton coDriverBK = new JoystickButton(coDriver, XboxController.Button.kBack.value);
     public static DPadButton coDriverDUp = new DPadButton(coDriver, DPadButton.Value.kDPadUp);
     public static DPadButton coDriverDDown = new DPadButton(coDriver, DPadButton.Value.kDPadDown);
     public static DPadButton coDriverDLeft = new DPadButton(coDriver, DPadButton.Value.kDPadLeft);
     public static DPadButton coDriverDRight = new DPadButton(coDriver, DPadButton.Value.kDPadRight);
-    public static TriggerButton coDriverLT;
-    public static TriggerButton coDriverRT;
+    public static TriggerButton coDriverLT = new TriggerButton(coDriver, Hand.kLeft);
+    public static TriggerButton coDriverRT = new TriggerButton(coDriver, Hand.kRight);
+    public static JoystickButton coDriverStart = new JoystickButton(coDriver, XboxController.Button.kStart.value);
+    public static JoystickButton coDriverBack = new JoystickButton(coDriver, XboxController.Button.kBack.value);
 
     public RobotContainer() {
         ourCompressor = new OurCompressor();
@@ -63,10 +64,7 @@ public class RobotContainer {
         ballHandler.setDefaultCommand(new BallHandlerDefault());
         harvester = new Harvester();
         driverRumble = new DriverRumble();
-        driverLT = new TriggerButton(driver, Hand.kLeft);
-        driverRT = new TriggerButton(driver, Hand.kRight);
-        coDriverLT = new TriggerButton(coDriver, Hand.kLeft);
-        coDriverRT = new TriggerButton(coDriver, Hand.kRight);
+
         configureButtonBindings();
     }
 
@@ -74,33 +72,34 @@ public class RobotContainer {
     private void configureButtonBindings() {
         driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         driverB.whileActiveContinuous(new BallHandlerPurge());
-        driverX.whileActiveContinuous(new TurretToPosition(0));
-        driverDLeft.whenActive(new TurretHoming());
+        driverDLeft.whenActive(new CG_HomeTurret());
         driverDUp.whenActive(new CG_OhHeck());
         driverDDown.whenActive(new HarvesterDown());
         driverLB.whileActiveContinuous(new CG_ReadyToFireInner()).whenInactive(new TurretToPosition(0));
         driverLT.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new TurretToPosition(0));
         driverRT.whileActiveContinuous(new CG_FireZeMissiles());
-        driverST.whenActive(new CompressorStart());
-        driverBK.whenActive(new CompressorStop());
+        driverStart.whenActive(new CompressorStart());
+        driverBack.whenActive(new CompressorStop());
 
         coDriverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         coDriverB.whileActiveContinuous(new BallHandlerPurge());
-        coDriverX.whileActiveContinuous(new TurretToPosition(0));
-        coDriverDLeft.whenActive(new TurretHoming());
+        coDriverDLeft.whenActive(new CG_HomeTurret());
         coDriverDUp.whenActive(new CG_OhHeck());
         coDriverDDown.whenActive(new HarvesterDown());
         coDriverLB.whileActiveContinuous(new CG_ReadyToFireInner()).whenInactive(new TurretToPosition(0));
         coDriverLT.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new TurretToPosition(0));
         coDriverRT.whileActiveContinuous(new CG_FireZeMissiles());
-        coDriverST.whenActive(new CompressorStart());
-        coDriverBK.whenActive(new CompressorStop());
+        coDriverStart.whenActive(new CompressorStart());
+        coDriverBack.whenActive(new CompressorStop());
     }
 
     public Command getAutonomousCommand() {
         return null;
     }
 
+    /**
+     * @return The Y value of the driver's left stick
+     */
     public static double getDriverLeftStickY() {
         if (Math.abs(driver.getY(Hand.kLeft)) > 0.05) {
             return -driver.getY(Hand.kLeft);
@@ -109,6 +108,9 @@ public class RobotContainer {
         }
     }
 
+    /**
+     * @return The X value of the driver's left stick
+     */
     public static double getDriverLeftStickX() {
         if (Math.abs(driver.getX(Hand.kLeft)) > 0.05) {
             return driver.getX(Hand.kLeft);
@@ -117,6 +119,9 @@ public class RobotContainer {
         }
     }
 
+    /**
+     * @return The Y value of the driver's right stick
+     */
     public static double getDriverRightStickY() {
         if (Math.abs(driver.getY(Hand.kRight)) > 0.05) {
             return -driver.getY(Hand.kRight);
@@ -125,6 +130,9 @@ public class RobotContainer {
         }
     }
 
+    /**
+     * @return The X value of the driver's right stick
+     */
     public static double getDriverRightStickX() {
         if (Math.abs(driver.getX(Hand.kRight)) > 0.05) {
             return driver.getX(Hand.kRight);
@@ -170,7 +178,7 @@ public class RobotContainer {
     }
 
 
-    private class TriggerButton extends Trigger {
+    private static class TriggerButton extends Trigger {
         Hand hand;
         XboxController controller;
 

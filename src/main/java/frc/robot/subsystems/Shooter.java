@@ -47,10 +47,18 @@ public class Shooter extends SubsystemBase {
         // This method will be called once per scheduler run
     }
 
+    /**
+     * @return The RPM of the shooter wheel
+     */
     public double getRPM() {
         return (shooter.getSelectedSensorVelocity() * 10 * 60 / Constants.SHOOTER_PULSES_PER_ROTATION);
     }
 
+    /**
+     * Set the output of the shooter wheel
+     * @param mode The control mode to use
+     * @param value The value to set
+     */
     public void set(ControlMode mode, double value) {
         shooter.set(mode, value);
         // System.out.println(value);
