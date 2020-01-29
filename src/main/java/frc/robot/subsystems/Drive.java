@@ -156,7 +156,7 @@ public class Drive extends SubsystemBase {
         return leftMaster.isMotionProfileFinished() && rightMaster.isMotionProfileFinished();
     }
 
-    public double[][] loadProfile(String profileName) {
+    public BufferedTrajectoryPointStream loadProfile(String profileName) {
         double[][] profile = new double[][]{};
         try (BufferedReader br = new BufferedReader(
                 new FileReader(new File(Filesystem.getDeployDirectory(), "paths/" + profileName + ".csv")))) {
@@ -179,6 +179,6 @@ public class Drive extends SubsystemBase {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return profile;
+        return createBuffer(profile);
     }
 }

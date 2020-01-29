@@ -23,8 +23,9 @@ public class DriveMotionProfile extends CommandBase {
 
     public DriveMotionProfile(String pathName) {
         addRequirements(RobotContainer.drive);
-        left = RobotContainer.drive.createBuffer(RobotContainer.drive.loadProfile(pathName + "_left"));
-        right = RobotContainer.drive.createBuffer(RobotContainer.drive.loadProfile(pathName + "_right"));
+        left = RobotContainer.drive.loadProfile(pathName + "_left");
+        right = RobotContainer.drive.loadProfile(pathName + "_right");
+        distance = 0;
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
@@ -58,6 +59,10 @@ public class DriveMotionProfile extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return RobotContainer.drive.isMotionProfileFinished() || (distance != 0 && RobotContainer.drive.isClosedLoopOnTarget());
+        if(distance != 0){
+            return RobotContainer.drive.isClosedLoopOnTarget();
+        }else{
+            return RobotContainer.drive.isMotionProfileFinished();
+        }
     }
 }
