@@ -20,8 +20,8 @@ public class CG_FireZeMissiles extends SequentialCommandGroup {
      */
     public CG_FireZeMissiles() {
         addCommands(
-            // new LimelightWaitForTarget(),
-            new BallHandlerShoot()
+                // new LimelightWaitForTarget(),
+                new BallHandlerShoot()
         );
 
         // Add your commands in the super() call, e.g.

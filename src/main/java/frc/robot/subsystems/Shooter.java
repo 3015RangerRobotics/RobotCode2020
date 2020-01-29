@@ -51,7 +51,7 @@ public class Shooter extends SubsystemBase {
         return (shooter.getSelectedSensorVelocity() * 10 * 60 / Constants.SHOOTER_PULSES_PER_ROTATION);
     }
 
-    public void set(ControlMode mode, double value) { 
+    public void set(ControlMode mode, double value) {
         shooter.set(mode, value);
         // System.out.println(value);
     }

@@ -78,13 +78,12 @@ public class Drive extends SubsystemBase {
         leftMaster.config_kD(0, Constants.DRIVE_D);
         leftMaster.config_kF(0, Constants.DRIVE_F);
 
-        leftMaster.configMotionCruiseVelocity((int) Math.round(Constants.DRIVE_MAX_VELOCITY /10));
-        rightMaster.configMotionCruiseVelocity((int) Math.round(Constants.DRIVE_MAX_VELOCITY /10));
-        leftMaster.configMotionAcceleration((int) Math.round(Constants.DRIVE_MAX_ACCELERATION /10));
-        rightMaster.configMotionAcceleration((int) Math.round(Constants.DRIVE_MAX_ACCELERATION /10));
+        leftMaster.configMotionCruiseVelocity((int) Math.round(Constants.DRIVE_MAX_VELOCITY / 10));
+        rightMaster.configMotionCruiseVelocity((int) Math.round(Constants.DRIVE_MAX_VELOCITY / 10));
+        leftMaster.configMotionAcceleration((int) Math.round(Constants.DRIVE_MAX_ACCELERATION / 10));
+        rightMaster.configMotionAcceleration((int) Math.round(Constants.DRIVE_MAX_ACCELERATION / 10));
         leftMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.DRIVE_MAX_MOTION_ERROR));
         rightMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.DRIVE_MAX_MOTION_ERROR));
-
 
 
         resetEncoders();
@@ -97,12 +96,12 @@ public class Drive extends SubsystemBase {
         // This method will be called once per scheduler run
     }
 
-    public void resetEncoders(){
+    public void resetEncoders() {
         leftMaster.setSelectedSensorPosition(0);
         rightMaster.setSelectedSensorPosition(0);
     }
 
-    public ControlMode getControlMode(){
+    public ControlMode getControlMode() {
         return leftMaster.getControlMode();
     }
 
@@ -141,9 +140,10 @@ public class Drive extends SubsystemBase {
         }
         return buffer;
     }
-    public boolean isClosedLoopOnTarget () {
+
+    public boolean isClosedLoopOnTarget() {
         return Math.abs(leftMaster.getClosedLoopError()) <= Constants.DRIVE_MAX_MOTION_ERROR
-        && Math.abs(rightMaster.getClosedLoopError()) <= Constants.DRIVE_MAX_MOTION_ERROR;
+                && Math.abs(rightMaster.getClosedLoopError()) <= Constants.DRIVE_MAX_MOTION_ERROR;
     }
 
     public void startMotionProfile(BufferedTrajectoryPointStream left, BufferedTrajectoryPointStream right) {
@@ -157,7 +157,7 @@ public class Drive extends SubsystemBase {
     }
 
     public double[][] loadProfile(String profileName) {
-        double[][] profile = new double[][] {};
+        double[][] profile = new double[][]{};
         try (BufferedReader br = new BufferedReader(
                 new FileReader(new File(Filesystem.getDeployDirectory(), "paths/" + profileName + ".csv")))) {
             ArrayList<double[]> points = new ArrayList<double[]>();

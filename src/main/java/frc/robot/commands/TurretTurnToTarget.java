@@ -20,7 +20,7 @@ public class TurretTurnToTarget extends CommandBase {
      * Creates a new TurretTurnToInner.
      */
 
-     private double pos;
+    private double pos;
 
     public TurretTurnToTarget() {
         // Use addRequirements() here to declare subsystem dependencies.

@@ -55,21 +55,20 @@ public class RobotContainer {
     public RobotContainer() {
         ourCompressor = new OurCompressor();
         drive = new Drive();
-        drive.setDefaultCommand( new DriveWithGamepad());
-         turret = new Turret();
-         limelight = new Limelight();
-         shooter = new Shooter();
-         ballHandler = new BallHandler();
-         ballHandler.setDefaultCommand(new BallHandlerDefault());
-         harvester = new Harvester();
-         driverRumble = new DriverRumble();
-         driverLT = new TriggerButton(driver, Hand.kLeft);
-         driverRT = new TriggerButton(driver, Hand.kRight);
+        drive.setDefaultCommand(new DriveWithGamepad());
+        turret = new Turret();
+        limelight = new Limelight();
+        shooter = new Shooter();
+        ballHandler = new BallHandler();
+        ballHandler.setDefaultCommand(new BallHandlerDefault());
+        harvester = new Harvester();
+        driverRumble = new DriverRumble();
+        driverLT = new TriggerButton(driver, Hand.kLeft);
+        driverRT = new TriggerButton(driver, Hand.kRight);
         coDriverLT = new TriggerButton(coDriver, Hand.kLeft);
         coDriverRT = new TriggerButton(coDriver, Hand.kRight);
         configureButtonBindings();
     }
-
 
 
     private void configureButtonBindings() {
@@ -118,10 +117,10 @@ public class RobotContainer {
         }
     }
 
-    public static double getDriverRightStickY(){
+    public static double getDriverRightStickY() {
         if (Math.abs(driver.getY(Hand.kRight)) > 0.05) {
             return -driver.getY(Hand.kRight);
-        }else {
+        } else {
             return 0;
         }
     }
@@ -129,40 +128,46 @@ public class RobotContainer {
     public static double getDriverRightStickX() {
         if (Math.abs(driver.getX(Hand.kRight)) > 0.05) {
             return driver.getX(Hand.kRight);
-        }else {
+        } else {
             return 0;
         }
     }
 
     /**
-     * Sets the left(soft) rumble on the driver's controller 
-     * @param left a value from 0 to 1 representing the power 
+     * Sets the left(soft) rumble on the driver's controller
+     *
+     * @param left a value from 0 to 1 representing the power
      */
     public static void setDriverRumbleLeft(double left) {
         driver.setRumble(RumbleType.kLeftRumble, left);
     }
+
     /**
      * Sets the right(hard) rumble on the driver's controller
+     *
      * @param right a value from 0 to 1 representing the power
      */
     public static void setDriverRumbleRight(double right) {
         driver.setRumble(RumbleType.kRightRumble, right);
     }
+
     /**
      * Sets the left(soft) rumble on the drivers controller
+     *
      * @param left a value from 0 to 1 representing the power
      */
     public static void setCoDriverRumbleLeft(double left) {
         coDriver.setRumble(RumbleType.kLeftRumble, left);
     }
+
     /**
      * Sets the right(hard) rumble on the drivers controller
+     *
      * @param right a value from 0 to 1 representing the power
      */
     public static void setCoDriverRumbleRight(double right) {
         coDriver.setRumble(RumbleType.kRightRumble, right);
     }
-
 
 
     private class TriggerButton extends Trigger {

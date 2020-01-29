@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class CG_ReadyToFireOuter extends SequentialCommandGroup {
 
-    public CG_ReadyToFireOuter(){
+    public CG_ReadyToFireOuter() {
         addCommands(
                 new LimelightSwitchPipeline(0),
                 new HarvesterDown(),

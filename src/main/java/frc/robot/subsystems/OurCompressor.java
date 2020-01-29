@@ -12,22 +12,25 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class OurCompressor extends SubsystemBase {
     Compressor compressor;
-  /**
-   * Creates a new OurCompressor.
-   */
-  public OurCompressor() {
-    compressor = new Compressor();
-    this.startCompressor();
-  }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
-  public void startCompressor(){
-      compressor.start();
-  }
-  public void stopCompressor(){
-      compressor.stop();
-  }
+    /**
+     * Creates a new OurCompressor.
+     */
+    public OurCompressor() {
+        compressor = new Compressor();
+        this.startCompressor();
+    }
+
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
+
+    public void startCompressor() {
+        compressor.start();
+    }
+
+    public void stopCompressor() {
+        compressor.stop();
+    }
 }

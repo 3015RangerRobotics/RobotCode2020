@@ -8,7 +8,7 @@
 package frc.robot;
 
 public final class Constants {
-
+    // Drive Constants
     public static final int DRIVE_RIGHT_MASTER = 1;
     public static final int DRIVE_RIGHT_FOLLOWER = 2;
     public static final int DRIVE_LEFT_MASTER = 3;
@@ -23,6 +23,7 @@ public final class Constants {
     public static final double DRIVE_MAX_MOTION_ERROR = 0.1 * DRIVE_PULSES_PER_FOOT;
     public static final int DRIVE_TIME_STEP = 10;
 
+    // Turret Constants
     public static final int TURRET_MOTOR = 6;
     public static final double TURRET_P = 2.5; // 0.3
     public static final double TURRET_I = 0; // 0
@@ -37,11 +38,45 @@ public final class Constants {
     public static final int TURRET_LEFT_LIMIT = 0;
     public static final int TURRET_RIGHT_LIMIT = 1;
     public static final int TURRET_HOMING_POSITION = (int) Math.round(-90 / TURRET_DEGREES_PER_PULSE);
-    
+
+    // Shooter Constants
     public static final int SHOOTER_MOTOR = 5;
     public static final double SHOOTER_P = 0;
     public static final double SHOOTER_I = 0; // 0
     public static final double SHOOTER_D = 0; // 0
     public static final double SHOOTER_F = 0.06; // 0
     public static final double SHOOTER_PULSES_PER_ROTATION = 3864.3712;
+
+    // Ball Handler Constants
+    public static final int HANDLER_MOTOR1 = 0;
+    public static final int HANDLER_MOTOR2 = 1;
+    public static final int HANDLER_MOTOR3 = 2;
+    public static final int HANDLER_MOTOR4 = 3;
+    public static final int HANDLER_MOTOR5 = 4;
+    public static final int HANDLER_SWITCH1 = 2;
+    public static final int HANDLER_SWITCH2 = 3;
+    public static final int HANDLER_SWITCH3 = 4;
+    public static final int HANDLER_SWITCH4 = 5;
+    public static final int HANDLER_SWITCH5 = 6;
+    public static final double HANDLER_MOTOR_IN_SPEED1 = 0.75;
+    public static final double HANDLER_MOTOR_IN_SPEED2 = 0.68;
+    public static final double HANDLER_MOTOR_IN_SPEED3 = 0.62;
+    public static final double HANDLER_MOTOR_IN_SPEED4 = 0.55;
+    public static final double HANDLER_MOTOR_IN_SPEED5 = 0.75;
+    public static final double HANDLER_MOTOR_OUT_SPEED1 = -0.5;
+    public static final double HANDLER_MOTOR_OUT_SPEED2 = -0.55;
+    public static final double HANDLER_MOTOR_OUT_SPEED3 = -0.62;
+    public static final double HANDLER_MOTOR_OUT_SPEED4 = -0.68;
+    public static final double HANDLER_MOTOR_OUT_SPEED5 = -0.75;
+    public static final double HANDLER_MOTOR_SHOOT_SPEED1 = 1.0;
+    public static final double HANDLER_MOTOR_SHOOT_SPEED2 = 0.5;
+    public static final double HANDLER_MOTOR_SHOOT_SPEED3 = 0.4;
+    public static final double HANDLER_MOTOR_SHOOT_SPEED4 = 0.4;
+    public static final double HANDLER_MOTOR_SHOOT_SPEED5 = 0.4;
+    public static final double HANDLER_MOTOR_OFF_SPEED = 0.0;
+
+    // Harvester Constants
+    public static final int HARVESTER_MOTOR = 5;
+    public static final int HARVESTER_SOLENOID_FORWARD = 6;
+    public static final int HARVESTER_SOLENOID_REVERSE = 7;
 }

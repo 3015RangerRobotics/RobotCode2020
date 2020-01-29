@@ -18,18 +18,18 @@ public class DriveHelper {
 
     /**
      * Tank drive helper
-     * 
+     *
      * @param left
      * @param right
      * @return Outputs for left and right motors
      */
-    public static DriveSignal tankDrive(double left,double right) {
+    public static DriveSignal tankDrive(double left, double right) {
         return new DriveSignal(left, right);
     }
 
     /**
      * Arcade Drive
-     * 
+     *
      * @param moveValue
      * @param rotateValue
      * @param squaredInputs
@@ -71,35 +71,32 @@ public class DriveHelper {
         }
         return new DriveSignal(leftMotorSpeed, rightMotorSpeed);
     }
+
     /**
      * Handles a deadzone
-     * 
-     * @param value The value to handle
+     *
+     * @param value    The value to handle
      * @param deadzone The deadzone
      * @return The handled value
      */
-protected static double handleDeadzone(double value, double deadzone)
-    {
-        return (Math.abs(value) > Math.abs(deadzone)) ? limit(value,1.0) : 0.0;
+    protected static double handleDeadzone(double value, double deadzone) {
+        return (Math.abs(value) > Math.abs(deadzone)) ? limit(value, 1.0) : 0.0;
     }
 
-/**
- * Limits a number between a given range
- * 
- * @param value The value to limit
- * @param deadzone The deadzone
- * @return The handled value
- */
-protected static double limit(double value, double max)
-    {   
-            if (value > max) 
-        {   
+    /**
+     * Limits a number between a given range
+     *
+     * @param value    The value to limit
+     * @param deadzone The deadzone
+     * @return The handled value
+     */
+    protected static double limit(double value, double max) {
+        if (value > max) {
             return max;
         }
-             if (value < -max)
-        {
+        if (value < -max) {
             return -max;
         }
-             return value;
+        return value;
     }
 }

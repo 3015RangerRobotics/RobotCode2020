@@ -73,20 +73,20 @@ public class Turret extends SubsystemBase {
     }
 
     public void set(ControlMode mode, double value) {
-        if(!leftLimit.get()){
-            if(mode == ControlMode.PercentOutput && value < 0){
+        if (!leftLimit.get()) {
+            if (mode == ControlMode.PercentOutput && value < 0) {
                 turretMotor.set(ControlMode.PercentOutput, 0);
                 return;
-            }else if(mode == ControlMode.Position && value < turretMotor.getSelectedSensorPosition()){
+            } else if (mode == ControlMode.Position && value < turretMotor.getSelectedSensorPosition()) {
                 turretMotor.set(ControlMode.PercentOutput, 0);
                 return;
             }
         }
-        if(!rightLimit.get()){
-            if(mode == ControlMode.PercentOutput && value > 0){
+        if (!rightLimit.get()) {
+            if (mode == ControlMode.PercentOutput && value > 0) {
                 turretMotor.set(ControlMode.PercentOutput, 0);
                 return;
-            }else if(mode == ControlMode.Position && value > turretMotor.getSelectedSensorPosition()){
+            } else if (mode == ControlMode.Position && value > turretMotor.getSelectedSensorPosition()) {
                 turretMotor.set(ControlMode.PercentOutput, 0);
                 return;
             }
@@ -99,11 +99,11 @@ public class Turret extends SubsystemBase {
         turretMotor.setSelectedSensorPosition(value);
     }
 
-    public boolean getLeftLimit(){
+    public boolean getLeftLimit() {
         return !leftLimit.get();
     }
 
-    public boolean getRightLimit(){
+    public boolean getRightLimit() {
         return !rightLimit.get();
     }
 }

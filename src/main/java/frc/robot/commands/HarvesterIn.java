@@ -11,34 +11,34 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
 public class HarvesterIn extends CommandBase {
-  /**
-   * Creates a new HarvesterIn.
-   */
-  public HarvesterIn() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.harvester);
-  }
+    /**
+     * Creates a new HarvesterIn.
+     */
+    public HarvesterIn() {
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(RobotContainer.harvester);
+    }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    RobotContainer.harvester.harvesterIn();
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        RobotContainer.harvester.harvesterIn();
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-      RobotContainer.harvester.harvesterStop();
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        RobotContainer.harvester.harvesterStop();
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

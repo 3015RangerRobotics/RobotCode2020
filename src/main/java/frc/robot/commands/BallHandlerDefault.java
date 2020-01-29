@@ -15,44 +15,45 @@ import frc.robot.subsystems.BallHandler;
 
 
 public class BallHandlerDefault extends CommandBase {
-  BallHandler  ballHandler = RobotContainer.ballHandler;
-  Timer timer = new Timer();
-  public BallHandlerDefault() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(ballHandler);
-  }
+    BallHandler ballHandler = RobotContainer.ballHandler;
+    Timer timer = new Timer();
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    timer.start();
-    timer.reset();
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    BallHandler.State currentState = ballHandler.getState();
-    if(currentState == BallHandler.State.kFillTo1 || currentState == BallHandler.State.kFillTo2 ||
-            currentState == BallHandler.State.kFillTo3 || currentState == BallHandler.State.kFillTo4 ||
-            currentState == BallHandler.State.kFillTo5){
-      if(timer.hasPeriodPassed(1.5)){
-        ballHandler.setPaused(true);
-      }
+    public BallHandlerDefault() {
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(ballHandler);
     }
 
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        timer.start();
+        timer.reset();
+    }
 
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        BallHandler.State currentState = ballHandler.getState();
+        if (currentState == BallHandler.State.kFillTo1 || currentState == BallHandler.State.kFillTo2 ||
+                currentState == BallHandler.State.kFillTo3 || currentState == BallHandler.State.kFillTo4 ||
+                currentState == BallHandler.State.kFillTo5) {
+            if (timer.hasPeriodPassed(1.5)) {
+                ballHandler.setPaused(true);
+            }
+        }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
 
-  }
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

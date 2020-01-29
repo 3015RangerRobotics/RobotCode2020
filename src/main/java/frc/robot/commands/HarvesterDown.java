@@ -12,35 +12,36 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Harvester;
 
 public class HarvesterDown extends CommandBase {
-  /**
-   * Creates a new BallHarvesterIn.
-   */
-  Harvester harvester = RobotContainer.harvester;
-  public HarvesterDown() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(harvester);
-  }
+    /**
+     * Creates a new BallHarvesterIn.
+     */
+    Harvester harvester = RobotContainer.harvester;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    harvester.harvesterDown();
+    public HarvesterDown() {
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(harvester);
+    }
 
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        harvester.harvesterDown();
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-  }
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return true;
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

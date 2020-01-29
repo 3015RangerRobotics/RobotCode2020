@@ -14,18 +14,18 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class CG_HarvesterOfBalls extends SequentialCommandGroup {
-  /**
-   * Creates a new HarvesterOfBalls.
-   */
-  public CG_HarvesterOfBalls() {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    addCommands(
-        new HarvesterDown(),
-        new ParallelCommandGroup(
-                new BallHandlerHarvest(),
-                new HarvesterIn()
-        )
-    );
-  }
+    /**
+     * Creates a new HarvesterOfBalls.
+     */
+    public CG_HarvesterOfBalls() {
+        // Add your commands in the super() call, e.g.
+        // super(new FooCommand(), new BarCommand());
+        addCommands(
+                new HarvesterDown(),
+                new ParallelCommandGroup(
+                        new BallHandlerHarvest(),
+                        new HarvesterIn()
+                )
+        );
+    }
 }

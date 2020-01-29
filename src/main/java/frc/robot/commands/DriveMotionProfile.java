@@ -36,12 +36,12 @@ public class DriveMotionProfile extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.drive.resetEncoders(); 
-        if (distance != 0){
+        RobotContainer.drive.resetEncoders();
+        if (distance != 0) {
             RobotContainer.drive.setMotorOutputs(ControlMode.MotionMagic, distance, distance);
         } else {
             RobotContainer.drive.startMotionProfile(left, right);
-        }         
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.
