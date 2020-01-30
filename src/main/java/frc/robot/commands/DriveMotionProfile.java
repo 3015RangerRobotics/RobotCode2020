@@ -28,8 +28,8 @@ public class DriveMotionProfile extends CommandBase {
      */
     public DriveMotionProfile(String pathName) {
         addRequirements(RobotContainer.drive);
-        left = RobotContainer.drive.loadProfile(pathName + "_left");
-        right = RobotContainer.drive.loadProfile(pathName + "_right");
+        left = RobotContainer.drive.loadProfileAsBuffer(pathName + "_left");
+        right = RobotContainer.drive.loadProfileAsBuffer(pathName + "_right");
         distance = 0;
         // Use addRequirements() here to declare subsystem dependencies.
     }

@@ -111,6 +111,14 @@ public class Drive extends SubsystemBase {
         return rightMaster.getSelectedSensorPosition() / Constants.DRIVE_PULSES_PER_FOOT;
     }
 
+    public double getLeftPositionRaw(){
+        return leftMaster.getSelectedSensorPosition();
+    }
+
+    public double getRightPositionRaw(){
+        return rightMaster.getSelectedSensorPosition();
+    }
+
     public double getLeftError(){
         return leftMaster.getClosedLoopError() / Constants.DRIVE_PULSES_PER_FOOT;
     }
@@ -160,11 +168,12 @@ public class Drive extends SubsystemBase {
 
     /**
      * Create a BufferedTrajectoryPointStream for the drive motors to follow
-     * @param profile The profile to convert
+     * @param pathName The profile to load
      * @return The given profile as a BufferedTrajectoryPointStream
      */
-    public BufferedTrajectoryPointStream createBuffer(double[][] profile) {
+    public BufferedTrajectoryPointStream loadProfileAsBuffer(String pathName) {
         BufferedTrajectoryPointStream buffer = new BufferedTrajectoryPointStream();
+        double[][] profile = loadProfile(pathName);
 
         for (int i = 0; i < profile.length; i++) {
             TrajectoryPoint point = new TrajectoryPoint();
@@ -172,8 +181,8 @@ public class Drive extends SubsystemBase {
             double velocity = profile[i][1];
 
             point.timeDur = Constants.DRIVE_TIME_STEP;
-            point.position = position * Constants.DRIVE_PULSES_PER_FOOT;
-            point.velocity = velocity * Constants.DRIVE_PULSES_PER_FOOT / 10;
+            point.position = position;
+            point.velocity = velocity;
 
             point.auxiliaryPos = 0;
             point.auxiliaryVel = 0;
@@ -221,7 +230,7 @@ public class Drive extends SubsystemBase {
      * @param profileName The name of the profile to load
      * @return The profile as a BufferedTrajectoryPointStream
      */
-    public BufferedTrajectoryPointStream loadProfile(String profileName) {
+    public double[][] loadProfile(String profileName) {
         double[][] profile = new double[][]{};
         try (BufferedReader br = new BufferedReader(
                 new FileReader(new File(Filesystem.getDeployDirectory(), "paths/" + profileName + ".csv")))) {
@@ -238,12 +247,12 @@ public class Drive extends SubsystemBase {
             }
             profile = new double[points.size()][2];
             for (int i = 0; i < points.size(); i++) {
-                profile[i][0] = points.get(i)[0];
-                profile[i][1] = points.get(i)[1];
+                profile[i][0] = points.get(i)[0] * Constants.DRIVE_PULSES_PER_FOOT;
+                profile[i][1] = points.get(i)[1] * Constants.DRIVE_PULSES_PER_FOOT / 10;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return createBuffer(profile);
+        return profile;
     }
 }
