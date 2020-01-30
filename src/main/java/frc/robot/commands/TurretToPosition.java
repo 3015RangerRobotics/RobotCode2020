@@ -19,6 +19,10 @@ public class TurretToPosition extends CommandBase {
      */
     public double angle;
 
+    /**
+     * Command to turn the turret to a specific angle
+     * @param angle The angle to turn to
+     */
     public TurretToPosition(double angle) {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(RobotContainer.turret);
@@ -31,10 +35,10 @@ public class TurretToPosition extends CommandBase {
     }
 
     // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    RobotContainer.turret.set(ControlMode.Position, (angle / Constants.TURRET_DEGREES_PER_PULSE));
-  }
+    @Override
+    public void execute() {
+        RobotContainer.turret.set(ControlMode.Position, (angle / Constants.TURRET_DEGREES_PER_PULSE));
+    }
 
     // Called once the command ends or is interrupted.
     @Override

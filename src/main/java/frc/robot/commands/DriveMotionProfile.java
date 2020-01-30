@@ -21,13 +21,22 @@ public class DriveMotionProfile extends CommandBase {
     private BufferedTrajectoryPointStream right;
     private double distance = 0;
 
+    /**
+     * Create a motion profile command to drive a pre-generated path
+     * @param pathName The name of the path to follow
+     */
     public DriveMotionProfile(String pathName) {
         addRequirements(RobotContainer.drive);
-        left = RobotContainer.drive.createBuffer(RobotContainer.drive.loadProfile(pathName + "_left"));
-        right = RobotContainer.drive.createBuffer(RobotContainer.drive.loadProfile(pathName + "_right"));
+        left = RobotContainer.drive.loadProfile(pathName + "_left");
+        right = RobotContainer.drive.loadProfile(pathName + "_right");
+        distance = 0;
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
+    /**
+     * Create a motion profile command to drive a straight line using motion magic
+     * @param distance The distance to drive
+     */
     public DriveMotionProfile(double distance) {
         addRequirements(RobotContainer.drive);
         this.distance = distance;
@@ -36,12 +45,12 @@ public class DriveMotionProfile extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.drive.resetEncoders(); 
-        if (distance != 0){
+        RobotContainer.drive.resetEncoders();
+        if (distance != 0) {
             RobotContainer.drive.setMotorOutputs(ControlMode.MotionMagic, distance, distance);
         } else {
             RobotContainer.drive.startMotionProfile(left, right);
-        }         
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -58,6 +67,10 @@ public class DriveMotionProfile extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return RobotContainer.drive.isMotionProfileFinished() || (distance != 0 && RobotContainer.drive.isClosedLoopOnTarget());
+        if(distance != 0){
+            return RobotContainer.drive.isClosedLoopOnTarget();
+        }else{
+            return RobotContainer.drive.isMotionProfileFinished();
+        }
     }
 }

@@ -7,50 +7,48 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.BallHandler;
 
-public class TurretTurnToInner extends CommandBase {
-    /**
-     * Creates a new TurretTurnToInner.
-     */
 
-     private double pos;
+public class BallHandlerDefault extends CommandBase {
+    BallHandler ballHandler = RobotContainer.ballHandler;
+    Timer timer = new Timer();
 
-    public TurretTurnToInner() {
+    public BallHandlerDefault() {
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(RobotContainer.turret, RobotContainer.limelight);
+        addRequirements(ballHandler);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.limelight.setPipeline(1);
-        RobotContainer.limelight.setStreamingMode(Limelight.StreamingMode.STANDARD);
-        RobotContainer.limelight.setLEDMode(Limelight.LEDMode.PIPELINE);
-        RobotContainer.limelight.setCameraMode(Limelight.CameraMode.VISION_PROCESSING);
-        pos = RobotContainer.limelight.getTargetAngleX();
+        timer.start();
+        timer.reset();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        // if(Math.abs(RobotContainer.limelight.getTargetAngleX()) <= Constants.turretDegreeMargin) {
-        //     RobotContainer.limelight.setPipeline(1);
-        // }
-        RobotContainer.turret.set(ControlMode.Position, pos / Constants.TURRET_DEGREES_PER_PULSE);
-        System.out.println(("Current Pos: " + RobotContainer.turret.getMotorPosition() + " Turn To: " + pos));
+        BallHandler.State currentState = ballHandler.getState();
+        if (currentState == BallHandler.State.kFillTo1 || currentState == BallHandler.State.kFillTo2 ||
+                currentState == BallHandler.State.kFillTo3 || currentState == BallHandler.State.kFillTo4 ||
+                currentState == BallHandler.State.kFillTo5) {
+            if (timer.hasPeriodPassed(1.5)) {
+                ballHandler.setPaused(true);
+            }
+        }
+
+
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        RobotContainer.turret.set(ControlMode.PercentOutput, 0);
+
     }
 
     // Returns true when the command should end.

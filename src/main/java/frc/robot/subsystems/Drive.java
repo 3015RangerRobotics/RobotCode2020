@@ -78,18 +78,15 @@ public class Drive extends SubsystemBase {
         leftMaster.config_kD(0, Constants.DRIVE_D);
         leftMaster.config_kF(0, Constants.DRIVE_F);
 
-        leftMaster.configMotionCruiseVelocity((int) Math.round(Constants.DRIVE_MAX_VELOCITY /10));
-        rightMaster.configMotionCruiseVelocity((int) Math.round(Constants.DRIVE_MAX_VELOCITY /10));
-        leftMaster.configMotionAcceleration((int) Math.round(Constants.DRIVE_MAX_ACCELERATION /10));
-        rightMaster.configMotionAcceleration((int) Math.round(Constants.DRIVE_MAX_ACCELERATION /10));
+        leftMaster.configMotionCruiseVelocity((int) Math.round(Constants.DRIVE_MAX_VELOCITY / 10));
+        rightMaster.configMotionCruiseVelocity((int) Math.round(Constants.DRIVE_MAX_VELOCITY / 10));
+        leftMaster.configMotionAcceleration((int) Math.round(Constants.DRIVE_MAX_ACCELERATION / 10));
+        rightMaster.configMotionAcceleration((int) Math.round(Constants.DRIVE_MAX_ACCELERATION / 10));
         leftMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.DRIVE_MAX_MOTION_ERROR));
         rightMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.DRIVE_MAX_MOTION_ERROR));
 
 
-
         resetEncoders();
-
-        // this.setDefaultCommand(new DriveWithGamepad());
     }
 
     @Override
@@ -97,25 +94,49 @@ public class Drive extends SubsystemBase {
         // This method will be called once per scheduler run
     }
 
-    public void resetEncoders(){
+    /**
+     * Reset the drive encoders to 0
+     */
+    public void resetEncoders() {
         leftMaster.setSelectedSensorPosition(0);
         rightMaster.setSelectedSensorPosition(0);
     }
 
-    public ControlMode getControlMode(){
+    /**
+     * Get the current control mode of the drive motors
+     * @return The current control mode
+     */
+    public ControlMode getControlMode() {
         return leftMaster.getControlMode();
     }
 
+    /**
+     * Set the output to the drive motors
+     * @param mode The control mode to use
+     * @param leftMotor Output value of the left motor
+     * @param rightMotor Output value of the right motor
+     */
     public void setMotorOutputs(ControlMode mode, double leftMotor, double rightMotor) {
         this.rightMaster.set(mode, rightMotor);
         this.leftMaster.set(mode, leftMotor);
     }
 
+    /**
+     * Set the motors using arcade drive
+     * @param driveValue Forward/Reverse value
+     * @param turnValue Turn value
+     * @param squaredInputs Should the inputs be squared (increases control at low speeds)
+     */
     public void arcadeDrive(double driveValue, double turnValue, boolean squaredInputs) {
         DriveSignal ds = DriveHelper.arcadeDrive(driveValue, turnValue, squaredInputs);
         setMotorOutputs(ControlMode.PercentOutput, ds.leftSignal, ds.rightSignal);
     }
 
+    /**
+     * Create a BufferedTrajectoryPointStream for the drive motors to follow
+     * @param profile The profile to convert
+     * @return The given profile as a BufferedTrajectoryPointStream
+     */
     public BufferedTrajectoryPointStream createBuffer(double[][] profile) {
         BufferedTrajectoryPointStream buffer = new BufferedTrajectoryPointStream();
 
@@ -141,23 +162,41 @@ public class Drive extends SubsystemBase {
         }
         return buffer;
     }
-    public boolean isClosedLoopOnTarget () {
+
+    /**
+     * Get if the closed loop control is on target
+     * @return if the closed loop control is on target
+     */
+    public boolean isClosedLoopOnTarget() {
         return Math.abs(leftMaster.getClosedLoopError()) <= Constants.DRIVE_MAX_MOTION_ERROR
-        && Math.abs(rightMaster.getClosedLoopError()) <= Constants.DRIVE_MAX_MOTION_ERROR;
+                && Math.abs(rightMaster.getClosedLoopError()) <= Constants.DRIVE_MAX_MOTION_ERROR;
     }
 
+    /**
+     * Start following a motion profile
+     * @param left The profile for the left motors
+     * @param right The profile for the right motors
+     */
     public void startMotionProfile(BufferedTrajectoryPointStream left, BufferedTrajectoryPointStream right) {
         leftMaster.startMotionProfile(left, 10, ControlMode.MotionProfile);
         rightMaster.startMotionProfile(right, 10, ControlMode.MotionProfile);
-
     }
 
+    /**
+     * Get if the motion profile is finished
+     * @return is the motion profile finished
+     */
     public boolean isMotionProfileFinished() {
         return leftMaster.isMotionProfileFinished() && rightMaster.isMotionProfileFinished();
     }
 
-    public double[][] loadProfile(String profileName) {
-        double[][] profile = new double[][] {};
+    /**
+     * Load a motion profile from a csv file
+     * @param profileName The name of the profile to load
+     * @return The profile as a BufferedTrajectoryPointStream
+     */
+    public BufferedTrajectoryPointStream loadProfile(String profileName) {
+        double[][] profile = new double[][]{};
         try (BufferedReader br = new BufferedReader(
                 new FileReader(new File(Filesystem.getDeployDirectory(), "paths/" + profileName + ".csv")))) {
             ArrayList<double[]> points = new ArrayList<double[]>();
@@ -179,6 +218,6 @@ public class Drive extends SubsystemBase {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return profile;
+        return createBuffer(profile);
     }
 }

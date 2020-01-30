@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
         shooter.enableVoltageCompensation(true);
         shooter.configVoltageCompSaturation(12.5);
 
-        shooter.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        // shooter.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
         shooter.setInverted(false);
         shooter.setSelectedSensorPosition(0);
@@ -47,11 +47,19 @@ public class Shooter extends SubsystemBase {
         // This method will be called once per scheduler run
     }
 
+    /**
+     * @return The RPM of the shooter wheel
+     */
     public double getRPM() {
         return (shooter.getSelectedSensorVelocity() * 10 * 60 / Constants.SHOOTER_PULSES_PER_ROTATION);
     }
 
-    public void set(ControlMode mode, double value) { 
+    /**
+     * Set the output of the shooter wheel
+     * @param mode The control mode to use
+     * @param value The value to set
+     */
+    public void set(ControlMode mode, double value) {
         shooter.set(mode, value);
         // System.out.println(value);
     }

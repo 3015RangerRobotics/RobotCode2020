@@ -10,22 +10,30 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class DriverRumbleOff extends CommandBase {
+public class CompressorStop extends CommandBase {
     /**
-     * Creates a new DriverRumbleOff.
+     * Creates a new CompressorStop.
      */
-    public DriverRumbleOff() {
+    public CompressorStop() {
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(RobotContainer.driverRumble);
+        addRequirements(RobotContainer.ourCompressor);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.setDriverRumbleLeft(0.0);
-        RobotContainer.setDriverRumbleRight(0.0);
+        RobotContainer.ourCompressor.stopCompressor();
     }
 
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+    }
+
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+    }
 
     // Returns true when the command should end.
     @Override

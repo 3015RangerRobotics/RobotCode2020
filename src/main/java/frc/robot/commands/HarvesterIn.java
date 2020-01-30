@@ -10,26 +10,35 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class DriverRumbleOff extends CommandBase {
+public class HarvesterIn extends CommandBase {
     /**
-     * Creates a new DriverRumbleOff.
+     * Creates a new HarvesterIn.
      */
-    public DriverRumbleOff() {
+    public HarvesterIn() {
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(RobotContainer.driverRumble);
+        addRequirements(RobotContainer.harvester);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.setDriverRumbleLeft(0.0);
-        RobotContainer.setDriverRumbleRight(0.0);
     }
 
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        RobotContainer.harvester.harvesterIn();
+    }
+
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        RobotContainer.harvester.harvesterStop();
+    }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 }

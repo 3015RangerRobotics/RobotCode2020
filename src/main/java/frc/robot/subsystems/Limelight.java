@@ -19,50 +19,50 @@ public class Limelight extends SubsystemBase {
     private double limelightAngle = 29.8;
     private double outerToInnerTargetDistance = 2.4;
 
-    public static enum LEDMode{
-        PIPELINE(0), 
+    public static enum LEDMode {
+        PIPELINE(0),
         LED_OFF(1),
         LED_BLINK(2),
         LED_ON(3);
 
         private int m;
 
-        private LEDMode(int mode){
+        private LEDMode(int mode) {
             m = mode;
         }
 
-        public int getMode(){
+        public int getMode() {
             return m;
         }
     }
 
-    public static enum StreamingMode{
+    public static enum StreamingMode {
         STANDARD(0),
         PIP_MAIN(1),
         PIP_SECONDARY(2);
 
         private int m;
 
-        private StreamingMode(int mode){
+        private StreamingMode(int mode) {
             m = mode;
         }
 
-        public int getMode(){
+        public int getMode() {
             return m;
         }
     }
 
-    public static enum CameraMode{
+    public static enum CameraMode {
         VISION_PROCESSING(0),
         DRIVER_CAMERA(1);
 
         private int m;
 
-        private CameraMode(int mode){
+        private CameraMode(int mode) {
             m = mode;
         }
 
-        public int getMode(){
+        public int getMode() {
             return m;
         }
     }
@@ -79,71 +79,126 @@ public class Limelight extends SubsystemBase {
         // This method will be called once per scheduler run
     }
 
-    public boolean hasTarget(){
+    /**
+     * @return if the limelight has a target
+     */
+    public boolean hasTarget() {
         return limelight.getEntry("tv").getDouble(0) == 1;
     }
 
-    public double getTargetAngleX(){
+    /**
+     * @return The X angle to the target
+     */
+    public double getTargetAngleX() {
         return limelight.getEntry("tx").getDouble(0);
     }
 
-    public double getTargetAngleY(){
+    /**
+     * @return The Y angle to the target
+     */
+    public double getTargetAngleY() {
         return limelight.getEntry("ty").getDouble(0);
     }
 
-    public double getLatency(){
+    /**
+     * @return The current latency from the limelight to the robot
+     */
+    public double getLatency() {
         return limelight.getEntry("tl").getDouble(0) + 11;
     }
 
-    public int getPipeline(){
+    /**
+     * @return The current active pipeline
+     */
+    public int getPipeline() {
         return limelight.getEntry("getpipe").getNumber(0).intValue();
     }
 
-    public double[] get3DSolution(){
-        return limelight.getEntry("camtran").getDoubleArray(new double[]{0,0,0,0,0,0});
+    /**
+     * @return The solution to solvePnP
+     */
+    public double[] get3DSolution() {
+        return limelight.getEntry("camtran").getDoubleArray(new double[]{0, 0, 0, 0, 0, 0});
     }
 
-    public double getTranslationX(){
+    /**
+     * @return The X distance to the target
+     */
+    public double getTranslationX() {
         return get3DSolution()[0];
     }
 
-    public double getTranslationY(){
+    /**
+     * @return The Y distance to the target
+     */
+    public double getTranslationY() {
         return get3DSolution()[1];
     }
 
-    public double getTranslationZ(){
+    /**
+     * @return The Z distance to the target
+     */
+    public double getTranslationZ() {
         return get3DSolution()[2];
     }
 
-    public double getRotationPitch(){
+    /**
+     * @return Target pitch
+     */
+    public double getRotationPitch() {
         return get3DSolution()[3];
     }
 
-    public double getRotationYaw(){
+    /**
+     * @return Target yaw
+     */
+    public double getRotationYaw() {
         return get3DSolution()[4];
     }
 
-    public double getRotationRoll(){
+    /**
+     * @return Target roll
+     */
+    public double getRotationRoll() {
         return get3DSolution()[5];
     }
 
-    public void setLEDMode(LEDMode mode){
+    /**
+     * Set the LED mode
+     * @param mode The mode to use
+     */
+    public void setLEDMode(LEDMode mode) {
         limelight.getEntry("ledMode").setNumber(mode.getMode());
     }
 
-    public void setCameraMode(CameraMode mode){
+    /**
+     * Set the camera mode
+     * @param mode The mode to use
+     */
+    public void setCameraMode(CameraMode mode) {
         limelight.getEntry("camMode").setNumber(mode.getMode());
     }
 
-    public void setStreamingMode(StreamingMode mode){
+    /**
+     * Set the streaming mode
+     * @param mode The mode to use
+     */
+    public void setStreamingMode(StreamingMode mode) {
         limelight.getEntry("stream").setNumber(mode.getMode());
     }
 
-    public void setPipeline(int id){
+    /**
+     * Set the processing pipeline
+     * @param id The id of the pipeline to use
+     */
+    public void setPipeline(int id) {
         limelight.getEntry("pipeline").setNumber(id);
     }
 
-    public double getRobotToOuterTargetDistance(){
+    /**
+     * @return The distance from the robot to the target (parallel line with floor)
+     */
+    public double getRobotToTargetDistance() {
         return (targetHeight - limelightHeight) / Math.tan(Math.toRadians(limelightAngle + getTargetAngleY()));
     }
 
