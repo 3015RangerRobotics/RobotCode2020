@@ -62,8 +62,8 @@ public class Drive extends SubsystemBase {
         leftMaster.enableVoltageCompensation(true);
         leftMaster.configVoltageCompSaturation(12.5);
 
-        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        // rightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        // leftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
         rightMaster.setSensorPhase(true);
         leftMaster.setSensorPhase(false);
@@ -92,7 +92,33 @@ public class Drive extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+//        System.out.println(rightMaster.getSelectedSensorVelocity());
     }
+
+    public double getActiveTrajPositionLeft(){
+        return leftMaster.getActiveTrajectoryPosition() / Constants.DRIVE_PULSES_PER_FOOT;
+    }
+
+    public double getActiveTrajPositionRight(){
+        return rightMaster.getActiveTrajectoryPosition() / Constants.DRIVE_PULSES_PER_FOOT;
+    }
+
+    public double getLeftPosition(){
+        return leftMaster.getSelectedSensorPosition() / Constants.DRIVE_PULSES_PER_FOOT;
+    }
+
+    public double getRightPosition(){
+        return rightMaster.getSelectedSensorPosition() / Constants.DRIVE_PULSES_PER_FOOT;
+    }
+
+    public double getLeftError(){
+        return leftMaster.getClosedLoopError() / Constants.DRIVE_PULSES_PER_FOOT;
+    }
+
+    public double getRightError(){
+        return rightMaster.getClosedLoopError() / Constants.DRIVE_PULSES_PER_FOOT;
+    }
+
 
     /**
      * Reset the drive encoders to 0

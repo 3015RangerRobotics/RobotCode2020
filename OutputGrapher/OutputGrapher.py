@@ -198,7 +198,7 @@ SHEET_NAME       = "Test Data Sheet.xlsx"
 VALID_DATA_NAMES = ["shooter", "drive_train_left", "drive_train_right", "turret"]
 
 # X AXIS / TIME GRAPH PROPERTIES
-TIME_SCALE = 10 # ms
+TIME_SCALE = 50 # ms
 TIME_UNITS = "ms"
 TIME_AXIS  = "Time (%s)" % TIME_UNITS
 

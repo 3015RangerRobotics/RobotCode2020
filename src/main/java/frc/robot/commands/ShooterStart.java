@@ -32,8 +32,8 @@ public class ShooterStart extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        RobotContainer.shooter.set(ControlMode.PercentOutput, 0.57);
-        //   RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.SHOOTER_PULSES_PER_ROTATION);
+//        RobotContainer.shooter.set(ControlMode.PercentOutput, 0.57);
+           RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.SHOOTER_PULSES_PER_ROTATION);
         System.out.println(RobotContainer.shooter.getRPM());
     }
 

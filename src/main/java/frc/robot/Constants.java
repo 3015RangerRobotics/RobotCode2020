@@ -13,13 +13,13 @@ public final class Constants {
     public static final int DRIVE_RIGHT_FOLLOWER = 2;
     public static final int DRIVE_LEFT_MASTER = 3;
     public static final int DRIVE_LEFT_FOLLOWER = 4;
-    public static final double DRIVE_P = 0;
+    public static final double DRIVE_P = 0.3;
     public static final double DRIVE_I = 0;
-    public static final double DRIVE_D = 0;
-    public static final double DRIVE_F = 0;
+    public static final double DRIVE_D = 0.1;
+    public static final double DRIVE_F = 1023.0/21000;
     public static final double DRIVE_PULSES_PER_FOOT = 14159.2386107;
-    public static final double DRIVE_MAX_VELOCITY = 12;
-    public static final double DRIVE_MAX_ACCELERATION = 8;
+    public static final double DRIVE_MAX_VELOCITY = 8 * DRIVE_PULSES_PER_FOOT;
+    public static final double DRIVE_MAX_ACCELERATION = 6 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_MAX_MOTION_ERROR = 0.1 * DRIVE_PULSES_PER_FOOT;
     public static final int DRIVE_TIME_STEP = 10;
 
@@ -44,8 +44,8 @@ public final class Constants {
     public static final double SHOOTER_P = 0;
     public static final double SHOOTER_I = 0; // 0
     public static final double SHOOTER_D = 0; // 0
-    public static final double SHOOTER_F = 0.06; // 0
-    public static final double SHOOTER_PULSES_PER_ROTATION = 3864.3712;
+    public static final double SHOOTER_F = 0.02; // 0
+    public static final double SHOOTER_PULSES_PER_ROTATION = 4096;
 
     // Ball Handler Constants
     public static final int HANDLER_MOTOR1 = 0;
@@ -77,6 +77,6 @@ public final class Constants {
 
     // Harvester Constants
     public static final int HARVESTER_MOTOR = 5;
-    public static final int HARVESTER_SOLENOID_FORWARD = 6;
-    public static final int HARVESTER_SOLENOID_REVERSE = 7;
+    public static final int HARVESTER_SOLENOID_FORWARD = 7;
+    public static final int HARVESTER_SOLENOID_REVERSE = 1;
 }

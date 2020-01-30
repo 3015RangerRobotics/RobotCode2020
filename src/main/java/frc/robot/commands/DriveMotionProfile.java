@@ -11,6 +11,7 @@ import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class DriveMotionProfile extends CommandBase {
@@ -47,15 +48,20 @@ public class DriveMotionProfile extends CommandBase {
     public void initialize() {
         RobotContainer.drive.resetEncoders();
         if (distance != 0) {
-            RobotContainer.drive.setMotorOutputs(ControlMode.MotionMagic, distance, distance);
+//            System.out.println(distance * Constants.DRIVE_PULSES_PER_FOOT);
+            RobotContainer.drive.setMotorOutputs(ControlMode.MotionMagic, distance * Constants.DRIVE_PULSES_PER_FOOT, distance * Constants.DRIVE_PULSES_PER_FOOT);
         } else {
             RobotContainer.drive.startMotionProfile(left, right);
         }
     }
+    int i = 0;
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        System.out.println("drive_train_left," + RobotContainer.drive.getLeftError() + "," + RobotContainer.drive.getLeftPosition());
+        System.out.println("drive_train_right," + RobotContainer.drive.getActiveTrajPositionRight() + "," + RobotContainer.drive.getRightPosition());
+//        RobotContainer.drive.setMotorOutputs(ControlMode.MotionMagic, distance * Constants.DRIVE_PULSES_PER_FOOT, distance * Constants.DRIVE_PULSES_PER_FOOT);
     }
 
     // Called once the command ends or is interrupted.
@@ -67,10 +73,10 @@ public class DriveMotionProfile extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if(distance != 0){
-            return RobotContainer.drive.isClosedLoopOnTarget();
-        }else{
+//        if(distance != 0){
+//            return RobotContainer.drive.isClosedLoopOnTarget();
+//        }else{
             return RobotContainer.drive.isMotionProfileFinished();
-        }
+//        }
     }
 }
