@@ -36,6 +36,8 @@ public class Shooter extends SubsystemBase {
         shooter.setSelectedSensorPosition(0);
         shooter.setSensorPhase(false);
 
+        // shooter.configClosedloopRamp(secondsFromNeutralToFull);
+
         shooter.config_kP(0, Constants.SHOOTER_P);
         shooter.config_kI(0, Constants.SHOOTER_I);
         shooter.config_kD(0, Constants.SHOOTER_D);

@@ -72,7 +72,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         driverB.whileActiveContinuous(new BallHandlerPurge());
-        driverX.whenActive(new DriveMotionProfileOld("path"));
+        driverX.whenActive(new DriveMotionProfile("path"));
         driverDLeft.whenActive(new CG_HomeTurret());
         driverDUp.whenActive(new CG_OhHeck());
         driverDDown.whenActive(new HarvesterDown());

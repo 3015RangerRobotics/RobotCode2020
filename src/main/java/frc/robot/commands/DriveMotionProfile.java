@@ -20,6 +20,8 @@ public class DriveMotionProfile extends CommandBase {
      */
     private BufferedTrajectoryPointStream left;
     private BufferedTrajectoryPointStream right;
+    private double[][] left2;
+    private double[][] right2;
     private double distance = 0;
 
     /**
@@ -29,7 +31,9 @@ public class DriveMotionProfile extends CommandBase {
     public DriveMotionProfile(String pathName) {
         addRequirements(RobotContainer.drive);
         left = RobotContainer.drive.loadProfileAsBuffer(pathName + "_left");
+        left2 = RobotContainer.drive.loadProfile(pathName + "_left");
         right = RobotContainer.drive.loadProfileAsBuffer(pathName + "_right");
+        right2 = RobotContainer.drive.loadProfile(pathName + "_right");
         distance = 0;
         // Use addRequirements() here to declare subsystem dependencies.
     }
@@ -42,11 +46,14 @@ public class DriveMotionProfile extends CommandBase {
         addRequirements(RobotContainer.drive);
         this.distance = distance;
     }
+    int i = -20;
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        i = -20;
         RobotContainer.drive.resetEncoders();
+        System.out.println("======================================");
         if (distance != 0) {
 //            System.out.println(distance * Constants.DRIVE_PULSES_PER_FOOT);
             RobotContainer.drive.setMotorOutputs(ControlMode.MotionMagic, distance * Constants.DRIVE_PULSES_PER_FOOT, distance * Constants.DRIVE_PULSES_PER_FOOT);
@@ -54,13 +61,15 @@ public class DriveMotionProfile extends CommandBase {
             RobotContainer.drive.startMotionProfile(left, right);
         }
     }
-    int i = 0;
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        System.out.println("drive_train_left," + RobotContainer.drive.getLeftError() + "," + RobotContainer.drive.getLeftPosition());
-        System.out.println("drive_train_right," + RobotContainer.drive.getActiveTrajPositionRight() + "," + RobotContainer.drive.getRightPosition());
+        if(i < left2.length && i >= 0) {
+            System.out.println("drive_train_left," + left2[i][0] / Constants.DRIVE_PULSES_PER_FOOT + "," + RobotContainer.drive.getLeftPosition());
+            System.out.println("drive_train_right," + right2[i][0] / Constants.DRIVE_PULSES_PER_FOOT + "," + RobotContainer.drive.getRightPosition());
+        }
+        i += 2;
 //        RobotContainer.drive.setMotorOutputs(ControlMode.MotionMagic, distance * Constants.DRIVE_PULSES_PER_FOOT, distance * Constants.DRIVE_PULSES_PER_FOOT);
     }
 

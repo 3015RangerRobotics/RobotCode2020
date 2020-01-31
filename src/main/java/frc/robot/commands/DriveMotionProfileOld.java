@@ -38,6 +38,8 @@ public class DriveMotionProfileOld extends CommandBase {
         prevErrorL = 0;
         prevErrorR = 0;
 
+        System.out.println("======================================");
+
         if (leftMotion.length != rightMotion.length) {
             System.out.println("Left and right profiles not of equal length!");
             this.cancel();
@@ -64,22 +66,22 @@ public class DriveMotionProfileOld extends CommandBase {
     private synchronized void threadedExecute(){
         if(i < leftMotion.length){
             double goalPosL = leftMotion[i][0];
-            double goalVelL = leftMotion[i][1] * 10;
+            double goalVelL = leftMotion[i][1];
 //            double goalAccL = leftMotion[i][2];
 
             double goalPosR = rightMotion[i][0];
-            double goalVelR = rightMotion[i][1] * 10;
+            double goalVelR = rightMotion[i][1];
 //            double goalAccR = rightMotion[i][2];
 
             double errorL = goalPosL - RobotContainer.drive.getLeftPositionRaw();
-            double errorDerivL = ((errorL - prevErrorL) / 0.01) - goalVelL;
+            double errorDerivL = ((errorL - prevErrorL) / 0.1) - goalVelL;
 
             double errorR = goalPosR - RobotContainer.drive.getRightPositionRaw();
-            double errorDerivR = ((errorR - prevErrorR) / 0.01) - goalVelR;
+            double errorDerivR = ((errorR - prevErrorR) / 0.1) - goalVelR;
 
             double kP = Constants.DRIVE_P;
             double kD = Constants.DRIVE_D;
-            double kV = (Constants.DRIVE_F / 1023) * 10;
+            double kV = (Constants.DRIVE_F / 1023);
             double kA = 0;
 
             double percentL = (kP * errorL) + (kD * errorDerivL) + (kV * goalVelL);
