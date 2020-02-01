@@ -7,16 +7,19 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class CompressorStart extends CommandBase {
+public class CompressorAuto extends CommandBase {
     /**
      * Creates a new CompressorStart.
      */
-    public CompressorStart() {
+    public CompressorAuto() {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(RobotContainer.ourCompressor);
+
     }
 
     // Called when the command is initially scheduled.
@@ -24,11 +27,19 @@ public class CompressorStart extends CommandBase {
     public void initialize() {
         RobotContainer.ourCompressor.startCompressor();
     }
-
-    public void execute()
-    {
+    @Override
+    public void execute(){
+        if(DriverStation.getInstance().isAutonomous() || RobotContainer.shooter.isRunning() || RobotController.getBatteryVoltage() <= 8.5)
+        {
+            RobotContainer.ourCompressor.stopCompressor();
+        }
+        else
+        {
+            RobotContainer.ourCompressor.startCompressor();
+        }
 
     }
+
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {

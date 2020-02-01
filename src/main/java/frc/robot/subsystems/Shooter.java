@@ -65,8 +65,14 @@ public class Shooter extends SubsystemBase {
         shooter.set(mode, value);
         // System.out.println(value);
     }
+    public boolean isRunning()
+    {
+        return shooter.getControlMode() == ControlMode.Velocity;
+
+    }
 
     public void setRampRate(boolean enabled) {
         shooter.configClosedloopRamp(enabled ? 1.0 : 0);
     }
 }
+

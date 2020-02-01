@@ -55,6 +55,7 @@ public class RobotContainer {
 
     public RobotContainer() {
         ourCompressor = new OurCompressor();
+        ourCompressor.setDefaultCommand(new CompressorAuto());
         drive = new Drive();
         drive.setDefaultCommand(new DriveWithGamepad());
         turret = new Turret();
