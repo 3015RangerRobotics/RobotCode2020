@@ -79,4 +79,9 @@ public final class Constants {
     public static final int HARVESTER_MOTOR = 5;
     public static final int HARVESTER_SOLENOID_FORWARD = 7;
     public static final int HARVESTER_SOLENOID_REVERSE = 1;
+
+    //Hood Constants
+
+    public static final int HOOD_SOLENOID_FORWARD = 2;
+    public static final int HOOD_SOLENOID_REVERSE = 3;
 }

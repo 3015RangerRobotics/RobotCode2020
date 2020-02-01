@@ -22,6 +22,7 @@ public class RobotContainer {
     public static Shooter shooter;
     public static OurCompressor ourCompressor;
     public static Harvester harvester;
+    public static Hood hood;
 
     public static JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     public static JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
@@ -65,7 +66,7 @@ public class RobotContainer {
         ballHandler.setDefaultCommand(new BallHandlerDefault());
         harvester = new Harvester();
         driverRumble = new DriverRumble();
-
+        hood = new Hood();
         configureButtonBindings();
     }
 
