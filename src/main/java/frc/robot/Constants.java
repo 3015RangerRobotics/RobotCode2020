@@ -45,7 +45,7 @@ public final class Constants {
     public static final double SHOOTER_I = 0; // 0
     public static final double SHOOTER_D = 0; // 0
     public static final double SHOOTER_F = 0.02; // 0
-    public static final double SHOOTER_PULSES_PER_ROTATION = 4096;
+    public static final double SHOOTER_PULSES_PER_ROTATION = 1024;
 
     // Ball Handler Constants
     public static final int HANDLER_MOTOR1 = 0;

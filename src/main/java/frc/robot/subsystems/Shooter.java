@@ -36,7 +36,7 @@ public class Shooter extends SubsystemBase {
         shooter.setSelectedSensorPosition(0);
         shooter.setSensorPhase(false);
 
-        // shooter.configClosedloopRamp(secondsFromNeutralToFull);
+        setRampRate(true);
 
         shooter.config_kP(0, Constants.SHOOTER_P);
         shooter.config_kI(0, Constants.SHOOTER_I);
@@ -64,5 +64,9 @@ public class Shooter extends SubsystemBase {
     public void set(ControlMode mode, double value) {
         shooter.set(mode, value);
         // System.out.println(value);
+    }
+
+    public void setRampRate(boolean enabled) {
+        shooter.configClosedloopRamp(enabled ? 1.0 : 0);
     }
 }

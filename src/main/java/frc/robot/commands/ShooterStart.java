@@ -27,6 +27,7 @@ public class ShooterStart extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        RobotContainer.shooter.setRampRate(true);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -35,6 +36,10 @@ public class ShooterStart extends CommandBase {
 //        RobotContainer.shooter.set(ControlMode.PercentOutput, 0.57);
            RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.SHOOTER_PULSES_PER_ROTATION);
         System.out.println(RobotContainer.shooter.getRPM());
+
+        if (RobotContainer.shooter.getRPM() > 1500){
+            RobotContainer.shooter.setRampRate(false);
+        }
     }
 
     // Called once the command ends or is interrupted.
