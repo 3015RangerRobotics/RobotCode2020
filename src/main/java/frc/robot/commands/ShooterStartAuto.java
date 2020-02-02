@@ -8,19 +8,21 @@
 package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class ShooterStart extends CommandBase {
-    double rpm = 0;
+public class ShooterStartAuto extends CommandBase {
+    double rpm = 5100;
+    double launch = Math.tan(Math.toRadians(53.2));
+    double f2m = 0.305;
 
     /**
      * Creates a new ShooterStart.
      */
-    public ShooterStart(double rpm) {
+    public ShooterStartAuto() {
         addRequirements(RobotContainer.shooter);
-        this.rpm = rpm;
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
@@ -28,7 +30,12 @@ public class ShooterStart extends CommandBase {
     @Override
     public void initialize() {
         RobotContainer.shooter.setRampRate(true);
-        System.out.println("===================");
+        double d = RobotContainer.limelight.getArea();
+        rpm = 5283.809 + (-85.301*d) + (-27.34*d*d);
+//        double a = Math.sqrt(9.81 * d * (launch*launch + 1));
+//        double b = Math.sqrt(Math.abs(2 * launch - (2 * 9.81 * (6.19*f2m) / d)));
+//        double v = a / b;
+        System.out.println("===================" + d);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

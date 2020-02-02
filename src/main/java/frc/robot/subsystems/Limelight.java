@@ -121,6 +121,14 @@ public class Limelight extends SubsystemBase {
         return limelight.getEntry("camtran").getDoubleArray(new double[]{0, 0, 0, 0, 0, 0});
     }
 
+    public double get3DDistance(){
+        return Math.sqrt(getTranslationZ()*getTranslationZ() + getTranslationX()*getTranslationX());
+    }
+
+    public double getArea(){
+        return limelight.getEntry("ta").getDouble(0);
+    }
+
     /**
      * @return The X distance to the target
      */

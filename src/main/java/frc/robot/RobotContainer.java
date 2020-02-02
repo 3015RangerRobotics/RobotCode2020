@@ -74,13 +74,15 @@ public class RobotContainer {
     private void configureButtonBindings() {
         driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         driverB.whileActiveContinuous(new BallHandlerPurge());
-        driverX.whenActive(new DriveMotionProfile("path"));
+        driverX.whenActive(new Auto8BallTrench());
         driverDLeft.whenActive(new CG_HomeTurret());
         driverDUp.whenActive(new CG_OhHeck());
         driverDDown.whenActive(new HarvesterDown());
-//        driverLB.whileActiveContinuous(new CG_ReadyToFireInner()).whenInactive(new TurretToPosition(0));
-//        driverLT.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new TurretToPosition(0));
-//        driverRT.whileActiveContinuous(new CG_FireZeMissiles());
+        driverLB.whileActiveContinuous(new CG_ReadyToFireInner()).whenInactive(new TurretToPosition(0));
+//        driverLB.whenActive(new ShooterStart());
+//        driverLT.whenActive(new ShooterStop());
+        driverLT.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new TurretToPosition(0));
+        driverRT.whileActiveContinuous(new CG_FireZeMissiles());
         driverStart.whenActive(new CompressorStart());
         driverBack.whenActive(new CompressorStop());
 

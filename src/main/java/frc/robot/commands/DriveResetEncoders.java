@@ -10,19 +10,18 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class CompressorStart extends CommandBase {
+public class DriveResetEncoders extends CommandBase {
     /**
      * Creates a new CompressorStart.
      */
-    public CompressorStart() {
+    public DriveResetEncoders() {
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(RobotContainer.ourCompressor);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.ourCompressor.startCompressor();
+        RobotContainer.drive.resetEncoders();
     }
 
     public void execute()
@@ -37,6 +36,6 @@ public class CompressorStart extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }

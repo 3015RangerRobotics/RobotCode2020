@@ -65,11 +65,11 @@ public class DriveMotionProfile extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(i < left2.length && i >= 0) {
-            System.out.println("drive_train_left," + left2[i][0] / Constants.DRIVE_PULSES_PER_FOOT + "," + RobotContainer.drive.getLeftPosition());
-            System.out.println("drive_train_right," + right2[i][0] / Constants.DRIVE_PULSES_PER_FOOT + "," + RobotContainer.drive.getRightPosition());
-        }
-        i += 2;
+//        if(i < left2.length && i >= 0) {
+//            System.out.println("drive_train_left," + left2[i][0] / Constants.DRIVE_PULSES_PER_FOOT + "," + RobotContainer.drive.getLeftPosition());
+//            System.out.println("drive_train_right," + right2[i][0] / Constants.DRIVE_PULSES_PER_FOOT + "," + RobotContainer.drive.getRightPosition());
+//        }
+//        i += 2;
 //        RobotContainer.drive.setMotorOutputs(ControlMode.MotionMagic, distance * Constants.DRIVE_PULSES_PER_FOOT, distance * Constants.DRIVE_PULSES_PER_FOOT);
     }
 
@@ -82,10 +82,10 @@ public class DriveMotionProfile extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-//        if(distance != 0){
-//            return RobotContainer.drive.isClosedLoopOnTarget();
-//        }else{
+        if(distance != 0){
+            return Math.abs(RobotContainer.drive.getActiveTrajPositionLeft()) >= Math.abs(distance - 0.1);
+        }else{
             return RobotContainer.drive.isMotionProfileFinished();
-//        }
+        }
     }
 }

@@ -34,17 +34,17 @@ public final class Constants {
     public static final int TURRET_SOFT_LIMIT_REVERSE = -90;
     public static final double TURRET_MAX_SPEED = 0.7;
     public static final double TURRET_MIN_SPEED = 0.15;
-    public static final double TURRET_DEGREE_MARGIN = Math.round((1 / Constants.TURRET_DEGREES_PER_PULSE) * 0.25);
+    public static final double TURRET_DEGREE_MARGIN = Math.round((1 / Constants.TURRET_DEGREES_PER_PULSE) * 0.15);
     public static final int TURRET_LEFT_LIMIT = 0;
     public static final int TURRET_RIGHT_LIMIT = 1;
     public static final int TURRET_HOMING_POSITION = (int) Math.round(-90 / TURRET_DEGREES_PER_PULSE);
 
     // Shooter Constants
     public static final int SHOOTER_MOTOR = 5;
-    public static final double SHOOTER_P = 0;
+    public static final double SHOOTER_P = 3.0;//3.7
     public static final double SHOOTER_I = 0; // 0
-    public static final double SHOOTER_D = 0; // 0
-    public static final double SHOOTER_F = 0.02; // 0
+    public static final double SHOOTER_D = 5.0; // 46.0
+    public static final double SHOOTER_F = 0.047; // 0
     public static final double SHOOTER_PULSES_PER_ROTATION = 1024;
 
     // Ball Handler Constants
@@ -58,7 +58,7 @@ public final class Constants {
     public static final int HANDLER_SWITCH3 = 4;
     public static final int HANDLER_SWITCH4 = 5;
     public static final int HANDLER_SWITCH5 = 6;
-    public static final double HANDLER_MOTOR_IN_SPEED1 = 0.75;
+    public static final double HANDLER_MOTOR_IN_SPEED1 = 0.5;
     public static final double HANDLER_MOTOR_IN_SPEED2 = 0.68;
     public static final double HANDLER_MOTOR_IN_SPEED3 = 0.62;
     public static final double HANDLER_MOTOR_IN_SPEED4 = 0.55;
@@ -69,7 +69,7 @@ public final class Constants {
     public static final double HANDLER_MOTOR_OUT_SPEED4 = -0.68;
     public static final double HANDLER_MOTOR_OUT_SPEED5 = -0.75;
     public static final double HANDLER_MOTOR_SHOOT_SPEED1 = 1.0;
-    public static final double HANDLER_MOTOR_SHOOT_SPEED2 = 0.5;
+    public static final double HANDLER_MOTOR_SHOOT_SPEED2 = 0.6;
     public static final double HANDLER_MOTOR_SHOOT_SPEED3 = 0.4;
     public static final double HANDLER_MOTOR_SHOOT_SPEED4 = 0.4;
     public static final double HANDLER_MOTOR_SHOOT_SPEED5 = 0.4;
