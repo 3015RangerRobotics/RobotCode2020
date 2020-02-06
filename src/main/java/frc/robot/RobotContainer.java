@@ -78,6 +78,7 @@ public class RobotContainer {
         driverDLeft.whenActive(new CG_HomeTurret());
         driverDUp.whenActive(new CG_OhHeck());
         driverDDown.whenActive(new HarvesterDown());
+        driverDRight.whileActiveContinuous(new DrivePlayMusic());
         driverLB.whileActiveContinuous(new CG_ReadyToFireInner()).whenInactive(new TurretToPosition(0));
 //        driverLB.whenActive(new ShooterStart());
 //        driverLT.whenActive(new ShooterStop());

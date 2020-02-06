@@ -14,10 +14,9 @@ import java.util.ArrayList;
 
 import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
 import com.ctre.phoenix.motion.TrajectoryPoint;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.music.Orchestra;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -38,6 +37,8 @@ public class Drive extends SubsystemBase {
     private double leftEncoderOffset = 0;
     private double rightEncoderOffset = 0;
 
+    private Orchestra orchestra;
+
     public Drive() {
         this.rightMaster = new TalonFX(Constants.DRIVE_RIGHT_MASTER);
         this.rightFollower = new TalonFX(Constants.DRIVE_RIGHT_FOLLOWER);
@@ -55,10 +56,7 @@ public class Drive extends SubsystemBase {
         leftMaster.setInverted(false);
         leftFollower.setInverted(false);
 
-//        rightMaster.setNeutralMode(NeutralMode.Coast);
-//        rightFollower.setNeutralMode(NeutralMode.Coast);
-//        leftMaster.setNeutralMode(NeutralMode.Coast);
-//        leftFollower.setNeutralMode(NeutralMode.Coast);\
+        leftMaster.setStatusFramePeriod(StatusFrame.Status_1_General, 10);
 
         enableBrakeMode();
 
@@ -90,6 +88,14 @@ public class Drive extends SubsystemBase {
         leftMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.DRIVE_MAX_MOTION_ERROR));
         rightMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.DRIVE_MAX_MOTION_ERROR));
 
+        ArrayList<TalonFX> instruments = new ArrayList<>();
+        instruments.add(leftMaster);
+        instruments.add(leftFollower);
+        instruments.add(rightMaster);
+        instruments.add(rightFollower);
+
+        orchestra = new Orchestra(instruments);
+        orchestra.loadMusic("pirates.chrp");
 
         resetEncoders();
     }
@@ -98,6 +104,14 @@ public class Drive extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
 //        System.out.println(rightMaster.getSelectedSensorVelocity());
+    }
+
+    public void playMusic(){
+        orchestra.play();
+    }
+
+    public void stopMusic(){
+        orchestra.stop();
     }
 
     public double getActiveTrajPositionLeft(){
