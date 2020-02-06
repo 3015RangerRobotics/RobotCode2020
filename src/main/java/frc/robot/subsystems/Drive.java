@@ -56,7 +56,25 @@ public class Drive extends SubsystemBase {
         leftMaster.setInverted(false);
         leftFollower.setInverted(false);
 
-        leftMaster.setStatusFramePeriod(StatusFrame.Status_1_General, 10);
+        leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 10);
+        leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10);
+        leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_9_MotProfBuffer, 10);
+        leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
+
+        leftFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 10);
+        leftFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10);
+        leftFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_9_MotProfBuffer, 10);
+        leftFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
+
+        rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 10);
+        rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10);
+        rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_9_MotProfBuffer, 10);
+        rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
+
+        rightFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 10);
+        rightFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10);
+        rightFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_9_MotProfBuffer, 10);
+        rightFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
 
         enableBrakeMode();
 
