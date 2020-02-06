@@ -10,6 +10,7 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class DriveWithGamepad extends CommandBase {
@@ -24,6 +25,7 @@ public class DriveWithGamepad extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        RobotContainer.drive.enableCoastMode();
 
     }
 
@@ -52,6 +54,7 @@ public class DriveWithGamepad extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         RobotContainer.drive.setMotorOutputs(ControlMode.PercentOutput, 0, 0);
+        RobotContainer.drive.enableBrakeMode();
 
     }
 
@@ -59,5 +62,11 @@ public class DriveWithGamepad extends CommandBase {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    //i dont approve
+    @Override
+    public boolean runsWhenDisabled(){
+        return true;
     }
 }

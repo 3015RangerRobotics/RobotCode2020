@@ -46,8 +46,8 @@ public class Harvester extends SubsystemBase {
     /**
      * Set the harvester motor to intake balls
      */
-    public void harvesterIn() {
-        harvesterMotor.set(-0.75);
+    public void harvesterIn(double speed) {
+        harvesterMotor.set(speed);
     }
 
     /**

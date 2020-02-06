@@ -13,13 +13,47 @@ public class Auto8BallTrench extends SequentialCommandGroup {
 //                        new CG_HomeTurret(),
                         new ShooterStart(5400),
                         new BallHandlerHarvest(),
-                        new HarvesterIn(),
+                        new HarvesterIn(-1.0),
                         new DriveMotionProfile(11)
                 ),
                 new ParallelDeadlineGroup(
                         new WaitCommand(3),
+                        new SequentialCommandGroup(
+                                new WaitCommand(0.25),
+//                                new DriveResetEncoders(),
+                                new ParallelCommandGroup(
+                                        new TurretTurnToTarget(),
+                                        new ShooterStartAuto()
+                                )
+                        ),
+                        new SequentialCommandGroup(
+                                new WaitCommand(0.75),
+                                new BallHandlerShoot()
+                        )
+                ),
+                new ParallelRaceGroup(
                         new ShooterStart(5400),
-                        new TurretTurnToTarget(),
+                        new TurretToPosition(0),
+                        new BallHandlerHarvest(),
+                        new HarvesterIn(-1.0),
+                        new DriveMotionProfile(9)
+                ),
+//                new DriveResetEncoders(),
+                new WaitCommand(.25),
+                new ParallelRaceGroup(
+                        new ShooterStart(5400),
+                        new DriveMotionProfile(-8.5)
+                ),
+                new ParallelDeadlineGroup(
+                        new WaitCommand(3),
+                        new SequentialCommandGroup(
+                                new WaitCommand(0.25),
+//                                new DriveResetEncoders(),
+                                new ParallelCommandGroup(
+                                        new TurretTurnToTarget(),
+                                        new ShooterStartAuto()
+                                )
+                        ),
                         new SequentialCommandGroup(
                                 new WaitCommand(0.75),
                                 new BallHandlerShoot()

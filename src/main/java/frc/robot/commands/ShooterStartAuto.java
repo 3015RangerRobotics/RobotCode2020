@@ -31,7 +31,8 @@ public class ShooterStartAuto extends CommandBase {
     public void initialize() {
         RobotContainer.shooter.setRampRate(true);
         double d = RobotContainer.limelight.getArea();
-        rpm = 5283.809 + (-85.301*d) + (-27.34*d*d);
+//        rpm = 5283.809 + (-85.301*d) + (-27.34*d*d);
+        rpm = 6494.93513 + (-2502.61834*d) + (1063.20913*d*d);
 //        double a = Math.sqrt(9.81 * d * (launch*launch + 1));
 //        double b = Math.sqrt(Math.abs(2 * launch - (2 * 9.81 * (6.19*f2m) / d)));
 //        double v = a / b;
@@ -43,7 +44,7 @@ public class ShooterStartAuto extends CommandBase {
     public void execute() {
 //        RobotContainer.shooter.set(ControlMode.PercentOutput, 0.57);
            RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.SHOOTER_PULSES_PER_ROTATION);
-        System.out.println("shooter," + rpm + "," + RobotContainer.shooter.getRPM());
+//        System.out.println("shooter," + rpm + "," + RobotContainer.shooter.getRPM());
 
         if (RobotContainer.shooter.getRPM() > 1500){
             RobotContainer.shooter.setRampRate(false);
@@ -59,6 +60,6 @@ public class ShooterStartAuto extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return RobotContainer.shooter.getRPM() >= 7000;
+        return RobotContainer.shooter.getRPM() >= 7500;
     }
 }

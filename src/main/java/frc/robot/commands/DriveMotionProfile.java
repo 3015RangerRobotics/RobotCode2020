@@ -18,10 +18,11 @@ public class DriveMotionProfile extends CommandBase {
     /**
      * Creates a new DriveMotionProfile.
      */
-    private BufferedTrajectoryPointStream left;
-    private BufferedTrajectoryPointStream right;
-    private double[][] left2;
-    private double[][] right2;
+//    private BufferedTrajectoryPointStream left;
+//    private BufferedTrajectoryPointStream right;
+//    private double[][] left2;
+//    private double[][] right2;
+    private String pathName;
     private double distance = 0;
 
     /**
@@ -30,11 +31,8 @@ public class DriveMotionProfile extends CommandBase {
      */
     public DriveMotionProfile(String pathName) {
         addRequirements(RobotContainer.drive);
-        left = RobotContainer.drive.loadProfileAsBuffer(pathName + "_left");
-        left2 = RobotContainer.drive.loadProfile(pathName + "_left");
-        right = RobotContainer.drive.loadProfileAsBuffer(pathName + "_right");
-        right2 = RobotContainer.drive.loadProfile(pathName + "_right");
         distance = 0;
+        this.pathName = pathName;
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
@@ -53,6 +51,10 @@ public class DriveMotionProfile extends CommandBase {
     public void initialize() {
         i = -20;
         RobotContainer.drive.resetEncoders();
+        BufferedTrajectoryPointStream left = RobotContainer.drive.loadProfileAsBuffer(pathName + "_left", true);
+//        left2 = RobotContainer.drive.loadProfile(pathName + "_left");
+        BufferedTrajectoryPointStream right = RobotContainer.drive.loadProfileAsBuffer(pathName + "_right", false);
+//        right2 = RobotContainer.drive.loadProfile(pathName + "_right");
         System.out.println("======================================");
         if (distance != 0) {
 //            System.out.println(distance * Constants.DRIVE_PULSES_PER_FOOT);
@@ -83,7 +85,7 @@ public class DriveMotionProfile extends CommandBase {
     @Override
     public boolean isFinished() {
         if(distance != 0){
-            return Math.abs(RobotContainer.drive.getActiveTrajPositionLeft()) >= Math.abs(distance - 0.1);
+            return Math.abs(RobotContainer.drive.getActiveTrajPositionLeft()) >= Math.abs(distance) - 0.1;
         }else{
             return RobotContainer.drive.isMotionProfileFinished();
         }

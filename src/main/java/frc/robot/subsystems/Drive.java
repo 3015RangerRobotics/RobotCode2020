@@ -35,6 +35,9 @@ public class Drive extends SubsystemBase {
     private TalonFX leftMaster;
     private TalonFX leftFollower;
 
+    private double leftEncoderOffset = 0;
+    private double rightEncoderOffset = 0;
+
     public Drive() {
         this.rightMaster = new TalonFX(Constants.DRIVE_RIGHT_MASTER);
         this.rightFollower = new TalonFX(Constants.DRIVE_RIGHT_FOLLOWER);
@@ -52,10 +55,12 @@ public class Drive extends SubsystemBase {
         leftMaster.setInverted(false);
         leftFollower.setInverted(false);
 
-        rightMaster.setNeutralMode(NeutralMode.Coast);
-        rightFollower.setNeutralMode(NeutralMode.Coast);
-        leftMaster.setNeutralMode(NeutralMode.Coast);
-        leftFollower.setNeutralMode(NeutralMode.Coast);
+//        rightMaster.setNeutralMode(NeutralMode.Coast);
+//        rightFollower.setNeutralMode(NeutralMode.Coast);
+//        leftMaster.setNeutralMode(NeutralMode.Coast);
+//        leftFollower.setNeutralMode(NeutralMode.Coast);\
+
+        enableBrakeMode();
 
         rightMaster.enableVoltageCompensation(true);
         rightMaster.configVoltageCompSaturation(12.5);
@@ -96,44 +101,60 @@ public class Drive extends SubsystemBase {
     }
 
     public double getActiveTrajPositionLeft(){
-        return leftMaster.getActiveTrajectoryPosition() / Constants.DRIVE_PULSES_PER_FOOT;
+        return (leftMaster.getActiveTrajectoryPosition() - leftEncoderOffset) / Constants.DRIVE_PULSES_PER_FOOT;
     }
 
     public double getActiveTrajPositionRight(){
-        return rightMaster.getActiveTrajectoryPosition() / Constants.DRIVE_PULSES_PER_FOOT;
+        return (rightMaster.getActiveTrajectoryPosition() - rightEncoderOffset) / Constants.DRIVE_PULSES_PER_FOOT;
     }
 
-    public double getLeftPosition(){
-        return leftMaster.getSelectedSensorPosition() / Constants.DRIVE_PULSES_PER_FOOT;
-    }
-
-    public double getRightPosition(){
-        return rightMaster.getSelectedSensorPosition() / Constants.DRIVE_PULSES_PER_FOOT;
-    }
-
-    public double getLeftPositionRaw(){
-        return leftMaster.getSelectedSensorPosition();
-    }
-
-    public double getRightPositionRaw(){
-        return rightMaster.getSelectedSensorPosition();
-    }
-
-    public double getLeftError(){
-        return leftMaster.getClosedLoopError() / Constants.DRIVE_PULSES_PER_FOOT;
-    }
-
-    public double getRightError(){
-        return rightMaster.getClosedLoopError() / Constants.DRIVE_PULSES_PER_FOOT;
-    }
+//    public double getLeftPosition(){
+//        return leftMaster.getSelectedSensorPosition() / Constants.DRIVE_PULSES_PER_FOOT;
+//    }
+//
+//    public double getRightPosition(){
+//        return rightMaster.getSelectedSensorPosition() / Constants.DRIVE_PULSES_PER_FOOT;
+//    }
+//
+//    public double getLeftPositionRaw(){
+//        return leftMaster.getSelectedSensorPosition();
+//    }
+//
+//    public double getRightPositionRaw(){
+//        return rightMaster.getSelectedSensorPosition();
+//    }
+//
+//    public double getLeftError(){
+//        return leftMaster.getClosedLoopError() / Constants.DRIVE_PULSES_PER_FOOT;
+//    }
+//
+//    public double getRightError(){
+//        return rightMaster.getClosedLoopError() / Constants.DRIVE_PULSES_PER_FOOT;
+//    }
 
 
     /**
      * Reset the drive encoders to 0
      */
     public void resetEncoders() {
-        leftMaster.setSelectedSensorPosition(0);
-        rightMaster.setSelectedSensorPosition(0);
+        leftEncoderOffset = leftMaster.getSelectedSensorPosition();
+        rightEncoderOffset = rightMaster.getSelectedSensorPosition();
+//        leftMaster.setSelectedSensorPosition(0);
+//        rightMaster.setSelectedSensorPosition(0);
+    }
+
+    public void enableCoastMode(){
+        rightMaster.setNeutralMode(NeutralMode.Coast);
+        rightFollower.setNeutralMode(NeutralMode.Coast);
+        leftMaster.setNeutralMode(NeutralMode.Coast);
+        leftFollower.setNeutralMode(NeutralMode.Coast);
+    }
+
+    public void enableBrakeMode(){
+        rightMaster.setNeutralMode(NeutralMode.Brake);
+        rightFollower.setNeutralMode(NeutralMode.Brake);
+        leftMaster.setNeutralMode(NeutralMode.Brake);
+        leftFollower.setNeutralMode(NeutralMode.Brake);
     }
 
     /**
@@ -151,8 +172,13 @@ public class Drive extends SubsystemBase {
      * @param rightMotor Output value of the right motor
      */
     public void setMotorOutputs(ControlMode mode, double leftMotor, double rightMotor) {
-        this.rightMaster.set(mode, rightMotor);
-        this.leftMaster.set(mode, leftMotor);
+        if(mode == ControlMode.MotionMagic){
+            this.rightMaster.set(mode, rightMotor + rightEncoderOffset);
+            this.leftMaster.set(mode, leftMotor + leftEncoderOffset);
+        }else{
+            this.rightMaster.set(mode, rightMotor);
+            this.leftMaster.set(mode, leftMotor);
+        }
     }
 
     /**
@@ -171,13 +197,13 @@ public class Drive extends SubsystemBase {
      * @param pathName The profile to load
      * @return The given profile as a BufferedTrajectoryPointStream
      */
-    public BufferedTrajectoryPointStream loadProfileAsBuffer(String pathName) {
+    public BufferedTrajectoryPointStream loadProfileAsBuffer(String pathName, boolean isLeft) {
         BufferedTrajectoryPointStream buffer = new BufferedTrajectoryPointStream();
         double[][] profile = loadProfile(pathName);
 
         for (int i = 0; i < profile.length; i++) {
             TrajectoryPoint point = new TrajectoryPoint();
-            double position = profile[i][0];
+            double position = profile[i][0] + (isLeft ? leftEncoderOffset : rightEncoderOffset);
             double velocity = profile[i][1];
 
             point.timeDur = Constants.DRIVE_TIME_STEP;
