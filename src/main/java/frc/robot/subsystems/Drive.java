@@ -34,8 +34,8 @@ public class Drive extends SubsystemBase {
     private TalonFX leftMaster;
     private TalonFX leftFollower;
 
-    private double leftEncoderOffset = 0;
-    private double rightEncoderOffset = 0;
+//    private double leftEncoderOffset = 0;
+//    private double rightEncoderOffset = 0;
 
     private Orchestra orchestra;
 
@@ -82,9 +82,6 @@ public class Drive extends SubsystemBase {
         rightMaster.configVoltageCompSaturation(12.5);
         leftMaster.enableVoltageCompensation(true);
         leftMaster.configVoltageCompSaturation(12.5);
-
-        // rightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        // leftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
         rightMaster.setSensorPhase(true);
         leftMaster.setSensorPhase(false);
@@ -133,11 +130,11 @@ public class Drive extends SubsystemBase {
     }
 
     public double getActiveTrajPositionLeft(){
-        return (leftMaster.getActiveTrajectoryPosition() - leftEncoderOffset) / Constants.DRIVE_PULSES_PER_FOOT;
+        return leftMaster.getActiveTrajectoryPosition() / Constants.DRIVE_PULSES_PER_FOOT;
     }
 
     public double getActiveTrajPositionRight(){
-        return (rightMaster.getActiveTrajectoryPosition() - rightEncoderOffset) / Constants.DRIVE_PULSES_PER_FOOT;
+        return rightMaster.getActiveTrajectoryPosition() / Constants.DRIVE_PULSES_PER_FOOT;
     }
 
 //    public double getLeftPosition(){
@@ -169,10 +166,10 @@ public class Drive extends SubsystemBase {
      * Reset the drive encoders to 0
      */
     public void resetEncoders() {
-        leftEncoderOffset = leftMaster.getSelectedSensorPosition();
-        rightEncoderOffset = rightMaster.getSelectedSensorPosition();
-//        leftMaster.setSelectedSensorPosition(0);
-//        rightMaster.setSelectedSensorPosition(0);
+//        leftEncoderOffset = leftMaster.getSelectedSensorPosition();
+//        rightEncoderOffset = rightMaster.getSelectedSensorPosition();
+        leftMaster.setSelectedSensorPosition(0);
+        rightMaster.setSelectedSensorPosition(0);
     }
 
     public void enableCoastMode(){
@@ -204,13 +201,8 @@ public class Drive extends SubsystemBase {
      * @param rightMotor Output value of the right motor
      */
     public void setMotorOutputs(ControlMode mode, double leftMotor, double rightMotor) {
-        if(mode == ControlMode.MotionMagic){
-            this.rightMaster.set(mode, rightMotor + rightEncoderOffset);
-            this.leftMaster.set(mode, leftMotor + leftEncoderOffset);
-        }else{
-            this.rightMaster.set(mode, rightMotor);
-            this.leftMaster.set(mode, leftMotor);
-        }
+        this.rightMaster.set(mode, rightMotor);
+        this.leftMaster.set(mode, leftMotor);
     }
 
     /**
@@ -222,38 +214,6 @@ public class Drive extends SubsystemBase {
     public void arcadeDrive(double driveValue, double turnValue, boolean squaredInputs) {
         DriveSignal ds = DriveHelper.arcadeDrive(driveValue, turnValue, squaredInputs);
         setMotorOutputs(ControlMode.PercentOutput, ds.leftSignal, ds.rightSignal);
-    }
-
-    /**
-     * Create a BufferedTrajectoryPointStream for the drive motors to follow
-     * @param pathName The profile to load
-     * @return The given profile as a BufferedTrajectoryPointStream
-     */
-    public BufferedTrajectoryPointStream loadProfileAsBuffer(String pathName, boolean isLeft) {
-        BufferedTrajectoryPointStream buffer = new BufferedTrajectoryPointStream();
-        double[][] profile = loadProfile(pathName);
-
-        for (int i = 0; i < profile.length; i++) {
-            TrajectoryPoint point = new TrajectoryPoint();
-            double position = profile[i][0] + (isLeft ? leftEncoderOffset : rightEncoderOffset);
-            double velocity = profile[i][1];
-
-            point.timeDur = Constants.DRIVE_TIME_STEP;
-            point.position = position;
-            point.velocity = velocity;
-
-            point.auxiliaryPos = 0;
-            point.auxiliaryVel = 0;
-            point.profileSlotSelect0 = 0;
-            point.profileSlotSelect1 = 1;
-            point.zeroPos = (i == 0);
-            point.isLastPoint = ((i + 1) == profile.length);
-            point.arbFeedFwd = 0;
-
-            buffer.Write(point);
-
-        }
-        return buffer;
     }
 
     /**
@@ -281,36 +241,5 @@ public class Drive extends SubsystemBase {
      */
     public boolean isMotionProfileFinished() {
         return leftMaster.isMotionProfileFinished() && rightMaster.isMotionProfileFinished();
-    }
-
-    /**
-     * Load a motion profile from a csv file
-     * @param profileName The name of the profile to load
-     * @return The profile as a BufferedTrajectoryPointStream
-     */
-    public double[][] loadProfile(String profileName) {
-        double[][] profile = new double[][]{};
-        try (BufferedReader br = new BufferedReader(
-                new FileReader(new File(Filesystem.getDeployDirectory(), "paths/" + profileName + ".csv")))) {
-            ArrayList<double[]> points = new ArrayList<double[]>();
-
-            String line = "";
-            while ((line = br.readLine()) != null) {
-                String[] pointString = line.split(",");
-                double[] point = new double[2];
-                for (int i = 0; i < 2; i++) {
-                    point[i] = Double.parseDouble(pointString[i]);
-                }
-                points.add(point);
-            }
-            profile = new double[points.size()][2];
-            for (int i = 0; i < points.size(); i++) {
-                profile[i][0] = points.get(i)[0] * Constants.DRIVE_PULSES_PER_FOOT;
-                profile[i][1] = points.get(i)[1] * Constants.DRIVE_PULSES_PER_FOOT / 10;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return profile;
     }
 }

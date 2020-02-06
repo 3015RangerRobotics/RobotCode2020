@@ -12,18 +12,14 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.DriveProfile;
 import frc.robot.RobotContainer;
 
 public class DriveMotionProfile extends CommandBase {
     /**
      * Creates a new DriveMotionProfile.
      */
-//    private BufferedTrajectoryPointStream left;
-//    private BufferedTrajectoryPointStream right;
-//    private double[][] left2;
-//    private double[][] right2;
-    private String pathName;
-    private double distance = 0;
+    private DriveProfile profile;
 
     /**
      * Create a motion profile command to drive a pre-generated path
@@ -31,48 +27,32 @@ public class DriveMotionProfile extends CommandBase {
      */
     public DriveMotionProfile(String pathName) {
         addRequirements(RobotContainer.drive);
-        distance = 0;
-        this.pathName = pathName;
-        // Use addRequirements() here to declare subsystem dependencies.
+        this.profile = new DriveProfile(pathName);
     }
 
     /**
      * Create a motion profile command to drive a straight line using motion magic
      * @param distance The distance to drive
+     * @param maxV The max velocity
+     * @param accel The max acceleration
      */
-    public DriveMotionProfile(double distance) {
+    public DriveMotionProfile(double distance, double maxV, double accel) {
         addRequirements(RobotContainer.drive);
-        this.distance = distance;
+//        this.distance = distance;
+        this.profile = new DriveProfile(distance, maxV, accel);
     }
-    int i = -20;
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        i = -20;
         RobotContainer.drive.resetEncoders();
-        BufferedTrajectoryPointStream left = RobotContainer.drive.loadProfileAsBuffer(pathName + "_left", true);
-//        left2 = RobotContainer.drive.loadProfile(pathName + "_left");
-        BufferedTrajectoryPointStream right = RobotContainer.drive.loadProfileAsBuffer(pathName + "_right", false);
-//        right2 = RobotContainer.drive.loadProfile(pathName + "_right");
-        System.out.println("======================================");
-        if (distance != 0) {
-//            System.out.println(distance * Constants.DRIVE_PULSES_PER_FOOT);
-            RobotContainer.drive.setMotorOutputs(ControlMode.MotionMagic, distance * Constants.DRIVE_PULSES_PER_FOOT, distance * Constants.DRIVE_PULSES_PER_FOOT);
-        } else {
-            RobotContainer.drive.startMotionProfile(left, right);
-        }
+        RobotContainer.drive.startMotionProfile(profile.getLeftProfile().asBuffer(), profile.getRightProfile().asBuffer());
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-//        if(i < left2.length && i >= 0) {
-//            System.out.println("drive_train_left," + left2[i][0] / Constants.DRIVE_PULSES_PER_FOOT + "," + RobotContainer.drive.getLeftPosition());
-//            System.out.println("drive_train_right," + right2[i][0] / Constants.DRIVE_PULSES_PER_FOOT + "," + RobotContainer.drive.getRightPosition());
-//        }
-//        i += 2;
-//        RobotContainer.drive.setMotorOutputs(ControlMode.MotionMagic, distance * Constants.DRIVE_PULSES_PER_FOOT, distance * Constants.DRIVE_PULSES_PER_FOOT);
+
     }
 
     // Called once the command ends or is interrupted.
@@ -84,10 +64,6 @@ public class DriveMotionProfile extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if(distance != 0){
-            return Math.abs(RobotContainer.drive.getActiveTrajPositionLeft()) >= Math.abs(distance) - 0.1;
-        }else{
-            return RobotContainer.drive.isMotionProfileFinished();
-        }
+        return RobotContainer.drive.isMotionProfileFinished();
     }
 }

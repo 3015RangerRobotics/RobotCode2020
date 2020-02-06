@@ -21,7 +21,7 @@ public final class Constants {
     public static final double DRIVE_MAX_VELOCITY = 8 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_MAX_ACCELERATION = 6 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_MAX_MOTION_ERROR = 0.1 * DRIVE_PULSES_PER_FOOT;
-    public static final int DRIVE_TIME_STEP = 10;
+    public static final int MP_TIME_STEP = 10;
 
     // Turret Constants
     public static final int TURRET_MOTOR = 6;
