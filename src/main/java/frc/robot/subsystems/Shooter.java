@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
-    private TalonFX shooter;
+    public TalonFX shooter;
 
     /**
      * Creates a new Shooter.

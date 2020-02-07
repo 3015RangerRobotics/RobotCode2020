@@ -33,8 +33,8 @@ public class MotionProfile {
 
         for (int i = 0; i < profile.length; i++) {
             TrajectoryPoint point = new TrajectoryPoint();
-            double position = profile[i][0];
-            double velocity = profile[i][1];
+            double position = profile[i][0] * Constants.DRIVE_PULSES_PER_FOOT;
+            double velocity = profile[i][1] * Constants.DRIVE_PULSES_PER_FOOT / 10;
 
             point.timeDur = Constants.MP_TIME_STEP;
             point.position = position;
@@ -76,8 +76,8 @@ public class MotionProfile {
             }
             profile = new double[points.size()][2];
             for (int i = 0; i < points.size(); i++) {
-                profile[i][0] = points.get(i)[0] * Constants.DRIVE_PULSES_PER_FOOT;
-                profile[i][1] = points.get(i)[1] * Constants.DRIVE_PULSES_PER_FOOT / 10;
+                profile[i][0] = points.get(i)[0];
+                profile[i][1] = points.get(i)[1];
             }
         } catch (Exception e) {
             e.printStackTrace();

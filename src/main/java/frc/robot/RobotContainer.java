@@ -57,11 +57,11 @@ public class RobotContainer {
     public RobotContainer() {
         ourCompressor = new OurCompressor();
         ourCompressor.setDefaultCommand(new CompressorAuto());
+        shooter = new Shooter();
         drive = new Drive();
         drive.setDefaultCommand(new DriveWithGamepad());
         turret = new Turret();
         limelight = new Limelight();
-        shooter = new Shooter();
         ballHandler = new BallHandler();
         ballHandler.setDefaultCommand(new BallHandlerDefault());
         harvester = new Harvester();

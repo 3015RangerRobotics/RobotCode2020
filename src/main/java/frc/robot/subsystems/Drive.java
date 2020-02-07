@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.DriveHelper;
 import frc.robot.DriveSignal;
+import frc.robot.RobotContainer;
 
 public class Drive extends SubsystemBase {
     /**
@@ -104,13 +105,14 @@ public class Drive extends SubsystemBase {
         rightMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.DRIVE_MAX_MOTION_ERROR));
 
         ArrayList<TalonFX> instruments = new ArrayList<>();
+        instruments.add(RobotContainer.shooter.shooter);
         instruments.add(leftMaster);
-        instruments.add(leftFollower);
+//        instruments.add(leftFollower);
         instruments.add(rightMaster);
-        instruments.add(rightFollower);
-
+//        instruments.add(rightFollower);
+//
         orchestra = new Orchestra(instruments);
-        orchestra.loadMusic("pirates.chrp");
+        orchestra.loadMusic("jeopardy.chrp");
 
         resetEncoders();
     }
@@ -127,6 +129,14 @@ public class Drive extends SubsystemBase {
 
     public void stopMusic(){
         orchestra.stop();
+    }
+
+    public double getLeftPositionRaw(){
+        return leftMaster.getSelectedSensorPosition();
+    }
+
+    public double getRightPositionRaw(){
+        return rightMaster.getSelectedSensorPosition();
     }
 
     public double getActiveTrajPositionLeft(){
