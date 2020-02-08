@@ -14,6 +14,7 @@ public final class Constants {
     public static final int DRIVE_LEFT_MASTER = 3;
     public static final int DRIVE_LEFT_FOLLOWER = 4;
     public static final double DRIVE_P = 0.005;//.005;
+    public static final double DRIVE_P_TURN = 0;
     public static final double DRIVE_I = 0;
     public static final double DRIVE_D = 13.724;//1;
     public static final double DRIVE_F = 1023.0/22600;

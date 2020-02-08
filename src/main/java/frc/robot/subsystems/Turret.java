@@ -23,6 +23,7 @@ public class Turret extends SubsystemBase {
     private TalonSRX turretMotor;
     private DigitalInput leftLimit;
     private DigitalInput rightLimit;
+    private boolean isLeftShot = false;
 
     public Turret() {
         this.turretMotor = new TalonSRX(Constants.TURRET_MOTOR);
@@ -66,6 +67,14 @@ public class Turret extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         // System.out.println("Turret Angle: "  + getMotorPosition() + " Motor Speed: " + turretMotor.getMotorOutputPercent());
+    }
+
+    public boolean isLeftShot(){
+        return isLeftShot;
+    }
+
+    public void toggleLeftShot(){
+        isLeftShot = !isLeftShot;
     }
 
     /**

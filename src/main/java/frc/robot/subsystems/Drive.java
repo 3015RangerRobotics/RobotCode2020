@@ -19,6 +19,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.music.Orchestra;
 
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.DriveHelper;
@@ -39,8 +40,10 @@ public class Drive extends SubsystemBase {
 //    private double rightEncoderOffset = 0;
 
     private Orchestra orchestra;
+    private AHRS imu;
 
     public Drive() {
+        this.imu = new AHRS(SerialPort.Port.kMXP);
         this.rightMaster = new TalonFX(Constants.DRIVE_RIGHT_MASTER);
         this.rightFollower = new TalonFX(Constants.DRIVE_RIGHT_FOLLOWER);
         this.leftMaster = new TalonFX(Constants.DRIVE_LEFT_MASTER);
@@ -125,6 +128,14 @@ public class Drive extends SubsystemBase {
 
     public void playMusic(){
         orchestra.play();
+    }
+
+    public double getAngle(){
+        return imu.getAngle();
+    }
+
+    public void resetIMU(){
+        imu.reset();
     }
 
     public void stopMusic(){
