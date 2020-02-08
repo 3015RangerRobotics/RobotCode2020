@@ -75,6 +75,7 @@ public class RobotContainer {
         driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         driverB.whileActiveContinuous(new BallHandlerPurge());
         driverX.whenActive(new Auto8BallTrench());
+        driverY.whenActive(new DriveStraightTemp(5, 8, 5));
         driverDRight.whenActive(new CG_HomeTurret());
         driverDLeft.whenActive(new CG_ToggleTurretDefaultPosition());
         driverDUp.whenActive(new CG_OhHeck());
@@ -83,7 +84,7 @@ public class RobotContainer {
 //        driverLB.whileActiveContinuous(new CG_ReadyToFireInner()).whenInactive(new TurretToPosition(0));
 //        driverLB.whenActive(new ShooterStart());
 //        driverLT.whenActive(new ShooterStop());
-        driverLB.whileActiveContinuous(new CG_ReadyToFireInner()).whenInactive(new HoodDown());
+        driverLB.whileActiveContinuous(new CG_ReadyToFireBatter()).whenInactive(new HoodDown());
         driverLT.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new TurretToDefaultPosition());
         driverRT.whileActiveContinuous(new CG_FireZeMissiles());
         driverStart.whenActive(new CompressorStart());

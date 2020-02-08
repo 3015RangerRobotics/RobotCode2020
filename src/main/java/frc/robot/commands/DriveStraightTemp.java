@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.DriveProfile;
 import frc.robot.MotionProfile;
 import frc.robot.RobotContainer;
 
@@ -17,8 +18,9 @@ public class DriveStraightTemp extends CommandBase {
 
     public DriveStraightTemp(double distance, double maxV, double accel) {
         addRequirements(RobotContainer.drive);
-        leftMotion = new MotionProfile(distance, maxV, accel).getProfile();
-        rightMotion = new MotionProfile(distance, maxV, accel).getProfile();
+        DriveProfile profile = new DriveProfile("path3");
+        leftMotion = profile.getLeftProfile().getProfile();
+        rightMotion = profile.getRightProfile().getProfile();
     }
 
     // Called when the command is initially scheduled.
@@ -54,9 +56,9 @@ public class DriveStraightTemp extends CommandBase {
 
     private synchronized void threadedExecute(){
         if(i < leftMotion.length){
-            double goalVelL = leftMotion[i][1];
+            double goalVelL = leftMotion[i][1] * Constants.DRIVE_PULSES_PER_FOOT / 10;
 
-            double goalVelR = rightMotion[i][1];
+            double goalVelR = rightMotion[i][1] * Constants.DRIVE_PULSES_PER_FOOT / 10;
 
             double kP = Constants.DRIVE_P_TURN;
             double kV = (Constants.DRIVE_F / 1023);

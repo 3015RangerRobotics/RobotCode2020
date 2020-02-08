@@ -17,9 +17,11 @@ import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.music.Orchestra;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.DriveHelper;
@@ -118,12 +120,14 @@ public class Drive extends SubsystemBase {
         orchestra.loadMusic("jeopardy.chrp");
 
         resetEncoders();
+        resetIMU();
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
 //        System.out.println(rightMaster.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("gyro", getAngle());
     }
 
     public void playMusic(){

@@ -14,7 +14,13 @@ public class Auto8BallTrench extends SequentialCommandGroup {
                         new ShooterStart(5400),
                         new BallHandlerHarvest(),
                         new HarvesterIn(-1.0),
-                        new DriveMotionProfile(11, 8, 5)
+                        new DriveStraightTemp(10.5, 6, 5)
+                ),
+                new ParallelDeadlineGroup(
+                        new WaitCommand(.5),
+                        new ShooterStart(5400),
+                        new BallHandlerHarvest(),
+                        new HarvesterIn(-1.00)
                 ),
                 new ParallelDeadlineGroup(
                         new WaitCommand(3),
@@ -35,14 +41,23 @@ public class Auto8BallTrench extends SequentialCommandGroup {
                         new ShooterStart(5400),
                         new TurretToPosition(0),
                         new BallHandlerHarvest(),
-                        new HarvesterIn(-1.0),
-                        new DriveMotionProfile(9, 8,5)
+                        new HarvesterIn(-.75),
+                        new DriveMotionProfile("path")
+//                        new DriveStraightTemp(7.8, 7,5)
                 ),
 //                new DriveResetEncoders(),
-                new WaitCommand(.25),
+//                new ParallelDeadlineGroup(
+//                        new WaitCommand(.6),
+//                        new BallHandlerHarvest(),
+//                        new HarvesterIn(-.6),
+//                        new ShooterStart(5400)
+//                ),
                 new ParallelRaceGroup(
+                        new BallHandlerHarvest(),
+                        new HarvesterIn(-.75),
                         new ShooterStart(5400),
-                        new DriveMotionProfile(-8.5, 8, 5)
+                        new DriveMotionProfile("path2")
+//                        new DriveStraightTemp(-4, 10, 5)
                 ),
                 new ParallelDeadlineGroup(
                         new WaitCommand(3),
