@@ -8,6 +8,8 @@
 package frc.robot;
 
 public final class Constants {
+    public static final double MP_TIME_STEP = 0.01;
+
     // Drive Constants
     public static final int DRIVE_RIGHT_MASTER = 1;
     public static final int DRIVE_RIGHT_FOLLOWER = 2;
@@ -18,12 +20,10 @@ public final class Constants {
     public static final double DRIVE_I = 0;
     public static final double DRIVE_D = 13.724;//1;
     public static final double DRIVE_F = 1023.0/22600;
-    public static final double DRIVE_F_LEFT = 1023.0/22000;
     public static final double DRIVE_PULSES_PER_FOOT = 14159.2386107;
     public static final double DRIVE_MAX_VELOCITY = 8 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_MAX_ACCELERATION = 6 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_MAX_MOTION_ERROR = 0.1 * DRIVE_PULSES_PER_FOOT;
-    public static final int MP_TIME_STEP = 10;
 
     // Turret Constants
     public static final int TURRET_MOTOR = 6;
@@ -32,8 +32,6 @@ public final class Constants {
     public static final double TURRET_D = 75; // 0
     public static final double TURRET_F = 0; // 0
     public static final double TURRET_DEGREES_PER_PULSE = 1 / (5600.0 / 90.0);
-    public static final int TURRET_SOFT_LIMIT_FORWARD = 90;
-    public static final int TURRET_SOFT_LIMIT_REVERSE = -90;
     public static final double TURRET_MAX_SPEED = 0.7;
     public static final double TURRET_MIN_SPEED = 0.15;
     public static final double TURRET_DEGREE_MARGIN = Math.round((1 / Constants.TURRET_DEGREES_PER_PULSE) * 0.15);
@@ -83,7 +81,6 @@ public final class Constants {
     public static final int HARVESTER_SOLENOID_REVERSE = 1;
 
     //Hood Constants
-
     public static final int HOOD_SOLENOID_FORWARD = 2;
     public static final int HOOD_SOLENOID_REVERSE = 5;
 }

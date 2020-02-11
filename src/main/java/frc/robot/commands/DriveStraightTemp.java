@@ -1,26 +1,21 @@
 package frc.robot.commands;
 
-import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.DriveProfile;
-import frc.robot.MotionProfile;
+import motionlib.DriveProfile;
 import frc.robot.RobotContainer;
 
 public class DriveStraightTemp extends CommandBase {
     private volatile boolean isFinished = false;
-    private double[][] leftMotion;
-    private double[][] rightMotion;
+    private DriveProfile profile;
     private volatile int i = 0;
 
-    public DriveStraightTemp(double distance, double maxV, double accel) {
+    public DriveStraightTemp(double distance, double maxV, double maxA) {
         addRequirements(RobotContainer.drive);
-        DriveProfile profile = new DriveProfile("path3");
-        leftMotion = profile.getLeftProfile().getProfile();
-        rightMotion = profile.getRightProfile().getProfile();
+        profile = new DriveProfile(distance, maxV, maxA);
     }
 
     // Called when the command is initially scheduled.
@@ -30,12 +25,6 @@ public class DriveStraightTemp extends CommandBase {
         RobotContainer.drive.resetIMU();
         isFinished = false;
         i = 0;
-
-        if (leftMotion.length != rightMotion.length) {
-            System.out.println("Left and right profiles not of equal length!");
-            this.cancel();
-            return;
-        }
 
         new Thread(() -> {
             double lastTime = 0;
@@ -55,10 +44,10 @@ public class DriveStraightTemp extends CommandBase {
     }
 
     private synchronized void threadedExecute(){
-        if(i < leftMotion.length){
-            double goalVelL = leftMotion[i][1] * Constants.DRIVE_PULSES_PER_FOOT / 10;
+        if(i < profile.getLeftProfile().getLength()){
+            double goalVelL = profile.getLeftProfile().getVelocityEncoder(i) / 10;
 
-            double goalVelR = rightMotion[i][1] * Constants.DRIVE_PULSES_PER_FOOT / 10;
+            double goalVelR = profile.getRightProfile().getVelocityEncoder(i) / 10;
 
             double kP = Constants.DRIVE_P_TURN;
             double kV = (Constants.DRIVE_F / 1023);
