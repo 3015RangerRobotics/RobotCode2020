@@ -46,7 +46,7 @@ public class ShooterStartAuto extends CommandBase {
            RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.SHOOTER_PULSES_PER_ROTATION);
 //        System.out.println("shooter," + rpm + "," + RobotContainer.shooter.getRPM());
 
-        if (RobotContainer.shooter.getRPM() > 1500){
+        if (RobotContainer.shooter.getRPM() > 3000){
             RobotContainer.shooter.setRampRate(false);
         }
     }

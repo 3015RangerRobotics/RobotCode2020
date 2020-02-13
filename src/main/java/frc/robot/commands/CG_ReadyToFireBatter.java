@@ -9,7 +9,7 @@ public class CG_ReadyToFireBatter extends SequentialCommandGroup {
     public CG_ReadyToFireBatter() {
         addCommands(
                 new HoodUp(),
-                new ShooterStart(5400)
+                new ShooterStart(4000)
         );
     }
 }

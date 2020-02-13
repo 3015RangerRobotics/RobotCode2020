@@ -22,6 +22,8 @@ public class Harvester extends SubsystemBase {
     public Harvester() {
         harvesterMotor = new VictorSP(Constants.HARVESTER_MOTOR);
         tiltControl = new DoubleSolenoid(Constants.HARVESTER_SOLENOID_FORWARD, Constants.HARVESTER_SOLENOID_REVERSE);
+
+        harvesterMotor.setInverted(true);
     }
 
     @Override

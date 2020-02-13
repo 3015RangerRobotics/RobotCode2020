@@ -64,9 +64,9 @@ public class BallHandler extends SubsystemBase {
 
         pdp = new PowerDistributionPanel(0);
 
-        motor1.setInverted(true);
+        motor1.setInverted(false);
         motor2.setInverted(true);
-        motor3.setInverted(true);
+        motor3.setInverted(false);
         motor4.setInverted(true);
         motor5.setInverted(true);
     }

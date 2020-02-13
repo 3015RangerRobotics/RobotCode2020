@@ -46,7 +46,7 @@ public class Turret extends SubsystemBase {
         // turretMotor.configReverseSoftLimitThreshold((int) Math.round(Constants.TURRET_SOFT_LIMIT_REVERSE / Constants.TURRET_DEGREES_PER_PULSE));
 
         turretMotor.setInverted(false);
-        turretMotor.setSelectedSensorPosition(0);
+//        turretMotor.setSelectedSensorPosition(0);
         turretMotor.setSensorPhase(false);
 
         turretMotor.configPeakOutputForward(Constants.TURRET_MAX_SPEED);
@@ -66,7 +66,7 @@ public class Turret extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        // System.out.println("Turret Angle: "  + getMotorPosition() + " Motor Speed: " + turretMotor.getMotorOutputPercent());
+         System.out.println("Turret Angle: "  + getPosition() + " Motor Speed: " + turretMotor.getMotorOutputPercent());
     }
 
     public boolean isLeftShot(){

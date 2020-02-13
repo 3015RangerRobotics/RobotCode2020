@@ -35,9 +35,9 @@ public final class Constants {
     public static final double TURRET_MAX_SPEED = 0.7;
     public static final double TURRET_MIN_SPEED = 0.15;
     public static final double TURRET_DEGREE_MARGIN = Math.round((1 / Constants.TURRET_DEGREES_PER_PULSE) * 0.15);
-    public static final int TURRET_LEFT_LIMIT = 0;
-    public static final int TURRET_RIGHT_LIMIT = 1;
-    public static final int TURRET_HOMING_POSITION = (int) Math.round(-90 / TURRET_DEGREES_PER_PULSE);
+    public static final int TURRET_LEFT_LIMIT = 1;
+    public static final int TURRET_RIGHT_LIMIT = 0;
+    public static final int TURRET_HOMING_POSITION = (int) Math.round(-114 / TURRET_DEGREES_PER_PULSE);
 
     // Shooter Constants
     public static final int SHOOTER_MOTOR = 5;
@@ -48,13 +48,13 @@ public final class Constants {
     public static final double SHOOTER_PULSES_PER_ROTATION = 1024;
 
     // Ball Handler Constants
-    public static final int HANDLER_MOTOR1 = 0;
-    public static final int HANDLER_MOTOR2 = 1;
-    public static final int HANDLER_MOTOR3 = 2;
-    public static final int HANDLER_MOTOR4 = 3;
+    public static final int HANDLER_MOTOR1 = 2;
+    public static final int HANDLER_MOTOR2 = 7;
+    public static final int HANDLER_MOTOR3 = 6;
+    public static final int HANDLER_MOTOR4 = 5;
     public static final int HANDLER_MOTOR5 = 4;
-    public static final int HANDLER_SWITCH1 = 2;
-    public static final int HANDLER_SWITCH2 = 3;
+    public static final int HANDLER_SWITCH1 = 3;
+    public static final int HANDLER_SWITCH2 = 2;
     public static final int HANDLER_SWITCH3 = 4;
     public static final int HANDLER_SWITCH4 = 5;
     public static final int HANDLER_SWITCH5 = 6;
@@ -76,11 +76,11 @@ public final class Constants {
     public static final double HANDLER_MOTOR_OFF_SPEED = 0.0;
 
     // Harvester Constants
-    public static final int HARVESTER_MOTOR = 5;
-    public static final int HARVESTER_SOLENOID_FORWARD = 7;
-    public static final int HARVESTER_SOLENOID_REVERSE = 1;
+    public static final int HARVESTER_MOTOR = 3;
+    public static final int HARVESTER_SOLENOID_FORWARD = 0;
+    public static final int HARVESTER_SOLENOID_REVERSE = 6;
 
     //Hood Constants
-    public static final int HOOD_SOLENOID_FORWARD = 2;
-    public static final int HOOD_SOLENOID_REVERSE = 5;
+    public static final int HOOD_SOLENOID_FORWARD = 1;
+    public static final int HOOD_SOLENOID_REVERSE = 7;
 }
