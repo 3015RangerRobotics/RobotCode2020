@@ -13,14 +13,14 @@ public class Auto8BallTrench extends SequentialCommandGroup {
 //                        new CG_HomeTurret(),
                         new ShooterStart(5400),
                         new BallHandlerHarvest(),
-                        new HarvesterIn(-1.0),
-                        new DriveStraightTemp(10.5, 6, 5)
+                        new HarvesterIn(-0.75),
+                        new DriveStraightTemp(10.5, 8, 5)
                 ),
                 new ParallelDeadlineGroup(
                         new WaitCommand(.5),
                         new ShooterStart(5400),
                         new BallHandlerHarvest(),
-                        new HarvesterIn(-1.00)
+                        new HarvesterIn(-0.75)
                 ),
                 new ParallelDeadlineGroup(
                         new WaitCommand(3),
@@ -37,26 +37,34 @@ public class Auto8BallTrench extends SequentialCommandGroup {
                                 new BallHandlerShoot()
                         )
                 ),
-                new ParallelRaceGroup(
+                new ParallelDeadlineGroup(
+                        new DriveStraightTemp(7,8,5),
                         new ShooterStart(5400),
                         new TurretToPosition(0),
                         new BallHandlerHarvest(),
-                        new HarvesterIn(-.75),
-                        new DriveMotionProfile("path")
+//                        new HarvesterIn(-.75),
+                        new SequentialCommandGroup(
+                                new HarvesterInForTime(-0.75, 1.4),
+                                new HarvesterUp()
+                        )
+
 //                        new DriveStraightTemp(7.8, 7,5)
                 ),
 //                new DriveResetEncoders(),
-//                new ParallelDeadlineGroup(
-//                        new WaitCommand(.6),
-//                        new BallHandlerHarvest(),
-//                        new HarvesterIn(-.6),
-//                        new ShooterStart(5400)
-//                ),
+                new ParallelDeadlineGroup(
+                        new SequentialCommandGroup(
+                                new WaitCommand(3),
+                                new HarvesterDown(),
+                                new HarvesterInForTime(-0.75, 1)
+                        ),
+                        new BallHandlerHarvest(),
+                        new ShooterStart(5400)
+                ),
                 new ParallelRaceGroup(
                         new BallHandlerHarvest(),
-                        new HarvesterIn(-.75),
+                        new HarvesterIn(-.4),
                         new ShooterStart(5400),
-                        new DriveMotionProfile("path2")
+                        new DriveStraightTemp(-0.75, 8, 5)
 //                        new DriveStraightTemp(-4, 10, 5)
                 ),
                 new ParallelDeadlineGroup(

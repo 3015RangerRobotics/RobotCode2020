@@ -41,9 +41,9 @@ public final class Constants {
 
     // Shooter Constants
     public static final int SHOOTER_MOTOR = 5;
-    public static final double SHOOTER_P = 3.0;//3.7
+    public static final double SHOOTER_P = 1.5;//3.7;//3.7
     public static final double SHOOTER_I = 0; // 0
-    public static final double SHOOTER_D = 5.0; // 46.0
+    public static final double SHOOTER_D = 20;//46.0; // 46.0
     public static final double SHOOTER_F = 0.047; // 0
     public static final double SHOOTER_PULSES_PER_ROTATION = 1024;
 
@@ -58,7 +58,7 @@ public final class Constants {
     public static final int HANDLER_SWITCH3 = 4;
     public static final int HANDLER_SWITCH4 = 5;
     public static final int HANDLER_SWITCH5 = 6;
-    public static final double HANDLER_MOTOR_IN_SPEED1 = 0.5;
+    public static final double HANDLER_MOTOR_IN_SPEED1 = 0.3;
     public static final double HANDLER_MOTOR_IN_SPEED2 = 0.68;
     public static final double HANDLER_MOTOR_IN_SPEED3 = 0.62;
     public static final double HANDLER_MOTOR_IN_SPEED4 = 0.55;

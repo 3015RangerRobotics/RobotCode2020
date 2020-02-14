@@ -12,10 +12,12 @@ public class DriveStraightTemp extends CommandBase {
     private volatile boolean isFinished = false;
     private DriveProfile profile;
     private volatile int i = 0;
+    private boolean reversed = false;
 
     public DriveStraightTemp(double distance, double maxV, double maxA) {
         addRequirements(RobotContainer.drive);
-        profile = new DriveProfile(distance, maxV, maxA);
+        if (distance < 0) reversed = true;
+        profile = new DriveProfile(Math.abs(distance), maxV, maxA);
     }
 
     // Called when the command is initially scheduled.
@@ -52,8 +54,8 @@ public class DriveStraightTemp extends CommandBase {
             double kP = Constants.DRIVE_P_TURN;
             double kV = (Constants.DRIVE_F / 1023);
 
-            double percentL = (kV * goalVelL);
-            double percentR = (kV * goalVelR);
+            double percentL = (kV * goalVelL * ((reversed) ? -1 : 1));
+            double percentR = (kV * goalVelR  * ((reversed) ? -1 : 1));
             double turnOffset = kP * RobotContainer.drive.getAngle();
 
             percentL -= turnOffset;

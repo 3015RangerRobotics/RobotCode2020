@@ -127,13 +127,13 @@ public class MotionProfile {
      * @return The generated profile
      */
     private double[][] generate1D(double distance, double maxV, double maxA){
-        double d = Math.abs(distance);
+//        double d = Math.abs(distance);
         TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(maxV), Units.feetToMeters(maxA));
-        config.setReversed(distance < 0);
+//        config.setReversed(distance < 0);
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 new Pose2d(0, 0, new Rotation2d(0)),
-                List.of(new Translation2d(Units.feetToMeters(d / 2), 0)),
-                new Pose2d(Units.feetToMeters(d), 0, new Rotation2d(0)),
+                List.of(new Translation2d(Units.feetToMeters(distance / 2), 0)),
+                new Pose2d(Units.feetToMeters(distance), 0, new Rotation2d(0)),
                 config
         );
 
