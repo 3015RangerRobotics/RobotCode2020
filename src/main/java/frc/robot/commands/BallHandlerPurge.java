@@ -14,33 +14,34 @@ import frc.robot.subsystems.BallHandler;
 
 
 public class BallHandlerPurge extends CommandBase {
-  BallHandler  ballHandler = RobotContainer.ballHandler;
-  public BallHandlerPurge() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(ballHandler);
-  }
+    BallHandler ballHandler = RobotContainer.ballHandler;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    ballHandler.setState(BallHandler.State.kPurge);
-    
-  }
+    public BallHandlerPurge() {
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(ballHandler);
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        ballHandler.setState(BallHandler.State.kPurge);
+        ballHandler.setPaused(false);
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    ballHandler.setState(BallHandler.State.kOff);
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        ballHandler.setState(BallHandler.State.kOff);
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

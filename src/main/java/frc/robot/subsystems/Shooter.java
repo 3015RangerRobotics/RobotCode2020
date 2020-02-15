@@ -16,13 +16,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
-    private TalonFX shooter;
+    public TalonFX shooter;
 
     /**
      * Creates a new Shooter.
      */
     public Shooter() {
-        shooter = new TalonFX(Constants.spinningShooter);
+        shooter = new TalonFX(Constants.SHOOTER_MOTOR);
         shooter.configFactoryDefault();
 
         shooter.setNeutralMode(NeutralMode.Coast);
@@ -30,16 +30,18 @@ public class Shooter extends SubsystemBase {
         shooter.enableVoltageCompensation(true);
         shooter.configVoltageCompSaturation(12.5);
 
-        shooter.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        // shooter.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
         shooter.setInverted(false);
         shooter.setSelectedSensorPosition(0);
         shooter.setSensorPhase(false);
 
-        shooter.config_kP(0, Constants.shooterP);
-        shooter.config_kI(0, Constants.shooterI);
-        shooter.config_kD(0, Constants.shooterD);
-        shooter.config_kF(0, Constants.shooterF);
+        setRampRate(true);
+
+        shooter.config_kP(0, Constants.SHOOTER_P);
+        shooter.config_kI(0, Constants.SHOOTER_I);
+        shooter.config_kD(0, Constants.SHOOTER_D);
+        shooter.config_kF(0, Constants.SHOOTER_F);
     }
 
     @Override
@@ -47,12 +49,30 @@ public class Shooter extends SubsystemBase {
         // This method will be called once per scheduler run
     }
 
+    /**
+     * @return The RPM of the shooter wheel
+     */
     public double getRPM() {
-        return (shooter.getSelectedSensorVelocity() * 10 * 60 / Constants.shooterPulsesPerRotation);
+        return (shooter.getSelectedSensorVelocity() * 10 * 60 / Constants.SHOOTER_PULSES_PER_ROTATION);
     }
 
-    public void set(ControlMode mode, double value) { 
+    /**
+     * Set the output of the shooter wheel
+     * @param mode The control mode to use
+     * @param value The value to set
+     */
+    public void set(ControlMode mode, double value) {
         shooter.set(mode, value);
         // System.out.println(value);
     }
+    public boolean isRunning()
+    {
+        return shooter.getControlMode() == ControlMode.Velocity;
+
+    }
+
+    public void setRampRate(boolean enabled) {
+        shooter.configClosedloopRamp(enabled ? 1.0 : 0);
+    }
 }
+

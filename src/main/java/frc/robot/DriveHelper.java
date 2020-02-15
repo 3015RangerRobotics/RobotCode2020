@@ -11,29 +11,26 @@ package frc.robot;
  * Add your docs here.
  */
 public class DriveHelper {
-    private static final double kDeadband = 0.02;
-    private static final double kTurnSensitivity = 1.0;
-
-    private static double quickStopAccumulator = 0.0;
+    private static final double kDeadband = 0.05;
 
     /**
      * Tank drive helper
-     * 
-     * @param left
-     * @param right
+     *
+     * @param left Left speed
+     * @param right Right speed
      * @return Outputs for left and right motors
      */
-    public static DriveSignal tankDrive(double left,double right) {
+    public static DriveSignal tankDrive(double left, double right) {
         return new DriveSignal(left, right);
     }
 
     /**
      * Arcade Drive
-     * 
-     * @param moveValue
-     * @param rotateValue
-     * @param squaredInputs
-     * @return
+     *
+     * @param moveValue Forward/Reverse speed
+     * @param rotateValue Turn Speed
+     * @param squaredInputs Should the inputs be squared (Increase control at low speeds)
+     * @return Outputs for left and right motors
      */
     public static DriveSignal arcadeDrive(double moveValue, double rotateValue, boolean squaredInputs) {
         double leftMotorSpeed;
@@ -71,35 +68,32 @@ public class DriveHelper {
         }
         return new DriveSignal(leftMotorSpeed, rightMotorSpeed);
     }
+
     /**
      * Handles a deadzone
-     * 
-     * @param value The value to handle
+     *
+     * @param value    The value to handle
      * @param deadzone The deadzone
      * @return The handled value
      */
-protected static double handleDeadzone(double value, double deadzone)
-    {
-        return (Math.abs(value) > Math.abs(deadzone)) ? limit(value,1.0) : 0.0;
+    protected static double handleDeadzone(double value, double deadzone) {
+        return (Math.abs(value) > Math.abs(deadzone)) ? limit(value, 1.0) : 0.0;
     }
 
-/**
- * Limits a number between a given range
- * 
- * @param value The value to limit
- * @param deadzone The deadzone
- * @return The handled value
- */
-protected static double limit(double value, double max)
-    {   
-            if (value > max) 
-        {   
+    /**
+     * Limits a number between a given range
+     *
+     * @param value    The value to limit
+     * @param max The maximum value
+     * @return The handled value
+     */
+    protected static double limit(double value, double max) {
+        if (value > max) {
             return max;
         }
-             if (value < -max)
-        {
+        if (value < -max) {
             return -max;
         }
-             return value;
+        return value;
     }
 }

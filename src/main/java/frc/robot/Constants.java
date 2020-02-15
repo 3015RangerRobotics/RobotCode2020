@@ -8,74 +8,79 @@
 package frc.robot;
 
 public final class Constants {
-    //CTRE CAN Motor Cotnroller ID's
-    public static final int rightDriveMaster = 1;
-    public static final int rightDriveFollower = 2;
-    public static final int leftDriveMaster = 3;
-    public static final int leftDriveFollower = 4;
-    public static final int turretMotor = 5;
+    public static final double MP_TIME_STEP = 0.01;
 
-    //PWM Motor Controllers
-    public static final int BALLHANDLER_MOTOR1 = 0; // Motor closet to turret
-    public static final int BALLHANDLER_MOTOR2 = 1; // Secound motor closet to turret
-    public static final int BALLHANDLER_MOTOR3 = 2; // third motor closet to turret
-    public static final int BALLHANDLER_MOTOR4 = 3; // fourth motor closet to turret
-    public static final int BALLHANDLER_MOTOR5 = 4; // fifth motor closet to turret
+    // Drive Constants
+    public static final int DRIVE_RIGHT_MASTER = 1;
+    public static final int DRIVE_RIGHT_FOLLOWER = 2;
+    public static final int DRIVE_LEFT_MASTER = 3;
+    public static final int DRIVE_LEFT_FOLLOWER = 4;
+    public static final double DRIVE_P = 0.005;//.005;
+    public static final double DRIVE_P_TURN = 0.015;
+    public static final double DRIVE_I = 0;
+    public static final double DRIVE_D = 13.724;//1;
+    public static final double DRIVE_F = 1023.0/22600;
+    public static final double DRIVE_PULSES_PER_FOOT = 14159.2386107;
+    public static final double DRIVE_MAX_VELOCITY = 8 * DRIVE_PULSES_PER_FOOT;
+    public static final double DRIVE_MAX_ACCELERATION = 6 * DRIVE_PULSES_PER_FOOT;
+    public static final double DRIVE_MAX_MOTION_ERROR = 0.1 * DRIVE_PULSES_PER_FOOT;
 
-    //DIO channels
-    public static final int BALLHANDLER_SWITCH1 = 0; // Switch closet to turret
-    public static final int BALLHANDLER_SWITCH2 = 1; // Second switch closet to turret
-    public static final int BALLHANDLER_SWITCH3 = 2; // Third switch closet to turret
-    public static final int BALLHANDLER_SWITCH4 = 3; // Fourth switch closet to turret
-    public static final int BALLHANDLER_SWITCH5 = 4; // Fifth switch closet to turret
+    // Turret Constants
+    public static final int TURRET_MOTOR = 6;
+    public static final double TURRET_P = 2.5; // 0.3
+    public static final double TURRET_I = 0; // 0
+    public static final double TURRET_D = 75; // 0
+    public static final double TURRET_F = 0; // 0
+    public static final double TURRET_DEGREES_PER_PULSE = 1 / (5600.0 / 90.0);
+    public static final double TURRET_MAX_SPEED = 0.7;
+    public static final double TURRET_MIN_SPEED = 0.15;
+    public static final double TURRET_DEGREE_MARGIN = Math.round((1 / Constants.TURRET_DEGREES_PER_PULSE) * 0.15);
+    public static final int TURRET_LEFT_LIMIT = 1;
+    public static final int TURRET_RIGHT_LIMIT = 0;
+    public static final int TURRET_HOMING_POSITION = (int) Math.round(-114 / TURRET_DEGREES_PER_PULSE);
 
-    //Solenoid channels
-    public static final int BALLHANDLER_SOLENOID_FWD = 0;
-    public static final int BALLHANDLER_SOLENOID_REV = 1;
+    // Shooter Constants
+    public static final int SHOOTER_MOTOR = 5;
+    public static final double SHOOTER_P = 1.5;//3.7;//3.7
+    public static final double SHOOTER_I = 0; // 0
+    public static final double SHOOTER_D = 20;//46.0; // 46.0
+    public static final double SHOOTER_F = 0.047; // 0
+    public static final double SHOOTER_PULSES_PER_ROTATION = 1024;
 
-    public static final double BALLHANDLER_MOTOR_IN_SPEED1 = .75; //.75
-    public static final double BALLHANDLER_MOTOR_IN_SPEED2 = .68;  //.68
-    public static final double BALLHANDLER_MOTOR_IN_SPEED3 = .62;  //.62
-    public static final double BALLHANDLER_MOTOR_IN_SPEED4 = .55;  //.55
-    public static final double BALLHANDLER_MOTOR_IN_SPEED5 = .5;   //.5
+    // Ball Handler Constants
+    public static final int HANDLER_MOTOR1 = 2;
+    public static final int HANDLER_MOTOR2 = 7;
+    public static final int HANDLER_MOTOR3 = 6;
+    public static final int HANDLER_MOTOR4 = 5;
+    public static final int HANDLER_MOTOR5 = 4;
+    public static final int HANDLER_SWITCH1 = 3;
+    public static final int HANDLER_SWITCH2 = 2;
+    public static final int HANDLER_SWITCH3 = 4;
+    public static final int HANDLER_SWITCH4 = 5;
+    public static final int HANDLER_SWITCH5 = 6;
+    public static final double HANDLER_MOTOR_IN_SPEED1 = 0.3;
+    public static final double HANDLER_MOTOR_IN_SPEED2 = 0.68;
+    public static final double HANDLER_MOTOR_IN_SPEED3 = 0.62;
+    public static final double HANDLER_MOTOR_IN_SPEED4 = 0.55;
+    public static final double HANDLER_MOTOR_IN_SPEED5 = 0.75;
+    public static final double HANDLER_MOTOR_OUT_SPEED1 = -0.5;
+    public static final double HANDLER_MOTOR_OUT_SPEED2 = -0.55;
+    public static final double HANDLER_MOTOR_OUT_SPEED3 = -0.62;
+    public static final double HANDLER_MOTOR_OUT_SPEED4 = -0.68;
+    public static final double HANDLER_MOTOR_OUT_SPEED5 = -0.75;
+    public static final double HANDLER_MOTOR_SHOOT_SPEED1 = 1.0;
+    public static final double HANDLER_MOTOR_SHOOT_SPEED2 = 0.6;
+    public static final double HANDLER_MOTOR_SHOOT_SPEED3 = 0.4;
+    public static final double HANDLER_MOTOR_SHOOT_SPEED4 = 0.4;
+    public static final double HANDLER_MOTOR_SHOOT_SPEED5 = 0.4;
+    public static final double HANDLER_MOTOR_OFF_SPEED = 0.0;
 
-    public static final double BALLHANDLER_MOTOR_OUT_SPEED1 = -.5; 
-    public static final double BALLHANDLER_MOTOR_OUT_SPEED2 = -.55;
-    public static final double BALLHANDLER_MOTOR_OUT_SPEED3 = -.62;
-    public static final double BALLHANDLER_MOTOR_OUT_SPEED4 = -.68;
-    public static final double BALLHANDLER_MOTOR_OUT_SPEED5 = -.75;
+    // Harvester Constants
+    public static final int HARVESTER_MOTOR = 3;
+    public static final int HARVESTER_SOLENOID_FORWARD = 0;
+    public static final int HARVESTER_SOLENOID_REVERSE = 6;
 
-    public static final double BALLHANDLER_MOTOR_SHOOT_SPEED = 1.0;
-    public static final double BALLHANDLER_MOTOR_OFF_SPEED = 0.0;
-
-    public static final double driveP = 0;
-    public static final double driveI = 0;
-    public static final double driveD = 0;
-    public static final double driveF = 0;
-    public static final double drivePulsesPerFoot = 1;
-    public static final double driveMaxVelocity = 12;
-    public static final double driveMaxAcceleration = 8;
-    public static final double driveMaxMotionError = 0.1 * drivePulsesPerFoot;
-    public static final int timeStep = 10;
-    
-    public static final double turretP = 2.5; // 0.3
-    public static final double turretI = 0; // 0
-    public static final double turretD = 75; // 0
-    public static final double turretF = 0; // 0
-
-    public static final double degreesPerPulse = 1 / (5600.0 / 90.0);
-    public static final int turretSoftLimitForward = 90;
-    public static final int turretSoftLimitReverse = -90;
-    public static final double turretMaxSpeed = 0.7;
-    public static final double turretMinSpeed = 0.15;
-    public static final double turretDegreeMargin = Math.round((1 / Constants.degreesPerPulse) * 0.25);
-    
-    public static final int spinningShooter = 5;
-
-    public static final double shooterP = 0;
-    public static final double shooterI = 0; // 0
-    public static final double shooterD = 0; // 0
-    public static final double shooterF = 0; // 0
-
-    public static final double shooterPulsesPerRotation = 2048;
+    //Hood Constants
+    public static final int HOOD_SOLENOID_FORWARD = 1;
+    public static final int HOOD_SOLENOID_REVERSE = 7;
 }

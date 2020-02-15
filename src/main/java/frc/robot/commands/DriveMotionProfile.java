@@ -7,46 +7,50 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import motionlib.DriveProfile;
 import frc.robot.RobotContainer;
 
 public class DriveMotionProfile extends CommandBase {
     /**
      * Creates a new DriveMotionProfile.
      */
-    private BufferedTrajectoryPointStream left;
-    private BufferedTrajectoryPointStream right;
-    private double distance = 0;
+    private DriveProfile profile;
 
+    /**
+     * Create a motion profile command to drive a pre-generated path
+     * @param pathName The name of the path to follow
+     */
     public DriveMotionProfile(String pathName) {
         addRequirements(RobotContainer.drive);
-        left = RobotContainer.drive.createBuffer(RobotContainer.drive.loadProfile(pathName + "_left"));
-        right = RobotContainer.drive.createBuffer(RobotContainer.drive.loadProfile(pathName + "_right"));
-        // Use addRequirements() here to declare subsystem dependencies.
+        this.profile = new DriveProfile(pathName);
     }
 
-    public DriveMotionProfile(double distance) {
+    /**
+     * Create a motion profile command to drive a straight line using motion magic
+     * @param distance The distance to drive
+     * @param maxV The max velocity
+     * @param maxA The max acceleration
+     */
+    public DriveMotionProfile(double distance, double maxV, double maxA) {
         addRequirements(RobotContainer.drive);
-        this.distance = distance;
+        this.profile = new DriveProfile(distance, maxV, maxA);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.drive.resetEncoders(); 
-        if (distance != 0){
-            RobotContainer.drive.setMotorOutputs(ControlMode.MotionMagic, distance, distance);
-        } else {
-            RobotContainer.drive.startMotionProfile(left, right);
-        }         
+        RobotContainer.drive.resetEncoders();
+        RobotContainer.drive.startMotionProfile(profile.getLeftProfile().getProfileAsCTREBuffer(),
+                profile.getRightProfile().getProfileAsCTREBuffer());
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+
     }
 
     // Called once the command ends or is interrupted.
@@ -58,6 +62,6 @@ public class DriveMotionProfile extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return RobotContainer.drive.isMotionProfileFinished() || (distance != 0 && RobotContainer.drive.isClosedLoopOnTarget());
+        return RobotContainer.drive.isMotionProfileFinished();
     }
 }

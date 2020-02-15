@@ -12,39 +12,40 @@ import frc.robot.RobotContainer;
 
 
 public class DriverRumbleSet extends CommandBase {
-  double leftPower;
-  double rightPower;
+    double leftPower;
+    double rightPower;
 
-  /**
-   * Creates a new DriverRumbleSet.
-   * @param leftPower a value from 0 to 1 representing the power of the leftRumble
-   * @param rightPower a value from 0 to 1 representing the power of the rightRumble
-   */
-  public DriverRumbleSet(double leftPower, double rightPower) {
-    this.leftPower = leftPower;
-    this.rightPower = rightPower;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.driverRumble);
+    /**
+     * Creates a new DriverRumbleSet.
+     *
+     * @param leftPower  a value from 0 to 1 representing the power of the leftRumble
+     * @param rightPower a value from 0 to 1 representing the power of the rightRumble
+     */
+    public DriverRumbleSet(double leftPower, double rightPower) {
+        this.leftPower = leftPower;
+        this.rightPower = rightPower;
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(RobotContainer.driverRumble);
 
-  }
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    RobotContainer.setDriverRumbleLeft(leftPower);
-    RobotContainer.setDriverRumbleRight(rightPower);
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        RobotContainer.setDriverRumbleLeft(leftPower);
+        RobotContainer.setDriverRumbleRight(rightPower);
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    RobotContainer.setDriverRumbleLeft(0.0);
-    RobotContainer.setDriverRumbleRight(0.0);
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        RobotContainer.setDriverRumbleLeft(0.0);
+        RobotContainer.setDriverRumbleRight(0.0);
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }
