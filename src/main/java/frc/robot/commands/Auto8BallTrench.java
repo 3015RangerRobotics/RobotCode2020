@@ -38,7 +38,7 @@ public class Auto8BallTrench extends SequentialCommandGroup {
                         )
                 ),
                 new ParallelDeadlineGroup(
-                        new DriveStraightTemp(7,8,5),
+                        new DriveStraightTemp(7.30,8,5),
                         new ShooterStart(5400),
                         new TurretToPosition(0),
                         new BallHandlerHarvest(),
@@ -53,18 +53,18 @@ public class Auto8BallTrench extends SequentialCommandGroup {
 //                new DriveResetEncoders(),
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
-                                new WaitCommand(3),
+//                                new WaitCommand(1),
                                 new HarvesterDown(),
-                                new HarvesterInForTime(-0.75, 1)
+                                new HarvesterInForTime(-0.75, 0.5)
                         ),
                         new BallHandlerHarvest(),
                         new ShooterStart(5400)
                 ),
                 new ParallelRaceGroup(
                         new BallHandlerHarvest(),
-                        new HarvesterIn(-.4),
+                        new HarvesterIn(-.75),
                         new ShooterStart(5400),
-                        new DriveStraightTemp(-0.75, 8, 5)
+                        new DriveStraightTemp(-4, 8, 5)
 //                        new DriveStraightTemp(-4, 10, 5)
                 ),
                 new ParallelDeadlineGroup(
