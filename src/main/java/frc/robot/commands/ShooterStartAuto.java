@@ -14,7 +14,7 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class ShooterStartAuto extends CommandBase {
-    double rpm = 4750;
+    double rpm = 5400;
     double launch = Math.tan(Math.toRadians(53.2));
     double f2m = 0.305;
 
@@ -31,7 +31,9 @@ public class ShooterStartAuto extends CommandBase {
     public void initialize() {
         RobotContainer.shooter.setRampRate(true);
         double d = RobotContainer.limelight.getArea();
-        rpm = 6494.93513 + (-2502.61834*d) + (1063.20913*d*d);
+        double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
+        rpm = 6494.93513 + (-2502.61834*d) + (1063.20913*d*d) + (1.5 * Math.abs(turretPos));
+//        rpm *= 1.02;
 //        double a = Math.sqrt(9.81 * d * (launch*launch + 1));
 //        double b = Math.sqrt(Math.abs(2 * launch - (2 * 9.81 * (6.19*f2m) / d)));
 //        double v = a / b;
@@ -45,9 +47,9 @@ public class ShooterStartAuto extends CommandBase {
            RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.SHOOTER_PULSES_PER_ROTATION);
 //        System.out.println("shooter," + rpm + "," + RobotContainer.shooter.getRPM());
 
-        if (RobotContainer.shooter.getRPM() > 1500){
-            RobotContainer.shooter.setRampRate(false);
-        }
+//        if (RobotContainer.shooter.getRPM() > 4000){
+//            RobotContainer.shooter.setRampRate(false);
+//        }
     }
 
     // Called once the command ends or is interrupted.

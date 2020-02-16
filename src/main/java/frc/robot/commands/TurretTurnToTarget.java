@@ -34,7 +34,7 @@ public class TurretTurnToTarget extends CommandBase {
 //        RobotContainer.limelight.setStreamingMode(Limelight.StreamingMode.STANDARD);
 //        RobotContainer.limelight.setLEDMode(Limelight.LEDMode.PIPELINE);
 //        RobotContainer.limelight.setCameraMode(Limelight.CameraMode.VISION_PROCESSING);
-        pos = RobotContainer.limelight.getTargetAngleX();
+        pos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
     }
 
     // Called every time the scheduler runs while the command is scheduled.

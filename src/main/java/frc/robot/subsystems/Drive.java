@@ -20,6 +20,7 @@ import com.ctre.phoenix.music.Orchestra;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -45,7 +46,7 @@ public class Drive extends SubsystemBase {
     private AHRS imu;
 
     public Drive() {
-        this.imu = new AHRS(SerialPort.Port.kMXP);
+        this.imu = new AHRS(I2C.Port.kMXP);
         this.rightMaster = new TalonFX(Constants.DRIVE_RIGHT_MASTER);
         this.rightFollower = new TalonFX(Constants.DRIVE_RIGHT_FOLLOWER);
         this.leftMaster = new TalonFX(Constants.DRIVE_LEFT_MASTER);

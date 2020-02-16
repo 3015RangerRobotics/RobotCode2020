@@ -28,7 +28,7 @@ public class TurretToDefaultPosition extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double angle = RobotContainer.turret.isLeftShot() ? -70 : 0;
+        double angle = RobotContainer.turret.isLeftShot() ? -90 : 0;
         RobotContainer.turret.set(ControlMode.Position, (angle / Constants.TURRET_DEGREES_PER_PULSE));
     }
 

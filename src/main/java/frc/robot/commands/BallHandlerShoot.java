@@ -18,6 +18,7 @@ public class BallHandlerShoot extends CommandBase {
     public void initialize() {
         ballHandler.setPaused(false);
         ballHandler.setState(BallHandler.State.kShootBall1);//start by shooting first ball
+        RobotContainer.shooter.selectProfileSlot(1);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -41,8 +42,8 @@ public class BallHandlerShoot extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-
         ballHandler.setState(BallHandler.State.kOff);
+        RobotContainer.shooter.selectProfileSlot(0);
     }
 
     // Returns true when the command should end.

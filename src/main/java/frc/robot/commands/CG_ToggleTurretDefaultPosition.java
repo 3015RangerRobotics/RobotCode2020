@@ -6,8 +6,8 @@ public class CG_ToggleTurretDefaultPosition extends SequentialCommandGroup {
 
     public CG_ToggleTurretDefaultPosition() {
         addCommands(
-                new TurretToggleLeftShot(),
-                new TurretToDefaultPosition()
+                new TurretToggleLeftShot()
+//                new TurretToDefaultPosition()
         );
     }
 }

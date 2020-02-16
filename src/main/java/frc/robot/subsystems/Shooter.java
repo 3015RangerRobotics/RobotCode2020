@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,6 +25,11 @@ public class Shooter extends SubsystemBase {
     public Shooter() {
         shooter = new TalonFX(Constants.SHOOTER_MOTOR);
         shooter.configFactoryDefault();
+
+        shooter.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10);
+        shooter.setStatusFramePeriod(StatusFrameEnhanced.Status_12_Feedback1, 10);
+        shooter.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
+        shooter.setStatusFramePeriod(StatusFrameEnhanced.Status_14_Turn_PIDF1, 10);
 
         shooter.setNeutralMode(NeutralMode.Coast);
 
@@ -42,11 +48,18 @@ public class Shooter extends SubsystemBase {
         shooter.config_kI(0, Constants.SHOOTER_I);
         shooter.config_kD(0, Constants.SHOOTER_D);
         shooter.config_kF(0, Constants.SHOOTER_F);
+
+        shooter.config_kP(1, Constants.SHOOTER_SHOOT_P);
+        shooter.config_kI(1, Constants.SHOOTER_SHOOT_I);
+        shooter.config_kD(1, Constants.SHOOTER_SHOOT_D);
+        shooter.config_kF(1, Constants.SHOOTER_SHOOT_F);
+
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+//        System.out.println(shooter.getMotorOutputPercent());
     }
 
     /**
@@ -65,6 +78,11 @@ public class Shooter extends SubsystemBase {
         shooter.set(mode, value);
         // System.out.println(value);
     }
+
+    public void selectProfileSlot(int id){
+        shooter.selectProfileSlot(id, 0);
+    }
+
     public boolean isRunning()
     {
         return shooter.getControlMode() == ControlMode.Velocity;
@@ -72,7 +90,8 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setRampRate(boolean enabled) {
-        shooter.configClosedloopRamp(enabled ? 1.0 : 0);
+        shooter.configClosedloopRamp(enabled ? 0 : 0);
     }
+
 }
 

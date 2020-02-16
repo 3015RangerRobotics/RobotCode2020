@@ -39,13 +39,17 @@ public final class Constants {
     public static final int TURRET_RIGHT_LIMIT = 0;
     public static final int TURRET_HOMING_POSITION = (int) Math.round(-114 / TURRET_DEGREES_PER_PULSE);
 
-    // Shooter Constants
+    // Shooter Constants (THe meaning of life, the universe, and everything)
     public static final int SHOOTER_MOTOR = 5;
-    public static final double SHOOTER_P = 1.5;//3.7;//3.7
+    public static final double SHOOTER_P = .5;//3.7;//3.7
     public static final double SHOOTER_I = 0; // 0
-    public static final double SHOOTER_D = 20;//46.0; // 46.0
-    public static final double SHOOTER_F = 0.047; // 0
-    public static final double SHOOTER_PULSES_PER_ROTATION = 1024;
+    public static final double SHOOTER_D = 10; // 46.0
+    public static final double SHOOTER_F = 0.0468; // 0.047
+    public static final double SHOOTER_PULSES_PER_ROTATION = 2048 * (2.0/3.0);
+    public static final double SHOOTER_SHOOT_P = 1;
+    public static final double SHOOTER_SHOOT_I = 0;
+    public static final double SHOOTER_SHOOT_D = 25;
+    public static final double SHOOTER_SHOOT_F = SHOOTER_F * 1;
 
     // Ball Handler Constants
     public static final int HANDLER_MOTOR1 = 2;
@@ -69,10 +73,10 @@ public final class Constants {
     public static final double HANDLER_MOTOR_OUT_SPEED4 = -0.68;
     public static final double HANDLER_MOTOR_OUT_SPEED5 = -0.75;
     public static final double HANDLER_MOTOR_SHOOT_SPEED1 = 1.0;
-    public static final double HANDLER_MOTOR_SHOOT_SPEED2 = 0.6;
-    public static final double HANDLER_MOTOR_SHOOT_SPEED3 = 0.4;
-    public static final double HANDLER_MOTOR_SHOOT_SPEED4 = 0.4;
-    public static final double HANDLER_MOTOR_SHOOT_SPEED5 = 0.4;
+    public static final double HANDLER_MOTOR_SHOOT_SPEED2 = 1.0;//.6 //.8
+    public static final double HANDLER_MOTOR_SHOOT_SPEED3 = 1.0;//.4 //.6
+    public static final double HANDLER_MOTOR_SHOOT_SPEED4 = 1.0;//.4
+    public static final double HANDLER_MOTOR_SHOOT_SPEED5 = 1.0;//.4
     public static final double HANDLER_MOTOR_OFF_SPEED = 0.0;
 
     // Harvester Constants
