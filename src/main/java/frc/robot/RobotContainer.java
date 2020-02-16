@@ -23,7 +23,7 @@ public class RobotContainer {
     public static OurCompressor ourCompressor;
     public static Harvester harvester;
     public static Hood hood;
-
+    public static Climber climber;
     public static JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     public static JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
     public static JoystickButton driverX = new JoystickButton(driver, XboxController.Button.kX.value);
@@ -68,6 +68,7 @@ public class RobotContainer {
         harvester = new Harvester();
         driverRumble = new DriverRumble();
         hood = new Hood();
+        climber = new Climber();
         configureButtonBindings();
     }
 
@@ -99,8 +100,8 @@ public class RobotContainer {
 //        coDriverLB.whileActiveContinuous(new CG_ReadyToFireInner()).whenInactive(new TurretToPosition(0));
 //        coDriverLT.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new TurretToPosition(0));
 //        coDriverRT.whileActiveContinuous(new CG_FireZeMissiles());
-//        coDriverStart.whenActive(new CompressorStart());
-//        coDriverBack.whenActive(new CompressorStop());
+       coDriverStart.whenActive(new ClimberClimbUp());
+       coDriverBack.whenActive(new ClimberClimbDown());
     }
 
     public Command getAutonomousCommand() {

@@ -87,4 +87,12 @@ public final class Constants {
     //Hood Constants
     public static final int HOOD_SOLENOID_FORWARD = 1;
     public static final int HOOD_SOLENOID_REVERSE = 7;
+
+    //CLimber Constants
+    public static final int CLIMBER_MOTOR = 7;
+    public static final int CLIMBER_LATCH_RELEASE = 3;
+    public static final double CLIMB_UP_SPEED = 0.8;
+    public static final double CLIMB_DOWN_SPEED = -0.3;
+    public static final double CLIMB_STOP_SPEED = 0.0;
+
 }
