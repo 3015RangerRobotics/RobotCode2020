@@ -19,6 +19,8 @@ import frc.robot.Constants;
 public class Climber extends SubsystemBase {
   private TalonSRX climberMotor;
   private Solenoid latchRelease;
+  private double encoder;
+
   public Climber() {
     climberMotor = new TalonSRX(Constants.CLIMBER_MOTOR);
     latchRelease = new Solenoid(Constants.CLIMBER_LATCH_RELEASE);

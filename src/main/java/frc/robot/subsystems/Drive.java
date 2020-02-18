@@ -242,6 +242,10 @@ public class Drive extends SubsystemBase {
         setMotorOutputs(ControlMode.PercentOutput, ds.leftSignal, ds.rightSignal);
     }
 
+    public void curvatureDrive(double throttle, double turn, boolean isQuickTurn, boolean squaredInputs) {
+        DriveSignal ds = DriveHelper.curvatureDrive(throttle, turn, isQuickTurn, squaredInputs);
+        setMotorOutputs(ControlMode.PercentOutput, ds.leftSignal, ds.rightSignal);
+    }
     /**
      * Get if the closed loop control is on target
      * @return if the closed loop control is on target

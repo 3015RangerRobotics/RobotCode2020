@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.BallHandler;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -62,6 +63,7 @@ public class RobotContainer {
         drive.setDefaultCommand(new DriveWithGamepad());
         turret = new Turret();
         turret.setDefaultCommand(new TurretToDefaultPosition());
+        SmartDashboard.putData(turret);
         limelight = new Limelight();
         ballHandler = new BallHandler();
         ballHandler.setDefaultCommand(new BallHandlerDefault());
@@ -74,34 +76,37 @@ public class RobotContainer {
 
 
     private void configureButtonBindings() {
-        driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
+//        driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         driverB.whileActiveContinuous(new BallHandlerPurge());
-        driverX.whenActive(new AutoPickpocket());
-        driverY.whenActive(new DriveStraightTemp(5, 8, 5));
-        driverDRight.whenActive(new CG_HomeTurret());
+        driverX.whenActive(new CG_HomeTurret());
+        driverY.whileActiveContinuous(new CG_ReadyToFireBatter()).whenInactive(new HoodDown());
+//        driverX.whenActive(new AutoPickpocket());
+//        driverY.whenActive(new DriveStraightTemp(5, 8, 5));
+//        driverDRight.whenActive(new CG_HomeTurret());
         driverDLeft.whenActive(new CG_ToggleTurretDefaultPosition());
-        driverDUp.whenActive(new CG_OhHeck());
-        driverDDown.whenActive(new HarvesterDown());
+//        driverDUp.whenActive(new HarvesterUp());
+        driverDDown.whenActive(new CG_OhHeck());
 //        driverDRight.whileActiveContinuous(new DrivePlayMusic());
-//        driverLB.whileActiveContinuous(new CG_ReadyToFireInner()).whenInactive(new TurretToPosition(0));
-//        driverLB.whenActive(new ShooterStart());
-//        driverLT.whenActive(new ShooterStop());
-        driverLB.whileActiveContinuous(new CG_ReadyToFireBatter()).whenInactive(new HoodDown());
-        driverLT.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new TurretToDefaultPosition());
-        driverRT.whileActiveContinuous(new CG_FireZeMissiles());
-        driverStart.whenActive(new CompressorStart());
-        driverBack.whenActive(new CompressorStop());
+        driverLT.whileActiveContinuous(new CG_HarvesterOfBalls());
+        driverLB.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new LimelightSwitchLEDMode(Limelight.LEDMode.LED_OFF));
+        driverRB.whileActiveContinuous(new CG_FireZeMissiles());
+//        driverStart.whenActive(new CompressorStart());
+//        driverBack.whenActive(new CompressorStop());
 
-//        coDriverA.whileActiveContinuous(new CG_HarvesterOfBalls());
-//        coDriverB.whileActiveContinuous(new BallHandlerPurge());
+        coDriverA.whileActiveContinuous(new CG_HarvesterOfBalls());
+        coDriverB.whileActiveContinuous(new BallHandlerPurge());
+        coDriverX.whenActive(new CG_HomeTurret());
+        coDriverY.whileActiveContinuous(new CG_ReadyToFireBatter()).whenInactive(new HoodDown());
 //        coDriverDLeft.whenActive(new CG_HomeTurret());
 //        coDriverDUp.whenActive(new CG_OhHeck());
-//        coDriverDDown.whenActive(new HarvesterDown());
+        coDriverDDown.whenActive(new CG_OhHeck());
 //        coDriverLB.whileActiveContinuous(new CG_ReadyToFireInner()).whenInactive(new TurretToPosition(0));
-//        coDriverLT.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new TurretToPosition(0));
-//        coDriverRT.whileActiveContinuous(new CG_FireZeMissiles());
-       coDriverStart.whenActive(new ClimberClimbUp());
-       coDriverBack.whenActive(new ClimberClimbDown());
+        coDriverLT.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new LimelightSwitchLEDMode(Limelight.LEDMode.LED_OFF));
+        coDriverLB.whileActiveContinuous(new TurretTurnManual(-0.3));
+        coDriverRB.whileActiveContinuous(new TurretTurnManual(0.3));
+        coDriverRT.whileActiveContinuous(new CG_FireZeMissiles());
+//       coDriverStart.whenActive(new ClimberClimbUp());
+//       coDriverBack.whenActive(new ClimberClimbDown());
     }
 
     public Command getAutonomousCommand() {

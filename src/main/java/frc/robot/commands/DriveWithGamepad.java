@@ -35,9 +35,9 @@ public class DriveWithGamepad extends CommandBase {
         double driveValue = 0.0;
         double turnValue = 0.0;
         if (Math.abs(RobotContainer.getDriverLeftStickY()) > (Math.abs(RobotContainer.getDriverRightStickY()))) {
-            driveValue = RobotContainer.getDriverLeftStickY();
+            driveValue = -RobotContainer.getDriverLeftStickY();
         } else {
-            driveValue = -RobotContainer.getDriverRightStickY();
+            driveValue = RobotContainer.getDriverRightStickY();//the negative was infront of this line
         }
 
         if (Math.abs(RobotContainer.getDriverLeftStickX()) > (Math.abs(RobotContainer.getDriverRightStickX()))) {
@@ -49,6 +49,20 @@ public class DriveWithGamepad extends CommandBase {
 
         RobotContainer.drive.arcadeDrive(driveValue, turnValue, true);
     }
+//        if (Math.abs(RobotContainer.getDriverLeftStickY()) >= 0.10 || Math.abs(RobotContainer.getDriverRightStickY()) >= 0.10) {
+//            if (Math.abs(RobotContainer.getDriverLeftStickY()) > (Math.abs(RobotContainer.getDriverRightStickY()))) {
+//                driveValue = -RobotContainer.getDriverLeftStickY();
+//                turnValue = RobotContainer.getDriverRightStickX();
+//            } else {
+//                driveValue = RobotContainer.getDriverRightStickY();
+//                turnValue = RobotContainer.getDriverLeftStickX();
+//            }
+//            RobotContainer.drive.curvatureDrive(driveValue, turnValue, false, true);
+//        } else {
+//            turnValue = RobotContainer.getDriverLeftStickX();
+//            RobotContainer.drive.arcadeDrive(driveValue, turnValue, true);
+//        }
+//    }
 
     // Called once the command ends or is interrupted.
     @Override
@@ -64,9 +78,9 @@ public class DriveWithGamepad extends CommandBase {
         return false;
     }
 
-    //i dont approve
+    //i don't approve
     @Override
-    public boolean runsWhenDisabled(){
+    public boolean runsWhenDisabled() {
         return true;
     }
 }

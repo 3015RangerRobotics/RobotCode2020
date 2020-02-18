@@ -7,8 +7,9 @@ public class CG_HomeTurret extends SequentialCommandGroup {
 
     public CG_HomeTurret() {
         addCommands(
+                new HarvesterDown(),
                 new TurretHoming(),
-                new TurretToPosition(0)
+                new TurretToDefaultPosition()
         );
     }
 }

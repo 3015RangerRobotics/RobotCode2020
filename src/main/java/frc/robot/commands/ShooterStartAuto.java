@@ -29,27 +29,33 @@ public class ShooterStartAuto extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.shooter.setRampRate(true);
-        double d = RobotContainer.limelight.getArea();
-        double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
-        rpm = 6494.93513 + (-2502.61834*d) + (1063.20913*d*d) + (1.5 * Math.abs(turretPos));
+//        RobotContainer.shooter.setRampRate(true);
+//        double d = RobotContainer.limelight.getArea();
+//        double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
+//        rpm = 6494.93513 + (-2502.61834*d) + (1063.20913*d*d) + (1.5 * Math.abs(turretPos));
 //        rpm *= 1.02;
 //        double a = Math.sqrt(9.81 * d * (launch*launch + 1));
 //        double b = Math.sqrt(Math.abs(2 * launch - (2 * 9.81 * (6.19*f2m) / d)));
 //        double v = a / b;
-        System.out.println("===================" + d);
+//        System.out.println("===================" + d);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
 //        RobotContainer.shooter.set(ControlMode.PercentOutput, 0.57);
-           RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.SHOOTER_PULSES_PER_ROTATION);
+
 //        System.out.println("shooter," + rpm + "," + RobotContainer.shooter.getRPM());
 
 //        if (RobotContainer.shooter.getRPM() > 4000){
 //            RobotContainer.shooter.setRampRate(false);
 //        }
+        double d = RobotContainer.limelight.getArea();
+        double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
+        rpm = 6494.93513 + (-2502.61834*d) + (1063.20913*d*d) + (1.5 * Math.abs(turretPos));
+
+        RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.SHOOTER_PULSES_PER_ROTATION);
+        System.out.println("===================" + d);
     }
 
     // Called once the command ends or is interrupted.

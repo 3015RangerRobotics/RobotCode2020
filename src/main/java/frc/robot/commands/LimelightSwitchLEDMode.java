@@ -9,32 +9,34 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Limelight;
 
-public class LimelightSwitchPipeline extends CommandBase {
+public class LimelightSwitchLEDMode extends CommandBase {
     /**
      * Creates a new LimelightSwitchPipeline.
      */
-    public int id;
+    public Limelight.LEDMode mode;
 
     /**
-     * Command to change the Limelight's current pipeline
-     * @param id The pipeline id to change to
+     * Command to change the Limelight's current LEDMode
+     * @param mode The LEDMode to change to
      */
-    public LimelightSwitchPipeline(int id) {
+    public LimelightSwitchLEDMode(Limelight.LEDMode mode) {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(RobotContainer.limelight);
-        this.id = id;
+        this.mode = mode;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.limelight.setPipeline(id);
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        RobotContainer.limelight.setLEDMode(mode);
     }
 
     // Called once the command ends or is interrupted.
@@ -45,6 +47,12 @@ public class LimelightSwitchPipeline extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
+        return true;
+    }
+
+    //i don't approve
+    @Override
+    public boolean runsWhenDisabled(){
         return true;
     }
 }

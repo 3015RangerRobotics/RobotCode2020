@@ -57,8 +57,8 @@ public final class Constants {
     public static final int HANDLER_MOTOR3 = 6;
     public static final int HANDLER_MOTOR4 = 5;
     public static final int HANDLER_MOTOR5 = 4;
-    public static final int HANDLER_SWITCH1 = 3;
-    public static final int HANDLER_SWITCH2 = 2;
+    public static final int HANDLER_SWITCH1 = 2;
+    public static final int HANDLER_SWITCH2 = 3;
     public static final int HANDLER_SWITCH3 = 4;
     public static final int HANDLER_SWITCH4 = 5;
     public static final int HANDLER_SWITCH5 = 6;
