@@ -81,7 +81,7 @@ public class RobotContainer {
         driverB.whileActiveContinuous(new CG_PurgeBalls());
         driverX.whenActive(new CG_HomeTurret());
         driverY.whileActiveContinuous(new CG_ReadyToFireBatter()).whenInactive(new HoodDown());
-//        driverX.whenActive(new AutoPickpocket());
+        driverA.whenActive(new AutoPickpocket());
 //        driverY.whenActive(new DriveStraightTemp(5, 8, 5));
 //        driverDRight.whenActive(new CG_HomeTurret());
         driverDLeft.whenActive(new CG_ToggleTurretDefaultPosition());
@@ -116,7 +116,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return null;
+        return new AutoHungryHippo();
     }
 
     /**
