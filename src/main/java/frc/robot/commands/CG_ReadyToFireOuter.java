@@ -15,7 +15,7 @@ public class CG_ReadyToFireOuter extends SequentialCommandGroup {
                 new WaitCommand(.2),
                 new ParallelCommandGroup(
                         new ShooterStartAuto(),
-                        new TurretTurnToTarget()
+                        new TurretTurnToTargetHold()
                 )
         );
     }

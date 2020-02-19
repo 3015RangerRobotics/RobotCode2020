@@ -28,14 +28,14 @@ public final class Constants {
 
     // Turret Constants
     public static final int TURRET_MOTOR = 6;
-    public static final double TURRET_P = 2.5; // 0.3
+    public static final double TURRET_P = 0.8; // 1.5  2
     public static final double TURRET_I = 0; // 0
-    public static final double TURRET_D = 75; // 0
+    public static final double TURRET_D = 20; // 70  190
     public static final double TURRET_F = 0; // 0
     public static final double TURRET_DEGREES_PER_PULSE = 1 / (5600.0 / 90.0);
     public static final double TURRET_MAX_SPEED = 0.7;
-    public static final double TURRET_MIN_SPEED = 0.15;
-    public static final double TURRET_DEGREE_MARGIN = Math.round((1 / Constants.TURRET_DEGREES_PER_PULSE) * 0.05);
+    public static final double TURRET_MIN_SPEED = 0.08;
+    public static final double TURRET_DEGREE_MARGIN = Math.round((1 / Constants.TURRET_DEGREES_PER_PULSE) * 1);
     public static final int TURRET_LEFT_LIMIT = 1;
     public static final int TURRET_RIGHT_LIMIT = 0;
     public static final int TURRET_HOMING_POSITION = (int) Math.round(-110 / TURRET_DEGREES_PER_PULSE);

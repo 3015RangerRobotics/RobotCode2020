@@ -26,6 +26,7 @@ public class Climber extends SubsystemBase {
     climberMotor = new TalonSRX(Constants.CLIMBER_MOTOR);
     climberMotor.setInverted(true);
     latchRelease = new DoubleSolenoid(Constants.CLIMBER_LATCH_RELEASE1, Constants.CLIMBER_LATCH_RELEASE2);
+    closeLatch();
     climberMotor.configVoltageCompSaturation(12.8);
     climberMotor.enableVoltageCompensation(true);
   }

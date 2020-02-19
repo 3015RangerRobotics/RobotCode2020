@@ -92,6 +92,7 @@ public class Limelight extends SubsystemBase {
                 double d = getTargetAngleX() - limeLightXAnglePrevious;
                 double v = d/Constants.ROBOT_TIME_STEP;
                 limelightXAngleOffset = v*getLatency();
+                limeLightXAnglePrevious = getTargetAngleX();
             }
         } else {
             limelightXAngleOffset = 0;
@@ -129,7 +130,7 @@ public class Limelight extends SubsystemBase {
      * @return The current latency from the limelight to the robot
      */
     public double getLatency() {
-        return limelight.getEntry("tl").getDouble(0) + 11;
+        return (limelight.getEntry("tl").getDouble(0) + 11) / 1000.0;
     }
 
     /**
