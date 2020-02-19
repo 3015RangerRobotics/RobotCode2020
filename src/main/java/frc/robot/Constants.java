@@ -9,6 +9,7 @@ package frc.robot;
 
 public final class Constants {
     public static final double MP_TIME_STEP = 0.01;
+    public static final double ROBOT_TIME_STEP = 0.02;
 
     // Drive Constants
     public static final int DRIVE_RIGHT_MASTER = 1;
@@ -34,10 +35,10 @@ public final class Constants {
     public static final double TURRET_DEGREES_PER_PULSE = 1 / (5600.0 / 90.0);
     public static final double TURRET_MAX_SPEED = 0.7;
     public static final double TURRET_MIN_SPEED = 0.15;
-    public static final double TURRET_DEGREE_MARGIN = Math.round((1 / Constants.TURRET_DEGREES_PER_PULSE) * 0.15);
+    public static final double TURRET_DEGREE_MARGIN = Math.round((1 / Constants.TURRET_DEGREES_PER_PULSE) * 0.05);
     public static final int TURRET_LEFT_LIMIT = 1;
     public static final int TURRET_RIGHT_LIMIT = 0;
-    public static final int TURRET_HOMING_POSITION = (int) Math.round(-114 / TURRET_DEGREES_PER_PULSE);
+    public static final int TURRET_HOMING_POSITION = (int) Math.round(-110 / TURRET_DEGREES_PER_PULSE);
 
     // Shooter Constants (THe meaning of life, the universe, and everything)
     public static final int SHOOTER_MOTOR = 5;
@@ -46,10 +47,11 @@ public final class Constants {
     public static final double SHOOTER_D = 10; // 46.0
     public static final double SHOOTER_F = 0.0468; // 0.047
     public static final double SHOOTER_PULSES_PER_ROTATION = 2048 * (2.0/3.0);
-    public static final double SHOOTER_SHOOT_P = 1;
+    public static final double SHOOTER_SHOOT_P = 6;
     public static final double SHOOTER_SHOOT_I = 0;
     public static final double SHOOTER_SHOOT_D = 25;
     public static final double SHOOTER_SHOOT_F = SHOOTER_F * 1;
+    public static final double SHOOTER_LAUNCH_ANGLE = 53.28;
 
     // Ball Handler Constants
     public static final int HANDLER_MOTOR1 = 2;
@@ -90,9 +92,8 @@ public final class Constants {
 
     //CLimber Constants
     public static final int CLIMBER_MOTOR = 7;
-    public static final int CLIMBER_LATCH_RELEASE = 3;
-    public static final double CLIMB_UP_SPEED = 0.8;
-    public static final double CLIMB_DOWN_SPEED = -0.3;
-    public static final double CLIMB_STOP_SPEED = 0.0;
+    public static final int CLIMBER_LATCH_RELEASE1 = 2;
+    public static final int CLIMBER_LATCH_RELEASE2 = 5;
+    public static final double CLIMB_UP_SPEED = 1;
 
 }

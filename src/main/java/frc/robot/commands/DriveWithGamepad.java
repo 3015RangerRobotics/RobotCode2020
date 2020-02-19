@@ -34,35 +34,36 @@ public class DriveWithGamepad extends CommandBase {
     public void execute() {
         double driveValue = 0.0;
         double turnValue = 0.0;
-        if (Math.abs(RobotContainer.getDriverLeftStickY()) > (Math.abs(RobotContainer.getDriverRightStickY()))) {
-            driveValue = -RobotContainer.getDriverLeftStickY();
-        } else {
-            driveValue = RobotContainer.getDriverRightStickY();//the negative was infront of this line
-        }
-
-        if (Math.abs(RobotContainer.getDriverLeftStickX()) > (Math.abs(RobotContainer.getDriverRightStickX()))) {
-            turnValue = RobotContainer.getDriverLeftStickX() / 1.25;
-
-        } else {
-            turnValue = RobotContainer.getDriverRightStickX() / 1.25;
-        }
-
-        RobotContainer.drive.arcadeDrive(driveValue, turnValue, true);
-    }
-//        if (Math.abs(RobotContainer.getDriverLeftStickY()) >= 0.10 || Math.abs(RobotContainer.getDriverRightStickY()) >= 0.10) {
-//            if (Math.abs(RobotContainer.getDriverLeftStickY()) > (Math.abs(RobotContainer.getDriverRightStickY()))) {
-//                driveValue = -RobotContainer.getDriverLeftStickY();
-//                turnValue = RobotContainer.getDriverRightStickX();
-//            } else {
-//                driveValue = RobotContainer.getDriverRightStickY();
-//                turnValue = RobotContainer.getDriverLeftStickX();
-//            }
-//            RobotContainer.drive.curvatureDrive(driveValue, turnValue, false, true);
+//        if (Math.abs(RobotContainer.getDriverLeftStickY()) > (Math.abs(RobotContainer.getDriverRightStickY()))) {
+//            driveValue = -RobotContainer.getDriverLeftStickY();
 //        } else {
-//            turnValue = RobotContainer.getDriverLeftStickX();
-//            RobotContainer.drive.arcadeDrive(driveValue, turnValue, true);
+//            driveValue = RobotContainer.getDriverRightStickY();//the negative was infront of this line
 //        }
+//
+//        if (Math.abs(RobotContainer.getDriverLeftStickX()) > (Math.abs(RobotContainer.getDriverRightStickX()))) {
+//            turnValue = RobotContainer.getDriverLeftStickX() / 1.25;
+//
+//        } else {
+//            turnValue = RobotContainer.getDriverRightStickX() / 1.25;
+//        }
+//
+//        RobotContainer.drive.arcadeDrive(driveValue, turnValue, true);
 //    }
+//        if(Math.abs(RobotContainer.getDriverRightStickX()) > Math.abs(RobotContainer.getDriverLeftStickX())){
+            turnValue = RobotContainer.getDriverRightStickX();
+//        }else{
+//            turnValue = RobotContainer.getDriverLeftStickX();
+//        }
+
+        if (Math.abs(RobotContainer.getDriverLeftStickY()) >= 0.10) {
+//            if (Math.abs(RobotContainer.getDriverLeftStickY()) > (Math.abs(RobotContainer.getDriverRightStickY()))) {
+                driveValue = -RobotContainer.getDriverLeftStickY();
+            RobotContainer.drive.curvatureDrive(driveValue, turnValue, false, true);
+        }
+        else {
+            RobotContainer.drive.arcadeDrive(driveValue, turnValue, true);
+        }
+    }
 
     // Called once the command ends or is interrupted.
     @Override

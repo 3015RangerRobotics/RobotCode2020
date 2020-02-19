@@ -9,14 +9,13 @@ package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class ShooterStartAuto extends CommandBase {
-    double rpm = 5400;
-    double launch = Math.tan(Math.toRadians(53.2));
-    double f2m = 0.305;
+    double rpm = 5700;
 
     /**
      * Creates a new ShooterStart.
@@ -53,9 +52,26 @@ public class ShooterStartAuto extends CommandBase {
         double d = RobotContainer.limelight.getArea();
         double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
         rpm = 6494.93513 + (-2502.61834*d) + (1063.20913*d*d) + (1.5 * Math.abs(turretPos));
+        //109.6213
+        //x
+        //3
+        //−
+        //17742.2424
+        //x
+        //2
+        //+
+        //954109.7956
+        //x
+        //−
+        //17047307.6571
 
+//        double v = Units.metersToFeet(RobotContainer.limelight.getShooterLaunchVelocity());
+//        double d = RobotContainer.limelight.getRobotToTargetDistance();
+//        double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
+//        rpm = Math.min(Math.abs((109.6213 * Math.pow(v, 3)) - (17742.2424 * Math.pow(v, 2)) + (954109.7956 * v) - 17047307.6571), 7000);
         RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.SHOOTER_PULSES_PER_ROTATION);
         System.out.println("===================" + d);
+
     }
 
     // Called once the command ends or is interrupted.

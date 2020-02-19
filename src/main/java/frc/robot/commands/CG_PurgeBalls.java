@@ -4,12 +4,13 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class CG_ReadyToFireBatter extends SequentialCommandGroup {
+public class CG_PurgeBalls extends SequentialCommandGroup {
 
-    public CG_ReadyToFireBatter() {
+    public CG_PurgeBalls() {
         addCommands(
-                new HoodUp(),
-                new ShooterStart(6600)
+                new HarvesterUp(),
+                new WaitCommand(0.25),
+                new BallHandlerPurge()
         );
     }
 }

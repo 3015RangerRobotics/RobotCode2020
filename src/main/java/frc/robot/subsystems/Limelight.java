@@ -9,15 +9,20 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Limelight extends SubsystemBase {
     NetworkTable limelight;
 
     private double targetHeight = 7.58;
-    private double limelightHeight = 2.2;
-    private double limelightAngle = 29.8;
+    private double limelightHeight = 1.75;
+    private double limelightAngle = 20;
     private double outerToInnerTargetDistance = 2.4;
+    private double limelightXAngleOffset = 0;
+    private double limeLightXAnglePrevious = 0;
 
     public static enum LEDMode {
         PIPELINE(0),
@@ -78,6 +83,21 @@ public class Limelight extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        SmartDashboard.putNumber("Distance to Target", getRobotToTargetDistance());
+        SmartDashboard.putNumber("Launch Velocity", getShooterLaunchVelocity());
+        if (hasTarget()){
+            if (limeLightXAnglePrevious == 0) {
+                limeLightXAnglePrevious = getTargetAngleX();
+            } else {
+                double d = getTargetAngleX() - limeLightXAnglePrevious;
+                double v = d/Constants.ROBOT_TIME_STEP;
+                limelightXAngleOffset = v*getLatency();
+            }
+        } else {
+            limelightXAngleOffset = 0;
+            limeLightXAnglePrevious = 0;
+        }
+
     }
 
     /**
@@ -92,6 +112,10 @@ public class Limelight extends SubsystemBase {
      */
     public double getTargetAngleX() {
         return limelight.getEntry("tx").getDouble(0);
+    }
+
+    public double getTargetAngleXAdjusted() {
+        return getTargetAngleX() + limelightXAngleOffset;
     }
 
     /**
@@ -209,6 +233,17 @@ public class Limelight extends SubsystemBase {
      */
     public double getRobotToTargetDistance() {
         return (targetHeight - limelightHeight) / Math.tan(Math.toRadians(limelightAngle + getTargetAngleY()));
+    }
+
+    public double getShooterLaunchVelocity() {
+        double g = 9.81;
+        double y = targetHeight;
+        double x = getRobotToTargetDistance();
+        double launchAngle = Constants.SHOOTER_LAUNCH_ANGLE; // Set to proper value
+        double tanA = Math.tan(Math.toRadians(launchAngle));
+        double upper = Math.sqrt(g) * Math.sqrt(x) * Math.sqrt(Math.pow(tanA, 2) + 1);
+        double lower = Math.sqrt(2 * tanA - ((2 * y) / x));
+        return Units.metersToFeet(upper / lower);
     }
 
     // public double getlimelightToOuterTargetDistance() {

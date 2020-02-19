@@ -12,7 +12,7 @@ public class CG_ReadyToFireOuter extends SequentialCommandGroup {
                 new LimelightSwitchLEDMode(Limelight.LEDMode.LED_ON),
                 new LimelightSwitchPipeline(0),
                 new HarvesterDown(),
-                new WaitCommand(.1),
+                new WaitCommand(.2),
                 new ParallelCommandGroup(
                         new ShooterStartAuto(),
                         new TurretTurnToTarget()

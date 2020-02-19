@@ -48,7 +48,7 @@ public class Turret extends SubsystemBase {
         // turretMotor.configReverseSoftLimitThreshold((int) Math.round(Constants.TURRET_SOFT_LIMIT_REVERSE / Constants.TURRET_DEGREES_PER_PULSE));
 
         turretMotor.setInverted(false);
-//        turretMotor.setSelectedSensorPosition(0);
+        turretMotor.setSelectedSensorPosition(0);
         turretMotor.setSensorPhase(false);
 
         turretMotor.configPeakOutputForward(Constants.TURRET_MAX_SPEED);
@@ -72,9 +72,6 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putNumber("Turret Position",  getPosition());
         SmartDashboard.putBoolean("Turret Left Limit",getLeftLimit());
         SmartDashboard.putBoolean("Turret Right Limit", getRightLimit());
-        if(getLeftLimit()) {
-            RobotContainer.turret.setEncoder(Constants.TURRET_HOMING_POSITION);
-        }
     }
 
     public boolean isLeftShot(){

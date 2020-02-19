@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -73,6 +74,12 @@ public class BallHandler extends SubsystemBase {
 
     @Override
     public void periodic() {
+        SmartDashboard.putBoolean("switch1", isSwitch1Pressed());
+        SmartDashboard.putBoolean("switch2", isSwitch2Pressed());
+        SmartDashboard.putBoolean("switch3", isSwitch3Pressed());
+        SmartDashboard.putBoolean("switch4", isSwitch4Pressed());
+        SmartDashboard.putBoolean("switch5", isSwitch5Pressed());
+
         double[] speeds;
         switch (state) {
             case kPurge:

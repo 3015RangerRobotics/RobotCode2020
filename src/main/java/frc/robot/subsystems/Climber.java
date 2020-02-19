@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -18,28 +19,26 @@ import frc.robot.Constants;
  */
 public class Climber extends SubsystemBase {
   private TalonSRX climberMotor;
-  private Solenoid latchRelease;
+  private DoubleSolenoid latchRelease;
   private double encoder;
 
   public Climber() {
     climberMotor = new TalonSRX(Constants.CLIMBER_MOTOR);
-    latchRelease = new Solenoid(Constants.CLIMBER_LATCH_RELEASE);
+    climberMotor.setInverted(true);
+    latchRelease = new DoubleSolenoid(Constants.CLIMBER_LATCH_RELEASE1, Constants.CLIMBER_LATCH_RELEASE2);
     climberMotor.configVoltageCompSaturation(12.8);
     climberMotor.enableVoltageCompensation(true);
   }
   public void releaseLatch() {
-    latchRelease.set(true);
+    latchRelease.set(DoubleSolenoid.Value.kForward);
   }
   public void closeLatch() {
-    latchRelease.set(false);
+    latchRelease.set(DoubleSolenoid.Value.kReverse);
   }
   public void climbUp() {
     climberMotor.set(ControlMode.PercentOutput, Constants.CLIMB_UP_SPEED);
   }
-  public void climbDown() {
-    climberMotor.set(ControlMode.PercentOutput, Constants.CLIMB_DOWN_SPEED);
-  }
   public void climbStop() {
-    climberMotor.set(ControlMode.PercentOutput, Constants.CLIMB_STOP_SPEED);
+    climberMotor.set(ControlMode.PercentOutput, 0);
   }
 }

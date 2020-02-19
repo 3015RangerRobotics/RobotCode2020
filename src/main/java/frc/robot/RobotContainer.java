@@ -71,13 +71,14 @@ public class RobotContainer {
         driverRumble = new DriverRumble();
         hood = new Hood();
         climber = new Climber();
+        SmartDashboard.putData(climber);
         configureButtonBindings();
     }
 
 
     private void configureButtonBindings() {
 //        driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
-        driverB.whileActiveContinuous(new BallHandlerPurge());
+        driverB.whileActiveContinuous(new CG_PurgeBalls());
         driverX.whenActive(new CG_HomeTurret());
         driverY.whileActiveContinuous(new CG_ReadyToFireBatter()).whenInactive(new HoodDown());
 //        driverX.whenActive(new AutoPickpocket());
@@ -90,11 +91,12 @@ public class RobotContainer {
         driverLT.whileActiveContinuous(new CG_HarvesterOfBalls());
         driverLB.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new LimelightSwitchLEDMode(Limelight.LEDMode.LED_OFF));
         driverRB.whileActiveContinuous(new CG_FireZeMissiles());
+        driverBack.whileActiveContinuous(new ClimberClimbUp());
 //        driverStart.whenActive(new CompressorStart());
 //        driverBack.whenActive(new CompressorStop());
 
         coDriverA.whileActiveContinuous(new CG_HarvesterOfBalls());
-        coDriverB.whileActiveContinuous(new BallHandlerPurge());
+        coDriverB.whileActiveContinuous(new CG_PurgeBalls());
         coDriverX.whenActive(new CG_HomeTurret());
         coDriverY.whileActiveContinuous(new CG_ReadyToFireBatter()).whenInactive(new HoodDown());
 //        coDriverDLeft.whenActive(new CG_HomeTurret());
@@ -105,8 +107,12 @@ public class RobotContainer {
         coDriverLB.whileActiveContinuous(new TurretTurnManual(-0.3));
         coDriverRB.whileActiveContinuous(new TurretTurnManual(0.3));
         coDriverRT.whileActiveContinuous(new CG_FireZeMissiles());
+        coDriverBack.whileActiveContinuous(new ClimberClimbUp());
 //       coDriverStart.whenActive(new ClimberClimbUp());
 //       coDriverBack.whenActive(new ClimberClimbDown());
+
+//        driverStart.and(
+        driverStart.and(coDriverStart.whenActive(new ClimberRelease()));
     }
 
     public Command getAutonomousCommand() {
@@ -150,7 +156,7 @@ public class RobotContainer {
      * @return The X value of the driver's right stick
      */
     public static double getDriverRightStickX() {
-        if (Math.abs(driver.getX(Hand.kRight)) > 0.05) {
+        if (Math.abs(driver.getX(Hand.kRight)) > 0.1) {
             return driver.getX(Hand.kRight);
         } else {
             return 0;

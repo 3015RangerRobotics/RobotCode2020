@@ -51,8 +51,8 @@ public class LimelightSwitchLEDMode extends CommandBase {
     }
 
     //i don't approve
-    @Override
-    public boolean runsWhenDisabled(){
-        return true;
-    }
+//    @Override
+//    public boolean runsWhenDisabled(){
+//        return true;
+//    }
 }
