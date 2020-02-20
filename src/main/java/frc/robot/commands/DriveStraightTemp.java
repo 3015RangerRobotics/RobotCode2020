@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import motionlib.DriveProfile;
+import lib.motion_profiles.DriveProfile;
 import frc.robot.RobotContainer;
 
 public class DriveStraightTemp extends CommandBase {

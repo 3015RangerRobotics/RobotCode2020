@@ -1,4 +1,4 @@
-package motionlib;
+package lib.motion_profiles;
 
 import frc.robot.Constants;
 

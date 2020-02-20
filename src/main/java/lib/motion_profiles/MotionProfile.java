@@ -1,4 +1,4 @@
-package motionlib;
+package lib.motion_profiles;
 
 import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
 import com.ctre.phoenix.motion.TrajectoryPoint;
