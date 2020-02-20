@@ -43,8 +43,8 @@ public class DriveMotionProfile extends CommandBase {
     @Override
     public void initialize() {
         RobotContainer.drive.resetEncoders();
-        RobotContainer.drive.startMotionProfile(profile.getLeftProfile().getProfileAsCTREBuffer(),
-                profile.getRightProfile().getProfileAsCTREBuffer());
+        RobotContainer.drive.startMotionProfile(profile.getLeftProfile().getProfileAsCTREBuffer(0, 0),
+                profile.getRightProfile().getProfileAsCTREBuffer(0, 0));
     }
 
     // Called every time the scheduler runs while the command is scheduled.

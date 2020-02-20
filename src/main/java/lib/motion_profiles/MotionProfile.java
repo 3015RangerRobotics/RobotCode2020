@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MotionProfile {
-    private double pulsesPerUnit;
-    private double timeStep;
-    private double[][] profile;
+    protected double pulsesPerUnit;
+    protected double timeStep;
+    protected double[][] profile;
 
     public MotionProfile(String profileName, double pulsesPerUnit, double timeStep){
         this.pulsesPerUnit = pulsesPerUnit;
@@ -43,11 +43,24 @@ public class MotionProfile {
     }
 
     public double getPositionFeet(int i){
-        return profile[i][0];
+        if(profile[i].length > 0){
+            return profile[i][0];
+        }
+        return 0;
     }
 
     public double getVelocityFeet(int i){
-        return profile[i][1];
+        if(profile[i].length > 1){
+            return profile[i][1];
+        }
+        return 0;
+    }
+
+    public double getAccelerationFeet(int i){
+        if(profile[i].length > 2){
+            return profile[i][2];
+        }
+        return 0;
     }
 
     public double getPositionEncoder(int i){
@@ -58,17 +71,22 @@ public class MotionProfile {
         return getVelocityFeet(i) * pulsesPerUnit;
     }
 
+    public double getAccelerationEncoder(int i){
+        return getAccelerationFeet(i) * pulsesPerUnit;
+    }
+
     /**
      * Create a BufferedTrajectoryPointStream for the motors to follow
      * @return The given profile as a BufferedTrajectoryPointStream
      */
-    public BufferedTrajectoryPointStream getProfileAsCTREBuffer() {
+    public BufferedTrajectoryPointStream getProfileAsCTREBuffer(double kV, double kA) {
         BufferedTrajectoryPointStream buffer = new BufferedTrajectoryPointStream();
 
         for (int i = 0; i < profile.length; i++) {
             TrajectoryPoint point = new TrajectoryPoint();
             double position = getPositionEncoder(i);
             double velocity = getVelocityEncoder(i) / 10;
+            double acceleration = getAccelerationEncoder(i);
 
             point.timeDur = (int) (timeStep * 1000);
             point.position = position;
@@ -80,7 +98,7 @@ public class MotionProfile {
             point.profileSlotSelect1 = 1;
             point.zeroPos = (i == 0);
             point.isLastPoint = ((i + 1) == profile.length);
-            point.arbFeedFwd = 0;
+            point.arbFeedFwd = (velocity * kV) + (acceleration * kA);
 
             buffer.Write(point);
 
@@ -102,16 +120,18 @@ public class MotionProfile {
             String line = "";
             while ((line = br.readLine()) != null) {
                 String[] pointString = line.split(",");
-                double[] point = new double[2];
-                for (int i = 0; i < 2; i++) {
+                double[] point = new double[pointString.length];
+                for (int i = 0; i < pointString.length; i++) {
                     point[i] = Double.parseDouble(pointString[i]);
                 }
                 points.add(point);
             }
-            profile = new double[points.size()][2];
+            int dataPoints = points.get(0).length;
+            profile = new double[points.size()][dataPoints];
             for (int i = 0; i < points.size(); i++) {
-                profile[i][0] = points.get(i)[0];
-                profile[i][1] = points.get(i)[1];
+                for(int j = 0; j < dataPoints; j++){
+                    profile[i][j] = points.get(i)[j];
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
