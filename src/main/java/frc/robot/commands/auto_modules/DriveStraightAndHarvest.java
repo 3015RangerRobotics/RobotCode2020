@@ -13,7 +13,7 @@ public class DriveStraightAndHarvest extends ParallelRaceGroup {
                         new HarvesterDown(),
                         new HarvesterIn(harvester)
                 ),
-                new DriveStraightTemp(distance, maxV, maxA)
+                new DriveMotionProfile(distance, maxV, maxA)
         );
     }
 }

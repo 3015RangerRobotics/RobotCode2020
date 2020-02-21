@@ -11,6 +11,9 @@ public final class Constants {
     public static final double MP_TIME_STEP = 0.01;
     public static final double ROBOT_TIME_STEP = 0.02;
 
+    public static final double LIMELIGHT_INNER_DISTANCE = 12;
+    public static final double LIMELIGHT_ZOOM_DISTANCE = 50;
+
     // Drive Constants
     public static final int DRIVE_RIGHT_MASTER = 1;
     public static final int DRIVE_RIGHT_FOLLOWER = 2;
@@ -20,12 +23,16 @@ public final class Constants {
     public static final double DRIVE_P_TURN = 0.015;
     public static final double DRIVE_I = 0;
     public static final double DRIVE_D = 13.724;//1;
-    public static final double DRIVE_F = 1023.0/22600;
+    public static final double DRIVE_F = 0;
+    public static final double DRIVE_KV = 1023.0/22600;
+    public static final double DRIVE_KA = 0;
     public static final double DRIVE_PULSES_PER_FOOT = 14159.2386107;
     public static final double DRIVE_MAX_VELOCITY = 8 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_MAX_ACCELERATION = 6 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_MAX_MOTION_ERROR = 0.1 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_PIGEON_UNITS_PER_DEGREE = 8192.0 / 360.0;
+    public static final int DRIVE_PIGEON = 10;
+    public static final double DRIVE_NEUTRAL_DEADBAND = 0.001;
 
     // Turret Constants
     public static final int TURRET_MOTOR = 6;
@@ -53,6 +60,7 @@ public final class Constants {
     public static final double SHOOTER_SHOOT_D = 25;
     public static final double SHOOTER_SHOOT_F = SHOOTER_F * 1;
     public static final double SHOOTER_LAUNCH_ANGLE = 53.28;
+    public static final double SHOOTER_TOLERANCE = 100;
 
     // Ball Handler Constants
     public static final int HANDLER_MOTOR1 = 2;

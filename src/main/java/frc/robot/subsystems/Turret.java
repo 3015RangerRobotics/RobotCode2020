@@ -69,16 +69,16 @@ public class Turret extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
 //         System.out.println("Turret Angle: "  + getPosition() + " Motor Speed: " + turretMotor.getMotorOutputPercent());
-        SmartDashboard.putNumber("Turret Position",  getPosition());
-        SmartDashboard.putBoolean("Turret Left Limit",getLeftLimit());
+        SmartDashboard.putNumber("Turret Position", getPosition());
+        SmartDashboard.putBoolean("Turret Left Limit", getLeftLimit());
         SmartDashboard.putBoolean("Turret Right Limit", getRightLimit());
     }
 
-    public boolean isLeftShot(){
+    public boolean isLeftShot() {
         return isLeftShot;
     }
 
-    public void toggleLeftShot(){
+    public void toggleLeftShot() {
         isLeftShot = !isLeftShot;
     }
 
@@ -91,7 +91,8 @@ public class Turret extends SubsystemBase {
 
     /**
      * Set the output of the turret motor
-     * @param mode The control mode to use
+     *
+     * @param mode  The control mode to use
      * @param value The value to output
      */
     public void set(ControlMode mode, double value) {
@@ -119,6 +120,7 @@ public class Turret extends SubsystemBase {
 
     /**
      * Set the position of the encoder
+     *
      * @param value The position to set
      */
     public void setEncoder(int value) {
@@ -137,5 +139,9 @@ public class Turret extends SubsystemBase {
      */
     public boolean getRightLimit() {
         return !rightLimit.get();
+    }
+
+    public boolean isOnTarget() {
+        return Math.abs(turretMotor.getClosedLoopError()) <= Constants.TURRET_DEGREE_MARGIN;
     }
 }

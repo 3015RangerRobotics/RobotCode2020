@@ -9,11 +9,14 @@ public class Auto8BallTrench extends SequentialCommandGroup {
 
     public Auto8BallTrench() {
         addCommands(
-                new DriveStraightAndHarvest(10.5, 10, 8, 5400, -0.75),
+                new ParallelDeadlineGroup(
+                        new DriveStraightAndHarvest(10.5, 10, 8, 5400, -0.75),
+                        new CG_HomeTurret()
+                ),
                 new HarvestInPlace(-.75, 0.5, 5400),
                 new AimAndShoot(3),
                 new ParallelDeadlineGroup(
-                        new DriveStraightTemp(6.6,10,8),
+                        new DriveMotionProfile(6.6,10,8),
                         new ShooterStart(5400),
                         new TurretToPosition(0),
                         new BallHandlerHarvest(),

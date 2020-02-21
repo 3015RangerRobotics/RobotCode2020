@@ -10,8 +10,9 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import lib.motion_profiles.DriveProfile;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import lib.motion_profiles.DriveProfile;
 
 public class DriveMotionProfile extends CommandBase {
     /**
@@ -43,8 +44,8 @@ public class DriveMotionProfile extends CommandBase {
     @Override
     public void initialize() {
         RobotContainer.drive.resetEncoders();
-        RobotContainer.drive.startMotionProfile(profile.getLeftProfile().getProfileAsCTREBuffer(0, 0),
-                profile.getRightProfile().getProfileAsCTREBuffer(0, 0));
+        RobotContainer.drive.resetIMU();
+        RobotContainer.drive.startMotionProfile(profile.getProfileAsCTREBuffer(Constants.DRIVE_KV, Constants.DRIVE_KA));
     }
 
     // Called every time the scheduler runs while the command is scheduled.

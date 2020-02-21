@@ -16,7 +16,9 @@ import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
 import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.music.Orchestra;
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Filesystem;
@@ -39,14 +41,11 @@ public class Drive extends SubsystemBase {
     private TalonFX leftMaster;
     private TalonFX leftFollower;
 
-//    private double leftEncoderOffset = 0;
-//    private double rightEncoderOffset = 0;
-
     private Orchestra orchestra;
-    private AHRS imu;
+    private PigeonIMU imu;
 
     public Drive() {
-        this.imu = new AHRS(I2C.Port.kMXP);
+        this.imu = new PigeonIMU(Constants.DRIVE_PIGEON);
         this.rightMaster = new TalonFX(Constants.DRIVE_RIGHT_MASTER);
         this.rightFollower = new TalonFX(Constants.DRIVE_RIGHT_FOLLOWER);
         this.leftMaster = new TalonFX(Constants.DRIVE_LEFT_MASTER);
@@ -54,6 +53,30 @@ public class Drive extends SubsystemBase {
 
         rightMaster.configFactoryDefault();
         leftMaster.configFactoryDefault();
+        imu.configFactoryDefault();
+
+        TalonFXConfiguration rightConfig = new TalonFXConfiguration();
+        rightConfig.remoteFilter0.remoteSensorDeviceID = imu.getDeviceID();
+        rightConfig.remoteFilter0.remoteSensorSource = RemoteSensorSource.Pigeon_Yaw;
+        rightConfig.remoteFilter1.remoteSensorDeviceID = leftMaster.getDeviceID();
+        rightConfig.remoteFilter1.remoteSensorSource = RemoteSensorSource.TalonFX_SelectedSensor;
+        rightConfig.diff0Term = FeedbackDevice.IntegratedSensor;
+        rightConfig.diff1Term = FeedbackDevice.RemoteSensor1;
+        rightConfig.primaryPID.selectedFeedbackSensor = FeedbackDevice.SensorDifference;
+        rightConfig.primaryPID.selectedFeedbackCoefficient = 0.5;
+        rightConfig.auxiliaryPID.selectedFeedbackSensor = FeedbackDevice.RemoteSensor0;
+        rightConfig.neutralDeadband = Constants.DRIVE_NEUTRAL_DEADBAND;
+        rightConfig.slot0.kP = Constants.DRIVE_P;
+        rightConfig.slot0.kI = Constants.DRIVE_I;
+        rightConfig.slot0.kD = Constants.DRIVE_D;
+        rightConfig.slot0.kF = Constants.DRIVE_F;
+        rightConfig.slot1.kP = Constants.DRIVE_P;
+        rightConfig.slot1.kI = Constants.DRIVE_I;
+        rightConfig.slot1.kD = Constants.DRIVE_D;
+        rightConfig.slot1.kF = Constants.DRIVE_F;
+
+        rightMaster.configAllSettings(rightConfig);
+
 
         rightFollower.follow(rightMaster);
         leftFollower.follow(leftMaster);
@@ -67,23 +90,18 @@ public class Drive extends SubsystemBase {
         leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10);
         leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_9_MotProfBuffer, 10);
         leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
+        leftMaster.setStatusFramePeriod(StatusFrame.Status_10_Targets, 10);
+        leftMaster.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10);
+        leftMaster.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 10);
 
-        leftFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 10);
-        leftFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10);
-        leftFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_9_MotProfBuffer, 10);
-        leftFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
 
         rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 10);
         rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10);
         rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_9_MotProfBuffer, 10);
         rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
-
-        rightFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 10);
-        rightFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10);
-        rightFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_9_MotProfBuffer, 10);
-        rightFollower.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
-
-        enableBrakeMode();
+        rightMaster.setStatusFramePeriod(StatusFrame.Status_10_Targets, 10);
+        rightMaster.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10);
+        rightMaster.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 10);
 
         rightMaster.enableVoltageCompensation(true);
         rightMaster.configVoltageCompSaturation(12.5);
@@ -93,41 +111,21 @@ public class Drive extends SubsystemBase {
         rightMaster.setSensorPhase(true);
         leftMaster.setSensorPhase(false);
 
-        rightMaster.config_kP(0, Constants.DRIVE_P);
-        rightMaster.config_kI(0, Constants.DRIVE_I);
-        rightMaster.config_kD(0, Constants.DRIVE_D);
-        rightMaster.config_kF(0, Constants.DRIVE_F);
-
-        leftMaster.config_kP(0, Constants.DRIVE_P);
-        leftMaster.config_kI(0, Constants.DRIVE_I);
-        leftMaster.config_kD(0, Constants.DRIVE_D);
-        leftMaster.config_kF(0, Constants.DRIVE_F);
-
-        leftMaster.configMotionCruiseVelocity((int) Math.round(Constants.DRIVE_MAX_VELOCITY / 10));
-        rightMaster.configMotionCruiseVelocity((int) Math.round(Constants.DRIVE_MAX_VELOCITY / 10));
-        leftMaster.configMotionAcceleration((int) Math.round(Constants.DRIVE_MAX_ACCELERATION / 10));
-        rightMaster.configMotionAcceleration((int) Math.round(Constants.DRIVE_MAX_ACCELERATION / 10));
-        leftMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.DRIVE_MAX_MOTION_ERROR));
-        rightMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.DRIVE_MAX_MOTION_ERROR));
-
         ArrayList<TalonFX> instruments = new ArrayList<>();
         instruments.add(RobotContainer.shooter.shooter);
         instruments.add(leftMaster);
-//        instruments.add(leftFollower);
         instruments.add(rightMaster);
-//        instruments.add(rightFollower);
 //
         orchestra = new Orchestra(instruments);
         orchestra.loadMusic("jeopardy.chrp");
 
         resetEncoders();
         resetIMU();
+        enableBrakeMode();
     }
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
-//        System.out.println(rightMaster.getSelectedSensorVelocity());
         SmartDashboard.putNumber("gyro", getAngle());
     }
 
@@ -136,64 +134,22 @@ public class Drive extends SubsystemBase {
     }
 
     public double getAngle(){
-        return imu.getAngle();
+        return imu.getFusedHeading();
     }
 
     public void resetIMU(){
-        imu.reset();
+        imu.setYaw(0);
     }
 
     public void stopMusic(){
         orchestra.stop();
     }
 
-    public double getLeftPositionRaw(){
-        return leftMaster.getSelectedSensorPosition();
-    }
-
-    public double getRightPositionRaw(){
-        return rightMaster.getSelectedSensorPosition();
-    }
-
-    public double getActiveTrajPositionLeft(){
-        return leftMaster.getActiveTrajectoryPosition() / Constants.DRIVE_PULSES_PER_FOOT;
-    }
-
-    public double getActiveTrajPositionRight(){
-        return rightMaster.getActiveTrajectoryPosition() / Constants.DRIVE_PULSES_PER_FOOT;
-    }
-
-//    public double getLeftPosition(){
-//        return leftMaster.getSelectedSensorPosition() / Constants.DRIVE_PULSES_PER_FOOT;
-//    }
-//
-//    public double getRightPosition(){
-//        return rightMaster.getSelectedSensorPosition() / Constants.DRIVE_PULSES_PER_FOOT;
-//    }
-//
-//    public double getLeftPositionRaw(){
-//        return leftMaster.getSelectedSensorPosition();
-//    }
-//
-//    public double getRightPositionRaw(){
-//        return rightMaster.getSelectedSensorPosition();
-//    }
-//
-//    public double getLeftError(){
-//        return leftMaster.getClosedLoopError() / Constants.DRIVE_PULSES_PER_FOOT;
-//    }
-//
-//    public double getRightError(){
-//        return rightMaster.getClosedLoopError() / Constants.DRIVE_PULSES_PER_FOOT;
-//    }
-
 
     /**
      * Reset the drive encoders to 0
      */
     public void resetEncoders() {
-//        leftEncoderOffset = leftMaster.getSelectedSensorPosition();
-//        rightEncoderOffset = rightMaster.getSelectedSensorPosition();
         leftMaster.setSelectedSensorPosition(0);
         rightMaster.setSelectedSensorPosition(0);
     }
@@ -257,12 +213,11 @@ public class Drive extends SubsystemBase {
 
     /**
      * Start following a motion profile
-     * @param left The profile for the left motors
-     * @param right The profile for the right motors
+     * @param profile The profile
      */
-    public void startMotionProfile(BufferedTrajectoryPointStream left, BufferedTrajectoryPointStream right) {
-        leftMaster.startMotionProfile(left, 10, ControlMode.MotionProfile);
-        rightMaster.startMotionProfile(right, 10, ControlMode.MotionProfile);
+    public void startMotionProfile(BufferedTrajectoryPointStream profile) {
+        leftMaster.follow(rightMaster);
+        rightMaster.startMotionProfile(profile, 10, ControlMode.MotionProfile);
     }
 
     /**
@@ -270,6 +225,6 @@ public class Drive extends SubsystemBase {
      * @return is the motion profile finished
      */
     public boolean isMotionProfileFinished() {
-        return leftMaster.isMotionProfileFinished() && rightMaster.isMotionProfileFinished();
+        return rightMaster.isMotionProfileFinished();
     }
 }

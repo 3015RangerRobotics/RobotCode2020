@@ -21,7 +21,7 @@ public class AimAndShoot extends ParallelDeadlineGroup {
                         )
                 ),
                 new SequentialCommandGroup(
-                        new WaitCommand(0.75),
+                        new TurretWaitUntilOnTarget(),
                         new BallHandlerShoot()
                 )
         );
@@ -39,7 +39,7 @@ public class AimAndShoot extends ParallelDeadlineGroup {
                         )
                 ),
                 new SequentialCommandGroup(
-                        new WaitCommand(0.75),
+                        new TurretWaitUntilOnTarget(),
                         new BallHandlerShoot()
                 )
         );
