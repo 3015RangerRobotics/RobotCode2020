@@ -19,7 +19,8 @@ public class AutoHungryHippo extends SequentialCommandGroup {
                 new ParallelDeadlineGroup(
                         new AimAndShoot(10, 6500),
                         new HarvesterIn(-0.75)
-                )
+                ),
+                new CG_HomeTurret()
         );
     }
 }

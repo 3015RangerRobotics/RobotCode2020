@@ -33,18 +33,24 @@ public class BallHandlerHarvest extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-
+        if (ballHandler.getState() == BallHandler.State.kOff){
+            RobotContainer.setDriverRumbleLeft(1);
+            RobotContainer.setDriverRumbleRight(1);
+        }
     }
 
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        RobotContainer.setDriverRumbleLeft(0);
+        RobotContainer.setDriverRumbleRight(0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return ballHandler.getState() == BallHandler.State.kOff;
+        return false;
+//        return ballHandler.getState() == BallHandler.State.kOff;
     }
 }
