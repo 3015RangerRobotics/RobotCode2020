@@ -31,7 +31,7 @@ public final class Constants {
     public static final double DRIVE_MAX_ACCELERATION = 6 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_MAX_MOTION_ERROR = 0.1 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_PIGEON_UNITS_PER_DEGREE = 8192.0 / 360.0;
-    public static final int DRIVE_PIGEON = 10;
+    public static final int DRIVE_PIGEON = 1;
     public static final double DRIVE_NEUTRAL_DEADBAND = 0.001;
 
     // Turret Constants
