@@ -81,7 +81,7 @@ public class RobotContainer {
         driverB.whileActiveContinuous(new CG_PurgeBalls());
         driverX.whenActive(new CG_HomeTurret());
         driverY.whileActiveContinuous(new CG_ReadyToFireBatter()).whenInactive(new HoodDown());
-//        driverA.whenActive(new DriveMotionProfile(20, 12, 8));
+//        driverA.whenActive(new ClimberLatch());
 //        driverY.whenActive(new DriveStraightTemp(5, 8, 5));
 //        driverDRight.whenActive(new CG_HomeTurret());
         driverDLeft.whenActive(new CG_ToggleTurretDefaultPosition());
@@ -101,12 +101,12 @@ public class RobotContainer {
         coDriverX.whenActive(new CG_HomeTurret());
         coDriverY.whileActiveContinuous(new CG_ReadyToFireBatter()).whenInactive(new HoodDown());
         coDriverDDown.whenActive(new CG_OhHeck());
-        coDriverLT.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new LimelightSwitchLEDMode(Limelight.LEDMode.LED_OFF));
         coDriverLB.whileActiveContinuous(new TurretTurnManual(-0.3));
         coDriverRB.whileActiveContinuous(new TurretTurnManual(0.3));
+        coDriverLT.whenActive(new CG_ReadyToFireOuter()).whenInactive(new ShooterStop());
         coDriverRT.whileActiveContinuous(new CG_FireZeMissiles());
         coDriverBack.whileActiveContinuous(new ClimberClimbUp());
-        driverStart.and(coDriverStart.whenActive(new ClimberRelease()));
+        driverStart.and(coDriverStart).whenActive(new ClimberRelease()).whenInactive(new ClimberLatch());
     }
 
     public Command getAutonomousCommand() {

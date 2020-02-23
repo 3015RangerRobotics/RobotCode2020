@@ -17,6 +17,7 @@ import frc.robot.RobotContainer;
 
 public class ShooterStartAuto extends CommandBase {
     double rpm = 5400;
+    boolean constantUpdate = true;
 
     /**
      * Creates a new ShooterStart.
@@ -24,21 +25,20 @@ public class ShooterStartAuto extends CommandBase {
     public ShooterStartAuto() {
         addRequirements(RobotContainer.shooter);
         // Use addRequirements() here to declare subsystem dependencies.
+        constantUpdate = true;
     }
 
+    public ShooterStartAuto(boolean constantUpdate) {
+        addRequirements(RobotContainer.shooter);
+        // Use addRequirements() here to declare subsystem dependencies.
+        this.constantUpdate = constantUpdate;
+    }
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-//        SmartDashboard.putNumber("shooter_rpm", rpm);
-//        RobotContainer.shooter.setRampRate(true);
-//        double d = RobotContainer.limelight.getArea();
-//        double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
-//        rpm = 6494.93513 + (-2502.61834*d) + (1063.20913*d*d) + (1.5 * Math.abs(turretPos));
-//        rpm *= 1.02;
-//        double a = Math.sqrt(9.81 * d * (launch*launch + 1));
-//        double b = Math.sqrt(Math.abs(2 * launch - (2 * 9.81 * (6.19*f2m) / d)));
-//        double v = a / b;
-//        System.out.println("===================" + d);
+        double d = RobotContainer.limelight.getRobotToTargetDistance();
+        double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
+        rpm = 4222.866701 + (110.34724*d) + (-1.51320429*d*d) + (1.5 * Math.abs(turretPos)); //Average ball
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -47,7 +47,9 @@ public class ShooterStartAuto extends CommandBase {
         double d = RobotContainer.limelight.getRobotToTargetDistance();
         double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
 //        rpm = 7430.1186 + (-255.07933*d) + (7.2472131*d*d) + (1.5 * Math.abs(turretPos)); //Perfect ball
-        rpm = 4222.866701 + (110.34724*d) + (-1.51320429*d*d) + (1.5 * Math.abs(turretPos)); //Average ball
+       if (constantUpdate){
+           rpm = 4222.866701 + (110.34724*d) + (-1.51320429*d*d) + (1.5 * Math.abs(turretPos)); //Average ball
+       }
 //        System.out.println("shooter," + rpm + "," + RobotContainer.shooter.getRPM());
         RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.SHOOTER_PULSES_PER_ROTATION);
     }

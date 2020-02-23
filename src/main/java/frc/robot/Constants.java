@@ -87,10 +87,10 @@ public final class Constants {
     public static final double HANDLER_MOTOR_OUT_SPEED4 = -0.68;
     public static final double HANDLER_MOTOR_OUT_SPEED5 = -0.75;
     public static final double HANDLER_MOTOR_SHOOT_SPEED1 = 1.0;
-    public static final double HANDLER_MOTOR_SHOOT_SPEED2 = 0.6;//.6 //.8
-    public static final double HANDLER_MOTOR_SHOOT_SPEED3 = 0.6;//.4 //.6
-    public static final double HANDLER_MOTOR_SHOOT_SPEED4 = 0.6;//.4
-    public static final double HANDLER_MOTOR_SHOOT_SPEED5 = 0.6;//.4
+    public static final double HANDLER_MOTOR_SHOOT_SPEED2 = 1;//.6 //.8
+    public static final double HANDLER_MOTOR_SHOOT_SPEED3 = 1;//.4 //.6
+    public static final double HANDLER_MOTOR_SHOOT_SPEED4 = 1;//.4
+    public static final double HANDLER_MOTOR_SHOOT_SPEED5 = 1;//.4
     public static final double HANDLER_MOTOR_OFF_SPEED = 0.0;
 
     // Harvester Constants

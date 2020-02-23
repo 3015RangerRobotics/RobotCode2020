@@ -28,7 +28,7 @@ public class CG_FireZeMissiles extends SequentialCommandGroup {
                         )
                 ),
                 new ParallelCommandGroup(
-                        new ShooterStartAuto(),
+                        new ShooterStartAuto(false),
                         new BallHandlerShoot()
                 )
 
