@@ -16,6 +16,7 @@ public class BallHandlerShoot extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+//        System.out.println("=++++++++++++++++++++++++++++++++++");
         ballHandler.setPaused(false);
         ballHandler.setState(BallHandler.State.kShootBall1);//start by shooting first ball
         RobotContainer.shooter.selectProfileSlot(1);
@@ -24,6 +25,7 @@ public class BallHandlerShoot extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+//        System.out.println(ballHandler.getState());
         if (ballHandler.getState() == State.kShootBall1 && !ballHandler.isSwitch1Pressed()) //If the first ball is no longer on the first switch and currently the kShootball1 state is being executed, fire ball 2.
         {
             ballHandler.setState(BallHandler.State.kShootBall2);

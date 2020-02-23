@@ -55,14 +55,14 @@ public class DriveWithGamepad extends CommandBase {
 //            turnValue = RobotContainer.getDriverLeftStickX();
 //        }
 
-        if (Math.abs(RobotContainer.getDriverLeftStickY()) >= 0.10) {
+//        if (Math.abs(RobotContainer.getDriverLeftStickY()) >= 0.10) {
 //            if (Math.abs(RobotContainer.getDriverLeftStickY()) > (Math.abs(RobotContainer.getDriverRightStickY()))) {
                 driveValue = -RobotContainer.getDriverLeftStickY();
-            RobotContainer.drive.curvatureDrive(driveValue, turnValue, false, true);
-        }
-        else {
+//            RobotContainer.drive.curvatureDrive(driveValue, turnValue, false, true);
+//        }
+//        else {
             RobotContainer.drive.arcadeDrive(driveValue, turnValue, true);
-        }
+//        }
     }
 
     // Called once the command ends or is interrupted.

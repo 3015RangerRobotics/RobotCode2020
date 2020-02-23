@@ -51,7 +51,8 @@ public class DriveMotionProfile extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-
+        System.out.println("drive_train_right," + RobotContainer.drive.getExpectedPosition(0) + "," + RobotContainer.drive.getPosition());
+        System.out.println("drive_train_left," + -RobotContainer.drive.getExpectedPosition(1) / Constants.DRIVE_PIGEON_UNITS_PER_DEGREE + "," + RobotContainer.drive.getAngle());
     }
 
     // Called once the command ends or is interrupted.

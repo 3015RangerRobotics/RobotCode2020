@@ -7,9 +7,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -21,7 +19,19 @@ public class CG_FireZeMissiles extends SequentialCommandGroup {
     public CG_FireZeMissiles() {
         addCommands(
                 // new LimelightWaitForTarget(),
-                new BallHandlerShoot()
+                new ParallelRaceGroup(
+                        new ShooterStartAuto(),
+                        new TurretTurnToTarget(),
+                        new SequentialCommandGroup(
+                                new TurretWaitUntilOnTarget(),
+                                new WaitCommand(0.2)
+                        )
+                ),
+                new ParallelCommandGroup(
+                        new ShooterStartAuto(),
+                        new BallHandlerShoot()
+                )
+
         );
 
         // Add your commands in the super() call, e.g.

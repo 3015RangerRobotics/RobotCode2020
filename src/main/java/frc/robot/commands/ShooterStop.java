@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Limelight;
 
 public class ShooterStop extends CommandBase {
     /**
@@ -24,6 +25,7 @@ public class ShooterStop extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        RobotContainer.limelight.setLEDMode(Limelight.LEDMode.LED_OFF);
         RobotContainer.shooter.set(ControlMode.PercentOutput, 0);
     }
 

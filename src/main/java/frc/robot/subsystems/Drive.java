@@ -60,8 +60,8 @@ public class Drive extends SubsystemBase {
         rightConfig.remoteFilter0.remoteSensorSource = RemoteSensorSource.Pigeon_Yaw;
         rightConfig.remoteFilter1.remoteSensorDeviceID = leftMaster.getDeviceID();
         rightConfig.remoteFilter1.remoteSensorSource = RemoteSensorSource.TalonFX_SelectedSensor;
-        rightConfig.diff0Term = FeedbackDevice.IntegratedSensor;
-        rightConfig.diff1Term = FeedbackDevice.RemoteSensor1;
+        rightConfig.diff1Term = FeedbackDevice.IntegratedSensor;
+        rightConfig.diff0Term = FeedbackDevice.RemoteSensor1;
         rightConfig.primaryPID.selectedFeedbackSensor = FeedbackDevice.SensorDifference;
         rightConfig.primaryPID.selectedFeedbackCoefficient = 0.5;
         rightConfig.auxiliaryPID.selectedFeedbackSensor = FeedbackDevice.RemoteSensor0;
@@ -70,12 +70,13 @@ public class Drive extends SubsystemBase {
         rightConfig.slot0.kI = Constants.DRIVE_I;
         rightConfig.slot0.kD = Constants.DRIVE_D;
         rightConfig.slot0.kF = Constants.DRIVE_F;
-        rightConfig.slot1.kP = Constants.DRIVE_P;
-        rightConfig.slot1.kI = Constants.DRIVE_I;
-        rightConfig.slot1.kD = Constants.DRIVE_D;
-        rightConfig.slot1.kF = Constants.DRIVE_F;
+        rightConfig.slot1.kP = Constants.DRIVE_TURN_P;
+        rightConfig.slot1.kI = Constants.DRIVE_TURN_I;
+        rightConfig.slot1.kD = Constants.DRIVE_TURN_D;
+        rightConfig.slot1.kF = Constants.DRIVE_TURN_F;
 
         rightMaster.configAllSettings(rightConfig);
+//        rightMaster.configAuxPIDPolarity(true);
 
 
         rightFollower.follow(rightMaster);
@@ -127,6 +128,8 @@ public class Drive extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("gyro", getAngle());
+        SmartDashboard.putNumber("right", rightMaster.getSelectedSensorPosition(0) / Constants.DRIVE_PULSES_PER_FOOT);
+        SmartDashboard.putNumber("left", leftMaster.getSelectedSensorPosition(0) / Constants.DRIVE_PULSES_PER_FOOT);
     }
 
     public void playMusic(){
@@ -134,7 +137,10 @@ public class Drive extends SubsystemBase {
     }
 
     public double getAngle(){
-        return imu.getFusedHeading();
+//        double[] ypr = new double[3];
+//        imu.getYawPitchRoll(ypr);
+//        return -ypr[0];
+        return -rightMaster.getSelectedSensorPosition(1) / Constants.DRIVE_PIGEON_UNITS_PER_DEGREE;
     }
 
     public void resetIMU(){
@@ -150,8 +156,8 @@ public class Drive extends SubsystemBase {
      * Reset the drive encoders to 0
      */
     public void resetEncoders() {
-        leftMaster.setSelectedSensorPosition(0);
-        rightMaster.setSelectedSensorPosition(0);
+        leftMaster.getSensorCollection().setIntegratedSensorPosition(0, 20);
+        rightMaster.getSensorCollection().setIntegratedSensorPosition(0, 20);
     }
 
     public void enableCoastMode(){
@@ -216,8 +222,8 @@ public class Drive extends SubsystemBase {
      * @param profile The profile
      */
     public void startMotionProfile(BufferedTrajectoryPointStream profile) {
-        leftMaster.follow(rightMaster);
-        rightMaster.startMotionProfile(profile, 10, ControlMode.MotionProfile);
+        leftMaster.follow(rightMaster, FollowerType.AuxOutput1);
+        rightMaster.startMotionProfile(profile, 10, ControlMode.MotionProfileArc);
     }
 
     /**
@@ -226,5 +232,13 @@ public class Drive extends SubsystemBase {
      */
     public boolean isMotionProfileFinished() {
         return rightMaster.isMotionProfileFinished();
+    }
+
+    public double getPosition(){
+        return rightMaster.getSelectedSensorPosition();
+    }
+
+    public double getExpectedPosition(int slot){
+        return rightMaster.getActiveTrajectoryPosition(slot);
     }
 }

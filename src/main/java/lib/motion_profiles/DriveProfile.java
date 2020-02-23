@@ -48,7 +48,7 @@ public class DriveProfile extends MotionProfile{
             TrajectoryPoint point = new TrajectoryPoint();
             double position = getPositionEncoder(i);
             double velocity = getVelocityEncoder(i) / 10;
-            double acceleration = getAccelerationEncoder(i);
+            double acceleration = getAccelerationEncoder(i) / 10;
             double heading = getHeadingIMU(i);
             double angularVelocity = getAngularVelocityIMU(i) / 10;
 
@@ -56,11 +56,11 @@ public class DriveProfile extends MotionProfile{
             point.position = position;
             point.velocity = velocity;
 
-            point.auxiliaryPos = heading;
-            point.auxiliaryVel = angularVelocity;
+            point.auxiliaryPos = -heading;
+            point.auxiliaryVel = -angularVelocity;
             point.profileSlotSelect0 = 0;
             point.profileSlotSelect1 = 1;
-            point.zeroPos = false;
+            point.zeroPos = (i == 0);
             point.isLastPoint = ((i + 1) == profile.length);
             point.arbFeedFwd = (velocity * kV) + (acceleration * kA);
             point.useAuxPID = true;

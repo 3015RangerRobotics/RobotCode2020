@@ -19,13 +19,16 @@ public final class Constants {
     public static final int DRIVE_RIGHT_FOLLOWER = 2;
     public static final int DRIVE_LEFT_MASTER = 3;
     public static final int DRIVE_LEFT_FOLLOWER = 4;
-    public static final double DRIVE_P = 0.005;//.005;
-    public static final double DRIVE_P_TURN = 0.015;
-    public static final double DRIVE_I = 0;
-    public static final double DRIVE_D = 13.724;//1;
-    public static final double DRIVE_F = 0;
-    public static final double DRIVE_KV = 1023.0/22600;
-    public static final double DRIVE_KA = 0;
+    public static final double DRIVE_P = 0.01;//.005;
+    public static final double DRIVE_I = 0;//0
+    public static final double DRIVE_D = 0;//13.724;
+    public static final double DRIVE_F = 0;//0
+    public static final double DRIVE_TURN_P = 0.937 * 0.7; // 2.4 // 1.1 // 0.937 * 0.784
+    public static final double DRIVE_TURN_I = 0.0001;
+    public static final double DRIVE_TURN_D = 0; // 5
+    public static final double DRIVE_TURN_F = 0;
+    public static final double DRIVE_KV = 1.0/28500;//22600
+    public static final double DRIVE_KA = 0.0000025;
     public static final double DRIVE_PULSES_PER_FOOT = 14159.2386107;
     public static final double DRIVE_MAX_VELOCITY = 8 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_MAX_ACCELERATION = 6 * DRIVE_PULSES_PER_FOOT;
@@ -53,11 +56,11 @@ public final class Constants {
     public static final double SHOOTER_P = .5;//3.7;//3.7
     public static final double SHOOTER_I = 0; // 0
     public static final double SHOOTER_D = 10; // 46.0
-    public static final double SHOOTER_F = 0.0468; // 0.047
+    public static final double SHOOTER_F = 0.0472; // 0.0468
     public static final double SHOOTER_PULSES_PER_ROTATION = 2048 * (2.0/3.0);
-    public static final double SHOOTER_SHOOT_P = 6;
+    public static final double SHOOTER_SHOOT_P = 20;//6
     public static final double SHOOTER_SHOOT_I = 0;
-    public static final double SHOOTER_SHOOT_D = 25;
+    public static final double SHOOTER_SHOOT_D = 50;//25
     public static final double SHOOTER_SHOOT_F = SHOOTER_F * 1;
     public static final double SHOOTER_LAUNCH_ANGLE = 53.28;
     public static final double SHOOTER_TOLERANCE = 100;
@@ -84,10 +87,10 @@ public final class Constants {
     public static final double HANDLER_MOTOR_OUT_SPEED4 = -0.68;
     public static final double HANDLER_MOTOR_OUT_SPEED5 = -0.75;
     public static final double HANDLER_MOTOR_SHOOT_SPEED1 = 1.0;
-    public static final double HANDLER_MOTOR_SHOOT_SPEED2 = 1.0;//.6 //.8
-    public static final double HANDLER_MOTOR_SHOOT_SPEED3 = 1.0;//.4 //.6
-    public static final double HANDLER_MOTOR_SHOOT_SPEED4 = 1.0;//.4
-    public static final double HANDLER_MOTOR_SHOOT_SPEED5 = 1.0;//.4
+    public static final double HANDLER_MOTOR_SHOOT_SPEED2 = 0.6;//.6 //.8
+    public static final double HANDLER_MOTOR_SHOOT_SPEED3 = 0.6;//.4 //.6
+    public static final double HANDLER_MOTOR_SHOOT_SPEED4 = 0.6;//.4
+    public static final double HANDLER_MOTOR_SHOOT_SPEED5 = 0.6;//.4
     public static final double HANDLER_MOTOR_OFF_SPEED = 0.0;
 
     // Harvester Constants
