@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -13,45 +6,31 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class ShooterStart extends CommandBase {
-    double rpm = 0;
+    double rpm;
 
-    /**
-     * Creates a new ShooterStart.
-     */
     public ShooterStart(double rpm) {
         addRequirements(RobotContainer.shooter);
         this.rpm = rpm;
-        // Use addRequirements() here to declare subsystem dependencies.
     }
 
-    // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         RobotContainer.shooter.setRampRate(true);
-        System.out.println("===================");
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-//        RobotContainer.shooter.set(ControlMode.PercentOutput, 0.57);
-           RobotContainer.shooter.set(ControlMode.Velocity,rpm /10 /60 * Constants.SHOOTER_PULSES_PER_ROTATION);
-        System.out.println("shooter," + rpm + "," + RobotContainer.shooter.getRPM());
-
-        if (RobotContainer.shooter.getRPM() > 1500){
-            RobotContainer.shooter.setRampRate(false);
-        }
+        RobotContainer.shooter.set(ControlMode.Velocity, rpm / 10 / 60 * Constants.SHOOTER_PULSES_PER_ROTATION);
+//        System.out.println("shooter," + rpm + "," + RobotContainer.shooter.getRPM());
     }
 
-    // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         RobotContainer.shooter.set(ControlMode.PercentOutput, 0);
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return RobotContainer.shooter.getRPM() >= 7000;
+        return false;
     }
 }

@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.*;
@@ -12,11 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-/**
- * Add your docs here.
- */
 public class BallHandler extends SubsystemBase {
-
     private VictorSP motor1;
     private VictorSP motor2;
     private VictorSP motor3;
@@ -30,8 +19,6 @@ public class BallHandler extends SubsystemBase {
     private DigitalInput switch5;
 
     private static boolean isPaused = false;
-
-    private PowerDistributionPanel pdp;
 
     public enum State {
         kPurge,
@@ -62,8 +49,6 @@ public class BallHandler extends SubsystemBase {
         switch3 = new DigitalInput(Constants.HANDLER_SWITCH3); //assigned to motor 3
         switch4 = new DigitalInput(Constants.HANDLER_SWITCH4); //assigned to motor 4
         switch5 = new DigitalInput(Constants.HANDLER_SWITCH5); //assigned to motor 5
-
-        pdp = new PowerDistributionPanel(0);
 
         motor1.setInverted(false);
         motor2.setInverted(true);
@@ -264,13 +249,6 @@ public class BallHandler extends SubsystemBase {
             motor4.set(speeds[3]);
             motor5.set(speeds[4]);
         }
-        //faux voltage control
-        // double voltAdjust = 12/ pdp.getVoltage();
-        // motor1.set(speeds[0] * voltAdjust);
-        // motor2.set(speeds[1] * voltAdjust);
-        // motor3.set(speeds[2] * voltAdjust);
-        // motor4.set(speeds[3] * voltAdjust);
-        // motor5.set(speeds[4] * voltAdjust);
     }
 
     /**

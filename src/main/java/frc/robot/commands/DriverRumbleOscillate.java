@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -24,22 +17,18 @@ public class DriverRumbleOscillate extends CommandBase {
      * @param period The time required to complete one oscillation
      */
     public DriverRumbleOscillate(double power, double period) {
+        addRequirements(RobotContainer.driverRumble);
         this.power = power;
         this.halfPeriod = period / 2.0;
         timer = new Timer();
-
-        // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(RobotContainer.driverRumble);
     }
 
-    // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         timer.start();
         timer.reset();
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         if (leftOn) {
@@ -61,14 +50,12 @@ public class DriverRumbleOscillate extends CommandBase {
         }
     }
 
-    // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         RobotContainer.setDriverRumbleLeft(0.0);
         RobotContainer.setDriverRumbleRight(0.0);
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         return false;

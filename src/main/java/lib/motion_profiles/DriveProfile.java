@@ -60,13 +60,12 @@ public class DriveProfile extends MotionProfile{
             point.auxiliaryVel = -angularVelocity;
             point.profileSlotSelect0 = 0;
             point.profileSlotSelect1 = 1;
-            point.zeroPos = (i == 0);
+            point.zeroPos = false;
             point.isLastPoint = ((i + 1) == profile.length);
             point.arbFeedFwd = (velocity * kV) + (acceleration * kA);
             point.useAuxPID = true;
 
             buffer.Write(point);
-
         }
         return buffer;
     }

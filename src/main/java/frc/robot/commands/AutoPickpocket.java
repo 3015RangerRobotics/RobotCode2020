@@ -14,7 +14,7 @@ public class AutoPickpocket extends SequentialCommandGroup {
                 ),
                 new HarvestInPlace(-0.75, .5, 5400),
                 new DrivePathAndShooterPrime("pp_trench_to_goal", 5400),
-                new AimAndShoot(3),
+                new AimAndShoot().withTimeout(3),
                 new DrivePathAndHarvest("pp_goal_to_our_trench", 5400, -0.75)
         );
     }

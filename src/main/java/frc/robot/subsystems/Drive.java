@@ -1,29 +1,12 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
-
 import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
-import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.music.Orchestra;
 import com.ctre.phoenix.sensors.PigeonIMU;
-import com.kauailabs.navx.frc.AHRS;
-
-import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -32,9 +15,6 @@ import frc.robot.DriveSignal;
 import frc.robot.RobotContainer;
 
 public class Drive extends SubsystemBase {
-    /**
-     * Creates a new Drive.
-     */
     private TalonFX rightMaster;
     private TalonFX rightFollower;
 
@@ -76,30 +56,29 @@ public class Drive extends SubsystemBase {
         rightConfig.slot1.kF = Constants.DRIVE_TURN_F;
 
         rightMaster.configAllSettings(rightConfig);
-//        rightMaster.configAuxPIDPolarity(true);
 
 
         rightFollower.follow(rightMaster);
         leftFollower.follow(leftMaster);
 
         rightMaster.setInverted(true);
-        rightFollower.setInverted(true);//must be explicit, inverting master will not invert follower.
+        rightFollower.setInverted(true);
         leftMaster.setInverted(false);
         leftFollower.setInverted(false);
 
-        leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 10);
-        leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10);
-        leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_9_MotProfBuffer, 10);
-        leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
+        leftMaster.setStatusFramePeriod(StatusFrame.Status_1_General, 10);
+        leftMaster.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10);
+        leftMaster.setStatusFramePeriod(StatusFrame.Status_9_MotProfBuffer, 10);
+        leftMaster.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10);
         leftMaster.setStatusFramePeriod(StatusFrame.Status_10_Targets, 10);
         leftMaster.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10);
         leftMaster.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 10);
 
 
-        rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 10);
-        rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10);
-        rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_9_MotProfBuffer, 10);
-        rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
+        rightMaster.setStatusFramePeriod(StatusFrame.Status_1_General, 10);
+        rightMaster.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10);
+        rightMaster.setStatusFramePeriod(StatusFrame.Status_9_MotProfBuffer, 10);
+        rightMaster.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 10);
         rightMaster.setStatusFramePeriod(StatusFrame.Status_10_Targets, 10);
         rightMaster.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 10);
         rightMaster.setStatusFramePeriod(StatusFrame.Status_17_Targets1, 10);
@@ -116,7 +95,7 @@ public class Drive extends SubsystemBase {
         instruments.add(RobotContainer.shooter.shooter);
         instruments.add(leftMaster);
         instruments.add(rightMaster);
-//
+
         orchestra = new Orchestra(instruments);
         orchestra.loadMusic("jeopardy.chrp");
 
@@ -150,7 +129,6 @@ public class Drive extends SubsystemBase {
     public void stopMusic(){
         orchestra.stop();
     }
-
 
     /**
      * Reset the drive encoders to 0
@@ -207,14 +185,6 @@ public class Drive extends SubsystemBase {
     public void curvatureDrive(double throttle, double turn, boolean isQuickTurn, boolean squaredInputs) {
         DriveSignal ds = DriveHelper.curvatureDrive(throttle, turn, isQuickTurn, squaredInputs);
         setMotorOutputs(ControlMode.PercentOutput, ds.leftSignal, ds.rightSignal);
-    }
-    /**
-     * Get if the closed loop control is on target
-     * @return if the closed loop control is on target
-     */
-    public boolean isClosedLoopOnTarget() {
-        return Math.abs(leftMaster.getClosedLoopError()) <= Constants.DRIVE_MAX_MOTION_ERROR
-                && Math.abs(rightMaster.getClosedLoopError()) <= Constants.DRIVE_MAX_MOTION_ERROR;
     }
 
     /**

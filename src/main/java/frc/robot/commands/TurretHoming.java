@@ -8,21 +8,17 @@ import frc.robot.RobotContainer;
 public class TurretHoming extends CommandBase {
     public TurretHoming() {
         addRequirements(RobotContainer.turret);
-        // Use addRequirements() here to declare subsystem dependencies.
     }
 
-    // Called when the command is initially scheduled.
     @Override
     public void initialize() {
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         RobotContainer.turret.set(ControlMode.PercentOutput, -0.25);
     }
 
-    // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
 //        if this is interrupted do not reset the encoder
@@ -32,7 +28,6 @@ public class TurretHoming extends CommandBase {
         RobotContainer.turret.set(ControlMode.PercentOutput, 0);
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         return RobotContainer.turret.getLeftLimit();

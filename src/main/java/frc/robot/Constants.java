@@ -9,7 +9,6 @@ package frc.robot;
 
 public final class Constants {
     public static final double MP_TIME_STEP = 0.01;
-    public static final double ROBOT_TIME_STEP = 0.02;
 
     public static final double LIMELIGHT_INNER_DISTANCE = 12;
     public static final double LIMELIGHT_ZOOM_DISTANCE = 50;
@@ -23,15 +22,15 @@ public final class Constants {
     public static final double DRIVE_I = 0;//0
     public static final double DRIVE_D = 0;//13.724;
     public static final double DRIVE_F = 0;//0
-    public static final double DRIVE_TURN_P = 0.937 * 0.7; // 2.4 // 1.1 // 0.937 * 0.784
+    public static final double DRIVE_TURN_P = 0.656; // 2.4 // 1.1 // 0.937 * 0.784
     public static final double DRIVE_TURN_I = 0.0001;
     public static final double DRIVE_TURN_D = 0; // 5
     public static final double DRIVE_TURN_F = 0;
     public static final double DRIVE_KV = 1.0/28500;//22600
     public static final double DRIVE_KA = 0.0000025;
     public static final double DRIVE_PULSES_PER_FOOT = 14159.2386107;
-    public static final double DRIVE_MAX_VELOCITY = 8 * DRIVE_PULSES_PER_FOOT;
-    public static final double DRIVE_MAX_ACCELERATION = 6 * DRIVE_PULSES_PER_FOOT;
+    public static final double DRIVE_MAX_VELOCITY = 12 * DRIVE_PULSES_PER_FOOT;
+    public static final double DRIVE_MAX_ACCELERATION = 8 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_MAX_MOTION_ERROR = 0.1 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_PIGEON_UNITS_PER_DEGREE = 8192.0 / 360.0;
     public static final int DRIVE_PIGEON = 1;
@@ -108,4 +107,8 @@ public final class Constants {
     public static final int CLIMBER_LATCH_RELEASE2 = 5;
     public static final double CLIMB_UP_SPEED = 1;
 
+    // Limelight Constants
+    public static final double LL_TARGET_HEIGHT = 7.58;
+    public static final double LL_MOUNT_HEIGHT = 1.75; //TODO: Update this if redoing speed calculation, it is currently wrong
+    public static final double LL_MOUNT_ANGLE = 20;
 }
