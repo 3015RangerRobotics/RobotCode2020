@@ -7,7 +7,7 @@ public class CG_ReadyToFireFender extends SequentialCommandGroup {
     public CG_ReadyToFireFender() {
         addCommands(
                 new HoodUp(),
-                new ShooterStart(6600)
+                new ShooterSetSpeed(6600)
         );
     }
 }

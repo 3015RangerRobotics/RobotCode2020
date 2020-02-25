@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.BallHandlerHarvest;
 import frc.robot.commands.HarvesterDown;
 import frc.robot.commands.HarvesterSet;
-import frc.robot.commands.ShooterStart;
+import frc.robot.commands.ShooterSetSpeed;
 
 public class HarvestInPlace extends ParallelDeadlineGroup {
     public HarvestInPlace(double harvester, double time, double shooter){
@@ -15,7 +15,7 @@ public class HarvestInPlace extends ParallelDeadlineGroup {
                         new HarvesterSet(harvester).withTimeout(time)
                 ),
                 new BallHandlerHarvest(),
-                new ShooterStart(shooter)
+                new ShooterSetSpeed(shooter)
         );
     }
 }

@@ -12,10 +12,8 @@ public class CG_ReadyToFire extends SequentialCommandGroup {
                 new LimelightSwitchPipeline(0),
                 new HarvesterDown(),
                 new WaitCommand(.2),
-                new ParallelCommandGroup(
-                        new ShooterStartAuto(),
-                        new TurretTurnToTargetHold()
-                )
+                new ShooterAutoSpeed(),
+                new TurretTurnToTargetHold()
         );
     }
 }

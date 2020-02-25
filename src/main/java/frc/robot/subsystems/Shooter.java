@@ -5,9 +5,20 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class Shooter extends SubsystemBase {
     public TalonFX shooter;
+
+    private enum State {
+        kSetSpeed,
+        kAutoSpeed,
+        kOff
+    }
+
+    public Shooter.State state = Shooter.State.kOff;
+
+    private double setSpeed;
 
     public Shooter() {
         shooter = new TalonFX(Constants.SHOOTER_MOTOR);
@@ -44,6 +55,19 @@ public class Shooter extends SubsystemBase {
         if(getRPM() >= 7500){
             shooter.set(ControlMode.PercentOutput, 0);
         }
+
+        switch(state) {
+            case kSetSpeed:
+                set(ControlMode.Velocity, setSpeed * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
+                break;
+            case kAutoSpeed:
+                set(ControlMode.Velocity, getAutoSpeed() * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
+                break;
+            case kOff:
+            default:
+                set(ControlMode.PercentOutput, 0);
+                break;
+        }
     }
 
     /**
@@ -74,6 +98,31 @@ public class Shooter extends SubsystemBase {
 
     public void setRampRate(boolean enabled) {
         shooter.configClosedloopRamp(enabled ? 0 : 0);
+    }
+
+    public void setStateSpeed(double speed) {
+        setSpeed = speed;
+        state = State.kSetSpeed;
+    }
+
+    public void setAutoSpeed() {
+        state = State.kAutoSpeed;
+    }
+
+    public void setOff() {
+        state = State.kOff;
+    }
+
+    public double getAutoSpeed() {
+        if(RobotContainer.limelight.hasTarget()) {
+            double d = RobotContainer.limelight.getRobotToTargetDistance();
+            double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
+//           double rpm = 7430.1186 + (-255.07933*d) + (7.2472131*d*d); //Perfect ball
+            double rpm = 4222.866701 + (110.34724 * d) + (-1.51320429 * d * d) + (1.5 * Math.abs(turretPos)); //Average ball
+            return rpm;
+        } else {
+            return 5400;
+        }
     }
 
 }

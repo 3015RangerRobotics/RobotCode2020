@@ -104,7 +104,7 @@ public class RobotContainer {
         coDriverLT.whenActive(new CG_ReadyToFire()).whenInactive(new ShooterStop());
         coDriverRT.whileActiveContinuous(new CG_FireZeMissiles());
         coDriverBack.whileActiveContinuous(new ClimberClimbUp());
-        coDriverDLeft.whenActive(new CG_ToggleTurretDefaultPosition());
+        coDriverDLeft.whenActive(new TurretToggleLeftShot());
         driverStart.and(coDriverStart).whenActive(new ClimberRelease()).whenInactive(new ClimberLatch());
     }
 

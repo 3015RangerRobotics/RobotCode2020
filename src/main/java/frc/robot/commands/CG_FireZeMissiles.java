@@ -6,36 +6,32 @@ public class CG_FireZeMissiles extends SequentialCommandGroup {
     public CG_FireZeMissiles() {
         super(
                 // new LimelightWaitForTarget(),
+                new ShooterAutoSpeed(),
                 new ParallelRaceGroup(
-                        new ShooterStartAuto(),
                         new TurretTurnToTarget(),
                         new SequentialCommandGroup(
                                 new TurretWaitUntilOnTarget(),
                                 new WaitCommand(0.2)
                         )
                 ),
-                new ParallelCommandGroup(
-                        new ShooterStartAuto(false),
-                        new BallHandlerShoot()
-                )
+                new ShooterAutoSpeed(false),
+                new BallHandlerShoot()
         );
     }
 
     public CG_FireZeMissiles(double shooter) {
         super(
                 // new LimelightWaitForTarget(),
+                new ShooterSetSpeed(shooter),
                 new ParallelRaceGroup(
-                        new ShooterStart(shooter),
                         new TurretTurnToTarget(),
                         new SequentialCommandGroup(
                                 new TurretWaitUntilOnTarget(),
                                 new WaitCommand(0.2)
                         )
                 ),
-                new ParallelCommandGroup(
-                        new ShooterStart(shooter),
-                        new BallHandlerShoot()
-                )
+                new ShooterSetSpeed(shooter),
+                new BallHandlerShoot()
         );
     }
 }

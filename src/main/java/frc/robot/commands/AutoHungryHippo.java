@@ -13,7 +13,7 @@ public class AutoHungryHippo extends SequentialCommandGroup {
                         new WaitCommand(1),
                         new TurretToPosition(-90),
                         new HarvesterDown(),
-                        new ShooterStart(6500)
+                        new ShooterSetSpeed(6500)
 
                 ),
                 new ParallelDeadlineGroup(

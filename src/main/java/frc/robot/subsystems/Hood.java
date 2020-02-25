@@ -9,6 +9,7 @@ public class Hood extends SubsystemBase {
 
     public Hood() {
         hoodControl = new DoubleSolenoid(Constants.HOOD_SOLENOID_FORWARD, Constants.HOOD_SOLENOID_REVERSE);
+        hoodDown();
     }
 
     @Override

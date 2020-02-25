@@ -14,7 +14,7 @@ public class ShooterStop extends CommandBase {
     @Override
     public void initialize() {
         RobotContainer.limelight.setLEDMode(Limelight.LEDMode.LED_OFF);
-        RobotContainer.shooter.set(ControlMode.PercentOutput, 0);
+        RobotContainer.shooter.setOff();
     }
 
     @Override
