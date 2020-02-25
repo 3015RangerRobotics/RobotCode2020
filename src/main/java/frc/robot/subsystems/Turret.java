@@ -16,6 +16,17 @@ public class Turret extends SubsystemBase {
     private DigitalInput rightLimit;
     private boolean isLeftShot = false;
 
+    private enum State {
+        kToPosition,
+        kTurnHold,
+        kHoming,
+        kDefault
+    }
+
+    State state = State.kDefault;
+
+    double toPosition;
+
     public Turret() {
         this.turretMotor = new TalonSRX(Constants.TURRET_MOTOR);
         this.leftLimit = new DigitalInput(Constants.TURRET_LEFT_LIMIT);
@@ -61,6 +72,27 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putNumber("Turret Position", getPosition());
         SmartDashboard.putBoolean("Turret Left Limit", getLeftLimit());
         SmartDashboard.putBoolean("Turret Right Limit", getRightLimit());
+
+        switch(state) {
+            case kToPosition:
+                set(ControlMode.Position, toPosition / Constants.TURRET_DEGREES_PER_PULSE);
+                break;
+            case kTurnHold:
+                toPosition = getPosition() + RobotContainer.limelight.getTargetAngleX();
+                set(ControlMode.Position, toPosition / Constants.TURRET_DEGREES_PER_PULSE);
+                break;
+            case kHoming:
+                set(ControlMode.PercentOutput, -0.25);
+                if(getLeftLimit()) {
+                    setEncoder(Constants.TURRET_HOMING_POSITION);
+                    state = State.kDefault;
+                }
+            case kDefault:
+            default:
+                toPosition = isLeftShot() ? -90 : 0;
+                set(ControlMode.Position, (toPosition / Constants.TURRET_DEGREES_PER_PULSE));
+                break;
+        }
     }
 
     public boolean isLeftShot() {
@@ -132,5 +164,22 @@ public class Turret extends SubsystemBase {
 
     public boolean isOnTarget() {
         return Math.abs(turretMotor.getClosedLoopError()) <= Constants.TURRET_DEGREE_MARGIN;
+    }
+
+    public void setStateDefault() {
+        state = State.kDefault;
+    }
+
+    public void setStateToPosition(double position) {
+        toPosition = position;
+        state = State.kToPosition;
+    }
+
+    public void setStateTurnHold() {
+        state = State.kTurnHold;
+    }
+
+    public void setStateHoming() {
+        state = State.kHoming;
     }
 }

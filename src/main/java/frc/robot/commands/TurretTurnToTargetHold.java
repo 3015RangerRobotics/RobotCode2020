@@ -14,22 +14,20 @@ public class TurretTurnToTargetHold extends CommandBase {
 
     @Override
     public void initialize() {
-
+        RobotContainer.turret.setStateTurnHold();
     }
 
     @Override
     public void execute() {
-        double pos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
-        RobotContainer.turret.set(ControlMode.Position, pos / Constants.TURRET_DEGREES_PER_PULSE);
+
     }
 
     @Override
     public void end(boolean interrupted) {
-        RobotContainer.turret.set(ControlMode.PercentOutput, 0);
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }

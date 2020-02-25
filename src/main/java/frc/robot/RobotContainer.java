@@ -77,34 +77,30 @@ public class RobotContainer {
 
 
     private void configureButtonBindings() {
-//        driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         driverB.whileActiveContinuous(new CG_PurgeBalls());
-        driverX.whenActive(new CG_HomeTurret());
-        driverY.whileActiveContinuous(new CG_ReadyToFireFender()).whenInactive(new HoodDown());
-//        driverA.whenActive(new ClimberLatch());
-//        driverY.whenActive(new DriveStraightTemp(5, 8, 5));
-//        driverDRight.whenActive(new CG_HomeTurret());
+        driverX.whenActive(new TurretHomePosition());
+        driverY.whenActive(new CG_ReadyToFireFender()).whenInactive(new CG_ShooterDefault());
         driverDLeft.whenActive(new TurretToggleLeftShot());
-//        driverDUp.whenActive(new HarvesterUp());
         driverDDown.whenActive(new CG_OhHeck());
-//        driverDRight.whileActiveContinuous(new DrivePlayMusic());
         driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
-//        driverLB.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new LimelightSwitchLEDMode(Limelight.LEDMode.LED_OFF));
-        driverLB.whenActive(new CG_ReadyToFire()).whenInactive(new ShooterStop());
+        driverLB.whenActive(new CG_ReadyToFire()).whenInactive(new CG_ShooterDefault());
         driverRB.whileActiveContinuous(new CG_FireZeMissiles());
+        driverY.negate().and(driverRB).whileActiveContinuous(new CG_FireZeMissiles());
+        driverY.and(driverRB).whileActiveContinuous(new BallHandlerShoot());
         driverBack.whileActiveContinuous(new ClimberClimbUp());
-//        driverStart.whenActive(new CompressorStart());
-//        driverBack.whenActive(new CompressorStop());
 
         coDriverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         coDriverB.whileActiveContinuous(new CG_PurgeBalls());
-        coDriverX.whenActive(new CG_HomeTurret());
-        coDriverY.whileActiveContinuous(new CG_ReadyToFireFender()).whenInactive(new HoodDown());
+        coDriverX.whenActive(new TurretHomePosition());
+        coDriverY.whenActive(new CG_ReadyToFireFender()).whenInactive(new CG_ShooterDefault());
         coDriverDDown.whenActive(new CG_OhHeck());
-        coDriverLT.whenActive(new CG_ReadyToFire()).whenInactive(new ShooterStop());
+        coDriverLT.whenActive(new CG_ReadyToFire()).whenInactive(new CG_ShooterDefault());
         coDriverRT.whileActiveContinuous(new CG_FireZeMissiles());
         coDriverBack.whileActiveContinuous(new ClimberClimbUp());
         coDriverDLeft.whenActive(new TurretToggleLeftShot());
+        coDriverY.negate().and(coDriverRT).whileActiveContinuous(new CG_FireZeMissiles());
+        coDriverY.and(coDriverRT).whileActiveContinuous(new BallHandlerShoot());
+
         driverStart.and(coDriverStart).whenActive(new ClimberRelease()).whenInactive(new ClimberLatch());
     }
 

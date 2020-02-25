@@ -105,11 +105,11 @@ public class Shooter extends SubsystemBase {
         state = State.kSetSpeed;
     }
 
-    public void setAutoSpeed() {
+    public void setStateAutoSpeed() {
         state = State.kAutoSpeed;
     }
 
-    public void setOff() {
+    public void setStateOff() {
         state = State.kOff;
     }
 
