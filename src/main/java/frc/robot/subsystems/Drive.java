@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.music.Orchestra;
 import com.ctre.phoenix.sensors.PigeonIMU;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -50,13 +51,25 @@ public class Drive extends SubsystemBase {
         rightConfig.slot0.kI = Constants.DRIVE_I;
         rightConfig.slot0.kD = Constants.DRIVE_D;
         rightConfig.slot0.kF = Constants.DRIVE_F;
-        rightConfig.slot1.kP = Constants.DRIVE_TURN_P;
-        rightConfig.slot1.kI = Constants.DRIVE_TURN_I;
-        rightConfig.slot1.kD = Constants.DRIVE_TURN_D;
-        rightConfig.slot1.kF = Constants.DRIVE_TURN_F;
+        rightConfig.slot1.kP = Constants.DRIVE_MP_TURN_P;
+        rightConfig.slot1.kI = Constants.DRIVE_MP_TURN_I;
+        rightConfig.slot1.kD = Constants.DRIVE_MP_TURN_D;
+        rightConfig.slot1.kF = Constants.DRIVE_MP_TURN_F;
 
         rightMaster.configAllSettings(rightConfig);
 
+        TalonFXConfiguration leftConfig = new TalonFXConfiguration();
+        leftConfig.remoteFilter0.remoteSensorDeviceID = imu.getDeviceID();
+        leftConfig.remoteFilter0.remoteSensorSource = RemoteSensorSource.Pigeon_Yaw;
+        leftConfig.neutralDeadband = Constants.DRIVE_NEUTRAL_DEADBAND;
+        leftConfig.slot0.kP = Constants.DRIVE_TURN_P;
+        leftConfig.slot0.kI = Constants.DRIVE_TURN_I;
+        leftConfig.slot0.kD = Constants.DRIVE_TURN_D;
+        leftConfig.slot0.kF = Constants.DRIVE_TURN_F;
+        leftConfig.motionCruiseVelocity = (int) Math.round(Constants.DRIVE_TURN_MAX_VELOCITY);
+        leftConfig.motionAcceleration = (int) Math.round(Constants.DRIVE_TURN_MAX_ACCELLERTAION);
+
+        leftMaster.configAllSettings(leftConfig);
 
         rightFollower.follow(rightMaster);
         leftFollower.follow(leftMaster);
@@ -208,7 +221,22 @@ public class Drive extends SubsystemBase {
         return rightMaster.getSelectedSensorPosition();
     }
 
-    public double getExpectedPosition(int slot){
-        return rightMaster.getActiveTrajectoryPosition(slot);
+    public double getExpectedPosition(int slot)
+
+    public void turnInPlaceSetup() {
+        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
+        rightMaster.setInverted(false);
+        rightMaster.setSensorPhase(false);
+        rightMaster.follow(leftMaster);
+    }
+
+    public void turnInPlaceCleanup() {
+        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0 , 20);
+        rightMaster.setInverted(true);
+        rightMaster.setSensorPhase(true);
+    }
+
+    public void setLeftMotor(ControlMode mode, double value) {
+        leftMaster.set(mode, value);
     }
 }

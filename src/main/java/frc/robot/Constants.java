@@ -22,10 +22,14 @@ public final class Constants {
     public static final double DRIVE_I = 0;//0
     public static final double DRIVE_D = 0;//13.724;
     public static final double DRIVE_F = 0;//0
-    public static final double DRIVE_TURN_P = 0.656; // 2.4 // 1.1 // 0.937 * 0.784
-    public static final double DRIVE_TURN_I = 0.0001;
-    public static final double DRIVE_TURN_D = 0; // 5
+    public static final double DRIVE_TURN_P = 0;
+    public static final double DRIVE_TURN_I = 0;
+    public static final double DRIVE_TURN_D = 0;
     public static final double DRIVE_TURN_F = 0;
+    public static final double DRIVE_MP_TURN_P = 0.656; // 2.4 // 1.1 // 0.937 * 0.784
+    public static final double DRIVE_MP_TURN_I = 0.0001;
+    public static final double DRIVE_MP_TURN_D = 0; // 5
+    public static final double DRIVE_MP_TURN_F = 0;
     public static final double DRIVE_KV = 1.0/28500;//22600
     public static final double DRIVE_KA = 0.0000025;
     public static final double DRIVE_PULSES_PER_FOOT = 14159.2386107;
@@ -33,6 +37,8 @@ public final class Constants {
     public static final double DRIVE_MAX_ACCELERATION = 8 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_MAX_MOTION_ERROR = 0.1 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_PIGEON_UNITS_PER_DEGREE = 8192.0 / 360.0;
+    public static final double DRIVE_TURN_MAX_VELOCITY = 360 * DRIVE_PIGEON_UNITS_PER_DEGREE;
+    public static final double DRIVE_TURN_MAX_ACCELLERTAION = 270 * DRIVE_PIGEON_UNITS_PER_DEGREE;
     public static final int DRIVE_PIGEON = 1;
     public static final double DRIVE_NEUTRAL_DEADBAND = 0.001;
 
@@ -50,7 +56,7 @@ public final class Constants {
     public static final int TURRET_RIGHT_LIMIT = 0;
     public static final int TURRET_HOMING_POSITION = (int) Math.round(-110 / TURRET_DEGREES_PER_PULSE);
 
-    // Shooter Constants (THe meaning of life, the universe, and everything)
+    // Shooter Constants
     public static final int SHOOTER_MOTOR = 5;
     public static final double SHOOTER_P = .5;//3.7;//3.7
     public static final double SHOOTER_I = 0; // 0
