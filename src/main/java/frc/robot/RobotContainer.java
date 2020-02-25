@@ -88,7 +88,7 @@ public class RobotContainer {
 //        driverDUp.whenActive(new HarvesterUp());
         driverDDown.whenActive(new CG_OhHeck());
 //        driverDRight.whileActiveContinuous(new DrivePlayMusic());
-        driverLT.whileActiveContinuous(new CG_HarvesterOfBalls());
+        driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
 //        driverLB.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new LimelightSwitchLEDMode(Limelight.LEDMode.LED_OFF));
         driverLB.whenActive(new CG_ReadyToFireOuter()).whenInactive(new ShooterStop());
         driverRB.whileActiveContinuous(new CG_FireZeMissiles());
@@ -106,6 +106,7 @@ public class RobotContainer {
         coDriverLT.whenActive(new CG_ReadyToFireOuter()).whenInactive(new ShooterStop());
         coDriverRT.whileActiveContinuous(new CG_FireZeMissiles());
         coDriverBack.whileActiveContinuous(new ClimberClimbUp());
+        coDriverDLeft.whenActive(new CG_ToggleTurretDefaultPosition());
         driverStart.and(coDriverStart).whenActive(new ClimberRelease()).whenInactive(new ClimberLatch());
     }
 

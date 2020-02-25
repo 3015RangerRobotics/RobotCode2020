@@ -25,7 +25,7 @@ public class DriveWithGamepad extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.drive.enableCoastMode();
+        RobotContainer.drive.enableBrakeMode();
 
     }
 
