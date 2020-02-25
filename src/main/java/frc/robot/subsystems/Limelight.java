@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -17,13 +10,6 @@ import frc.robot.Constants;
 public class Limelight extends SubsystemBase {
     NetworkTable limelight;
 
-    private double targetHeight = 7.58;
-    private double limelightHeight = 1.75;
-    private double limelightAngle = 20;
-    private double outerToInnerTargetDistance = 2.4;
-    private double limelightXAngleOffset = 0;
-    private double limeLightXAnglePrevious = 0;
-
     public static enum LEDMode {
         PIPELINE(0),
         LED_OFF(1),
@@ -32,7 +18,7 @@ public class Limelight extends SubsystemBase {
 
         private int m;
 
-        private LEDMode(int mode) {
+        LEDMode(int mode) {
             m = mode;
         }
 
@@ -48,7 +34,7 @@ public class Limelight extends SubsystemBase {
 
         private int m;
 
-        private StreamingMode(int mode) {
+        StreamingMode(int mode) {
             m = mode;
         }
 
@@ -63,7 +49,7 @@ public class Limelight extends SubsystemBase {
 
         private int m;
 
-        private CameraMode(int mode) {
+        CameraMode(int mode) {
             m = mode;
         }
 
@@ -82,23 +68,8 @@ public class Limelight extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
         SmartDashboard.putNumber("Distance to Target", getRobotToTargetDistance());
         SmartDashboard.putNumber("Launch Velocity", getShooterLaunchVelocity());
-        if (hasTarget()){
-            if (limeLightXAnglePrevious == 0) {
-                limeLightXAnglePrevious = getTargetAngleX();
-            } else {
-                double d = getTargetAngleX() - limeLightXAnglePrevious;
-                double v = d/Constants.ROBOT_TIME_STEP;
-                limelightXAngleOffset = v*getLatency();
-                limeLightXAnglePrevious = getTargetAngleX();
-            }
-        } else {
-            limelightXAngleOffset = 0;
-            limeLightXAnglePrevious = 0;
-        }
-
     }
 
     /**
@@ -113,10 +84,6 @@ public class Limelight extends SubsystemBase {
      */
     public double getTargetAngleX() {
         return limelight.getEntry("tx").getDouble(0);
-    }
-
-    public double getTargetAngleXAdjusted() {
-        return getTargetAngleX() + limelightXAngleOffset;
     }
 
     /**
@@ -233,12 +200,12 @@ public class Limelight extends SubsystemBase {
      * @return The distance from the robot to the target (parallel line with floor)
      */
     public double getRobotToTargetDistance() {
-        return (targetHeight - limelightHeight) / Math.tan(Math.toRadians(limelightAngle + getTargetAngleY()));
+        return (Constants.LL_TARGET_HEIGHT - Constants.LL_MOUNT_HEIGHT) / Math.tan(Math.toRadians(Constants.LL_MOUNT_ANGLE + getTargetAngleY()));
     }
 
     public double getShooterLaunchVelocity() {
         double g = 9.81;
-        double y = targetHeight;
+        double y = Constants.LL_TARGET_HEIGHT;
         double x = getRobotToTargetDistance();
         double launchAngle = Constants.SHOOTER_LAUNCH_ANGLE; // Set to proper value
         double tanA = Math.tan(Math.toRadians(launchAngle));

@@ -1,23 +1,10 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.*;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class CG_FireZeMissiles extends SequentialCommandGroup {
-    /**
-     * Creates a new FireZeMissiles.
-     */
     public CG_FireZeMissiles() {
-        addCommands(
+        super(
                 // new LimelightWaitForTarget(),
                 new ParallelRaceGroup(
                         new ShooterStartAuto(),
@@ -31,10 +18,24 @@ public class CG_FireZeMissiles extends SequentialCommandGroup {
                         new ShooterStartAuto(false),
                         new BallHandlerShoot()
                 )
-
         );
+    }
 
-        // Add your commands in the super() call, e.g.
-        // super(new FooCommand(), new BarCommand());super();
+    public CG_FireZeMissiles(double shooter) {
+        super(
+                // new LimelightWaitForTarget(),
+                new ParallelRaceGroup(
+                        new ShooterStart(shooter),
+                        new TurretTurnToTarget(),
+                        new SequentialCommandGroup(
+                                new TurretWaitUntilOnTarget(),
+                                new WaitCommand(0.2)
+                        )
+                ),
+                new ParallelCommandGroup(
+                        new ShooterStart(shooter),
+                        new BallHandlerShoot()
+                )
+        );
     }
 }

@@ -1,16 +1,6 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,24 +9,17 @@ import frc.robot.Constants;
 public class Shooter extends SubsystemBase {
     public TalonFX shooter;
 
-    /**
-     * Creates a new Shooter.
-     */
     public Shooter() {
         shooter = new TalonFX(Constants.SHOOTER_MOTOR);
         shooter.configFactoryDefault();
 
-        shooter.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 10);
-        shooter.setStatusFramePeriod(StatusFrameEnhanced.Status_12_Feedback1, 10);
-        shooter.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
-        shooter.setStatusFramePeriod(StatusFrameEnhanced.Status_14_Turn_PIDF1, 10);
+        shooter.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 10);
+        shooter.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 10);
 
         shooter.setNeutralMode(NeutralMode.Coast);
 
         shooter.enableVoltageCompensation(true);
         shooter.configVoltageCompSaturation(12.5);
-
-        // shooter.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
         shooter.setInverted(false);
         shooter.setSelectedSensorPosition(0);
@@ -58,8 +41,9 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
-//        System.out.println(shooter.getMotorOutputPercent());
+        if(getRPM() >= 7500){
+            shooter.set(ControlMode.PercentOutput, 0);
+        }
     }
 
     /**
@@ -76,7 +60,6 @@ public class Shooter extends SubsystemBase {
      */
     public void set(ControlMode mode, double value) {
         shooter.set(mode, value);
-        // System.out.println(value);
     }
 
     public void selectProfileSlot(int id){

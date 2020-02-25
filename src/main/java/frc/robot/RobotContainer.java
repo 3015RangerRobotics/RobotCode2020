@@ -25,6 +25,7 @@ public class RobotContainer {
     public static Harvester harvester;
     public static Hood hood;
     public static Climber climber;
+
     public static JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     public static JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
     public static JoystickButton driverX = new JoystickButton(driver, XboxController.Button.kX.value);
@@ -63,7 +64,6 @@ public class RobotContainer {
         drive.setDefaultCommand(new DriveWithGamepad());
         turret = new Turret();
         turret.setDefaultCommand(new TurretToDefaultPosition());
-        SmartDashboard.putData(turret);
         limelight = new Limelight();
         ballHandler = new BallHandler();
         ballHandler.setDefaultCommand(new BallHandlerDefault());
@@ -71,7 +71,7 @@ public class RobotContainer {
         driverRumble = new DriverRumble();
         hood = new Hood();
         climber = new Climber();
-        SmartDashboard.putData(climber);
+
         configureButtonBindings();
     }
 
@@ -80,17 +80,17 @@ public class RobotContainer {
 //        driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         driverB.whileActiveContinuous(new CG_PurgeBalls());
         driverX.whenActive(new CG_HomeTurret());
-        driverY.whileActiveContinuous(new CG_ReadyToFireBatter()).whenInactive(new HoodDown());
+        driverY.whileActiveContinuous(new CG_ReadyToFireFender()).whenInactive(new HoodDown());
 //        driverA.whenActive(new ClimberLatch());
 //        driverY.whenActive(new DriveStraightTemp(5, 8, 5));
 //        driverDRight.whenActive(new CG_HomeTurret());
-        driverDLeft.whenActive(new CG_ToggleTurretDefaultPosition());
+        driverDLeft.whenActive(new TurretToggleLeftShot());
 //        driverDUp.whenActive(new HarvesterUp());
         driverDDown.whenActive(new CG_OhHeck());
 //        driverDRight.whileActiveContinuous(new DrivePlayMusic());
         driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
 //        driverLB.whileActiveContinuous(new CG_ReadyToFireOuter()).whenInactive(new LimelightSwitchLEDMode(Limelight.LEDMode.LED_OFF));
-        driverLB.whenActive(new CG_ReadyToFireOuter()).whenInactive(new ShooterStop());
+        driverLB.whenActive(new CG_ReadyToFire()).whenInactive(new ShooterStop());
         driverRB.whileActiveContinuous(new CG_FireZeMissiles());
         driverBack.whileActiveContinuous(new ClimberClimbUp());
 //        driverStart.whenActive(new CompressorStart());
@@ -99,11 +99,9 @@ public class RobotContainer {
         coDriverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         coDriverB.whileActiveContinuous(new CG_PurgeBalls());
         coDriverX.whenActive(new CG_HomeTurret());
-        coDriverY.whileActiveContinuous(new CG_ReadyToFireBatter()).whenInactive(new HoodDown());
+        coDriverY.whileActiveContinuous(new CG_ReadyToFireFender()).whenInactive(new HoodDown());
         coDriverDDown.whenActive(new CG_OhHeck());
-        coDriverLB.whileActiveContinuous(new TurretTurnManual(-0.3));
-        coDriverRB.whileActiveContinuous(new TurretTurnManual(0.3));
-        coDriverLT.whenActive(new CG_ReadyToFireOuter()).whenInactive(new ShooterStop());
+        coDriverLT.whenActive(new CG_ReadyToFire()).whenInactive(new ShooterStop());
         coDriverRT.whileActiveContinuous(new CG_FireZeMissiles());
         coDriverBack.whileActiveContinuous(new ClimberClimbUp());
         coDriverDLeft.whenActive(new CG_ToggleTurretDefaultPosition());

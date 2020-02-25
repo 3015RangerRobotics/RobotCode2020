@@ -11,7 +11,7 @@ public class DrivePathAndHarvest extends ParallelRaceGroup {
                 new BallHandlerHarvest(),
                 new SequentialCommandGroup(
                         new HarvesterDown(),
-                        new HarvesterIn(harvester)
+                        new HarvesterSet(harvester)
                 ),
                 new DriveMotionProfile(path)
         );
