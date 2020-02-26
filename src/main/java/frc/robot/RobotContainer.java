@@ -84,10 +84,9 @@ public class RobotContainer {
         driverDDown.whenActive(new CG_OhHeck());
         driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         driverLB.whenActive(new CG_ReadyToFire()).whenInactive(new CG_ShooterDefault());
-        driverRB.whileActiveContinuous(new CG_FireZeMissiles());
-        driverY.negate().and(driverRB).whileActiveContinuous(new CG_FireZeMissiles());
-        driverY.and(driverRB).whileActiveContinuous(new BallHandlerShoot());
-        driverBack.whileActiveContinuous(new ClimberClimbUp());
+        driverY.negate().and(driverRB).whileActiveOnce(new CG_FireZeMissiles());
+        driverY.and(driverRB).whileActiveOnce(new BallHandlerShoot());
+        driverBack.whileActiveOnce(new ClimberClimbUp());
 
         coDriverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         coDriverB.whileActiveContinuous(new CG_PurgeBalls());
@@ -95,11 +94,10 @@ public class RobotContainer {
         coDriverY.whenActive(new CG_ReadyToFireFender()).whenInactive(new CG_ShooterDefault());
         coDriverDDown.whenActive(new CG_OhHeck());
         coDriverLT.whenActive(new CG_ReadyToFire()).whenInactive(new CG_ShooterDefault());
-        coDriverRT.whileActiveContinuous(new CG_FireZeMissiles());
         coDriverBack.whileActiveContinuous(new ClimberClimbUp());
         coDriverDLeft.whenActive(new TurretToggleLeftShot());
-        coDriverY.negate().and(coDriverRT).whileActiveContinuous(new CG_FireZeMissiles());
-        coDriverY.and(coDriverRT).whileActiveContinuous(new BallHandlerShoot());
+        coDriverY.negate().and(coDriverRT).whileActiveOnce(new CG_FireZeMissiles());
+        coDriverY.and(coDriverRT).whileActiveOnce(new BallHandlerShoot());
 
         driverStart.and(coDriverStart).whenActive(new ClimberRelease()).whenInactive(new ClimberLatch());
     }

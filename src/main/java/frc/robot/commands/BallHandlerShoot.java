@@ -50,6 +50,8 @@ public class BallHandlerShoot extends CommandBase {
         } else if (ballHandler.getState() == State.kShootBall4 && !ballHandler.isSwitch4Pressed() && timer.hasPeriodPassed(delay)) {
             //If the currently the kShootball4 state is being executed and the fourth ball is no longer on the fourth switch, fire ball 5
             ballHandler.setState(BallHandler.State.kShootBall5);
+            timer.reset();
+            timer.start();
         }
     }
 
@@ -61,6 +63,6 @@ public class BallHandlerShoot extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return ballHandler.getState() == State.kShootBall5 && timer.hasPeriodPassed(0.75);
     }
 }
