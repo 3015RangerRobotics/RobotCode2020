@@ -87,6 +87,7 @@ public class Turret extends SubsystemBase {
                     setEncoder(Constants.TURRET_HOMING_POSITION);
                     state = State.kDefault;
                 }
+                break;
             case kDefault:
             default:
                 toPosition = isLeftShot() ? -90 : 0;

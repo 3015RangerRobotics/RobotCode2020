@@ -8,7 +8,7 @@ public class CG_ReadyToFireFender extends SequentialCommandGroup {
         addCommands(
                 new HoodUp(),
                 new TurretToDefaultPosition(),
-                new ShooterSetSpeed(6600)
+                new ShooterSetSpeed(3250)
         );
     }
 }

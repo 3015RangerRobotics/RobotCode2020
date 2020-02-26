@@ -63,7 +63,6 @@ public class RobotContainer {
         drive = new Drive();
         drive.setDefaultCommand(new DriveWithGamepad());
         turret = new Turret();
-        turret.setDefaultCommand(new TurretToDefaultPosition());
         limelight = new Limelight();
         ballHandler = new BallHandler();
         ballHandler.setDefaultCommand(new BallHandlerDefault());
@@ -80,6 +79,7 @@ public class RobotContainer {
         driverB.whileActiveContinuous(new CG_PurgeBalls());
         driverX.whenActive(new TurretHomePosition());
         driverY.whenActive(new CG_ReadyToFireFender()).whenInactive(new CG_ShooterDefault());
+        driverDUp.whenActive(new DriveMotionProfile(1.75, 12,8));
         driverDLeft.whenActive(new TurretToggleLeftShot());
         driverDDown.whenActive(new CG_OhHeck());
         driverA.whileActiveContinuous(new CG_HarvesterOfBalls());

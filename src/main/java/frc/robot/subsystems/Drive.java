@@ -221,7 +221,9 @@ public class Drive extends SubsystemBase {
         return rightMaster.getSelectedSensorPosition();
     }
 
-    public double getExpectedPosition(int slot)
+    public double getExpectedPosition(int slot){
+        return rightMaster.getActiveTrajectoryPosition(slot);
+    }
 
     public void turnInPlaceSetup() {
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
