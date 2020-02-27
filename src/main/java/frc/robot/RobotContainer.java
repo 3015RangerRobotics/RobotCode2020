@@ -82,10 +82,11 @@ public class RobotContainer {
         driverDUp.whenActive(new DriveMotionProfile(1.75, 12,8));
         driverDLeft.whenActive(new TurretToggleLeftShot());
         driverDDown.whenActive(new CG_OhHeck());
+//        driverDRight.whenActive(new DriveTurnInPlace(90));
         driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         driverLB.whenActive(new CG_ReadyToFire()).whenInactive(new CG_ShooterDefault());
         driverY.negate().and(driverRB).whileActiveOnce(new CG_FireZeMissiles());
-        driverY.and(driverRB).whileActiveOnce(new BallHandlerShoot());
+        driverY.and(driverRB).whileActiveOnce(new CG_FireZeMissilesFender());
         driverBack.whileActiveOnce(new ClimberClimbUp());
 
         coDriverA.whileActiveContinuous(new CG_HarvesterOfBalls());
@@ -97,13 +98,13 @@ public class RobotContainer {
         coDriverBack.whileActiveContinuous(new ClimberClimbUp());
         coDriverDLeft.whenActive(new TurretToggleLeftShot());
         coDriverY.negate().and(coDriverRT).whileActiveOnce(new CG_FireZeMissiles());
-        coDriverY.and(coDriverRT).whileActiveOnce(new BallHandlerShoot());
+        coDriverY.and(coDriverRT).whileActiveOnce(new CG_FireZeMissilesFender());
 
         driverStart.and(coDriverStart).whenActive(new ClimberRelease()).whenInactive(new ClimberLatch());
     }
 
     public Command getAutonomousCommand() {
-        return new Auto8BallTrench();
+        return new AutoPickpocket();
     }
 
     /**

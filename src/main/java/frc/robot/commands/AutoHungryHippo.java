@@ -9,17 +9,17 @@ public class AutoHungryHippo extends SequentialCommandGroup {
 
     public AutoHungryHippo() {
         super(
-                new ParallelDeadlineGroup(
-                        new WaitCommand(1),
-                        new TurretToPosition(-90),
-                        new HarvesterDown(),
-                        new ShooterSetSpeed(6500)
-
-                ),
-                new ParallelDeadlineGroup(
-                        new AimAndShoot(6500).withTimeout(10),
-                        new HarvesterSet(-0.75)
-                )
+//                new ParallelDeadlineGroup(
+//                        new WaitCommand(1),
+//                        new TurretToPosition(-90),
+//                        new HarvesterDown(),
+//                        new ShooterSetSpeed(6500)
+//
+//                ),
+//                new ParallelDeadlineGroup(
+//                        new AimAndShoot(6500).withTimeout(10),
+//                        new HarvesterSet(-0.75)
+//                )
         );
     }
 }

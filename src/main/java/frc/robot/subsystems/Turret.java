@@ -82,8 +82,8 @@ public class Turret extends SubsystemBase {
                 set(ControlMode.Position, toPosition / Constants.TURRET_DEGREES_PER_PULSE);
                 break;
             case kHoming:
-                set(ControlMode.PercentOutput, -0.25);
-                if(getLeftLimit()) {
+                set(ControlMode.PercentOutput, 0.25);
+                if(getRightLimit()) {
                     setEncoder(Constants.TURRET_HOMING_POSITION);
                     state = State.kDefault;
                 }

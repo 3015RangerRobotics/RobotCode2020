@@ -7,12 +7,13 @@ import frc.robot.RobotContainer;
 
 public class TurretHomePosition extends CommandBase {
     public TurretHomePosition() {
-        addRequirements(RobotContainer.turret);
+        addRequirements(RobotContainer.turret, RobotContainer.harvester);
     }
 
     @Override
     public void initialize() {
         RobotContainer.turret.setStateHoming();
+        RobotContainer.harvester.harvesterDown();
     }
 
     @Override

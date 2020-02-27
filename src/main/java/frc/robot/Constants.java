@@ -18,14 +18,15 @@ public final class Constants {
     public static final int DRIVE_RIGHT_FOLLOWER = 2;
     public static final int DRIVE_LEFT_MASTER = 3;
     public static final int DRIVE_LEFT_FOLLOWER = 4;
+    public static final double DRIVE_PIGEON_UNITS_PER_DEGREE = 8192.0 / 360.0;
     public static final double DRIVE_P = 0.01;//.005;
     public static final double DRIVE_I = 0;//0
     public static final double DRIVE_D = 0;//13.724;
     public static final double DRIVE_F = 0;//0
-    public static final double DRIVE_TURN_P = 0;
-    public static final double DRIVE_TURN_I = 0;
+    public static final double DRIVE_TURN_P = 0.656;
+    public static final double DRIVE_TURN_I = 0.0001;
     public static final double DRIVE_TURN_D = 0;
-    public static final double DRIVE_TURN_F = 0;
+    public static final double DRIVE_TURN_F = 0;//1023.0 / 50 * DRIVE_PIGEON_UNITS_PER_DEGREE;
     public static final double DRIVE_MP_TURN_P = 0.656; // 2.4 // 1.1 // 0.937 * 0.784
     public static final double DRIVE_MP_TURN_I = 0.0001;
     public static final double DRIVE_MP_TURN_D = 0; // 5
@@ -36,9 +37,8 @@ public final class Constants {
     public static final double DRIVE_MAX_VELOCITY = 12 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_MAX_ACCELERATION = 8 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_MAX_MOTION_ERROR = 0.1 * DRIVE_PULSES_PER_FOOT;
-    public static final double DRIVE_PIGEON_UNITS_PER_DEGREE = 8192.0 / 360.0;
-    public static final double DRIVE_TURN_MAX_VELOCITY = 360 * DRIVE_PIGEON_UNITS_PER_DEGREE;
-    public static final double DRIVE_TURN_MAX_ACCELLERTAION = 270 * DRIVE_PIGEON_UNITS_PER_DEGREE;
+    public static final double DRIVE_TURN_MAX_VELOCITY = 360 * DRIVE_PIGEON_UNITS_PER_DEGREE / 10;
+    public static final double DRIVE_TURN_MAX_ACCELLERTAION = 10 * DRIVE_PIGEON_UNITS_PER_DEGREE / 10;
     public static final int DRIVE_PIGEON = 1;
     public static final double DRIVE_NEUTRAL_DEADBAND = 0.001;
 
@@ -54,8 +54,8 @@ public final class Constants {
     public static final double TURRET_DEGREE_MARGIN = Math.round((1 / Constants.TURRET_DEGREES_PER_PULSE) * 1);
     public static final int TURRET_LEFT_LIMIT = 1;
     public static final int TURRET_RIGHT_LIMIT = 0;
-    public static final int TURRET_HOMING_POSITION = (int) Math.round(-110 / TURRET_DEGREES_PER_PULSE);
-
+//    public static final int TURRET_HOMING_POSITION = (int) Math.round(-110 / TURRET_DEGREES_PER_PULSE); // Left Limit
+    public static final int TURRET_HOMING_POSITION = (int) Math.round(52 / TURRET_DEGREES_PER_PULSE); // Right Limit
     // Shooter Constants
     public static final int SHOOTER_MOTOR = 5;
     public static final double SHOOTER_P = .5;//3.7;//3.7
@@ -68,7 +68,7 @@ public final class Constants {
     public static final double SHOOTER_SHOOT_D = 50;//25
     public static final double SHOOTER_SHOOT_F = SHOOTER_F * 1;
     public static final double SHOOTER_LAUNCH_ANGLE = 53.28;
-    public static final double SHOOTER_TOLERANCE = 100;
+    public static final double SHOOTER_TOLERANCE = 10;
 
     // Ball Handler Constants
     public static final int HANDLER_MOTOR1 = 2;

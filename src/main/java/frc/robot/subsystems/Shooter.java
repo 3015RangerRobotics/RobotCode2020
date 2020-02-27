@@ -63,10 +63,12 @@ public class Shooter extends SubsystemBase {
                 set(ControlMode.Velocity, setSpeed * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
                 break;
             case kAutoSpeed:
-                set(ControlMode.Velocity, getAutoSpeed() * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
+                setSpeed = getAutoSpeed();
+                set(ControlMode.Velocity, setSpeed * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
                 break;
             case kOff:
             default:
+                setSpeed = 0;
                 set(ControlMode.PercentOutput, 0);
                 break;
         }
@@ -120,11 +122,15 @@ public class Shooter extends SubsystemBase {
             double d = RobotContainer.limelight.getRobotToTargetDistance();
             double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
 //           double rpm = 7430.1186 + (-255.07933*d) + (7.2472131*d*d); //Perfect ball
-            double rpm = 4222.866701 + (110.34724 * d) + (-1.51320429 * d * d) + (1.5 * Math.abs(turretPos)); //Average ball
+            double rpm = 4222.866701 + (110.34724 * d) + (-1.51320429 * d * d) + (2 * Math.abs(turretPos)); //Average ball
             return rpm;
         } else {
             return 5400;
         }
+    }
+
+    public boolean isPrimed() {
+        return Math.abs(setSpeed - getRPM()) <= Constants.SHOOTER_TOLERANCE;
     }
 
 }

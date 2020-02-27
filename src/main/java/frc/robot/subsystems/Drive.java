@@ -16,7 +16,7 @@ import frc.robot.DriveSignal;
 import frc.robot.RobotContainer;
 
 public class Drive extends SubsystemBase {
-    private TalonFX rightMaster;
+    public TalonFX rightMaster;
     private TalonFX rightFollower;
 
     private TalonFX leftMaster;
@@ -55,21 +55,28 @@ public class Drive extends SubsystemBase {
         rightConfig.slot1.kI = Constants.DRIVE_MP_TURN_I;
         rightConfig.slot1.kD = Constants.DRIVE_MP_TURN_D;
         rightConfig.slot1.kF = Constants.DRIVE_MP_TURN_F;
+//        rightConfig.slot2.kP = -Constants.DRIVE_TURN_P;
+//        rightConfig.slot2.kI = -Constants.DRIVE_TURN_I;
+//        rightConfig.slot2.kD = -Constants.DRIVE_TURN_D;
+//        rightConfig.slot2.kF = -Constants.DRIVE_TURN_F;
+//        rightConfig.motionCruiseVelocity = (int) Math.round(Constants.DRIVE_TURN_MAX_VELOCITY);
+//        rightConfig.motionAcceleration = (int) Math.round(Constants.DRIVE_TURN_MAX_ACCELLERTAION);
 
         rightMaster.configAllSettings(rightConfig);
 
-        TalonFXConfiguration leftConfig = new TalonFXConfiguration();
-        leftConfig.remoteFilter0.remoteSensorDeviceID = imu.getDeviceID();
-        leftConfig.remoteFilter0.remoteSensorSource = RemoteSensorSource.Pigeon_Yaw;
-        leftConfig.neutralDeadband = Constants.DRIVE_NEUTRAL_DEADBAND;
-        leftConfig.slot0.kP = Constants.DRIVE_TURN_P;
-        leftConfig.slot0.kI = Constants.DRIVE_TURN_I;
-        leftConfig.slot0.kD = Constants.DRIVE_TURN_D;
-        leftConfig.slot0.kF = Constants.DRIVE_TURN_F;
-        leftConfig.motionCruiseVelocity = (int) Math.round(Constants.DRIVE_TURN_MAX_VELOCITY);
-        leftConfig.motionAcceleration = (int) Math.round(Constants.DRIVE_TURN_MAX_ACCELLERTAION);
-
-        leftMaster.configAllSettings(leftConfig);
+//        TalonFXConfiguration leftConfig = new TalonFXConfiguration();
+//        leftConfig.remoteFilter0.remoteSensorDeviceID = imu.getDeviceID();
+//        leftConfig.remoteFilter0.remoteSensorSource = RemoteSensorSource.Pigeon_Yaw;
+//        leftConfig.neutralDeadband = Constants.DRIVE_NEUTRAL_DEADBAND;
+//        leftConfig.primaryPID.selectedFeedbackCoefficient = 1;
+//        leftConfig.slot0.kP = Constants.DRIVE_TURN_P;
+//        leftConfig.slot0.kI = Constants.DRIVE_TURN_I;
+//        leftConfig.slot0.kD = Constants.DRIVE_TURN_D;
+//        leftConfig.slot0.kF = Constants.DRIVE_TURN_F;
+//        leftConfig.motionCruiseVelocity = (int) Math.round(Constants.DRIVE_TURN_MAX_VELOCITY);
+//        leftConfig.motionAcceleration = (int) Math.round(Constants.DRIVE_TURN_MAX_ACCELLERTAION);
+//
+//        leftMaster.configAllSettings(leftConfig);
 
         rightFollower.follow(rightMaster);
         leftFollower.follow(leftMaster);
@@ -120,8 +127,9 @@ public class Drive extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("gyro", getAngle());
-        SmartDashboard.putNumber("right", rightMaster.getSelectedSensorPosition(0) / Constants.DRIVE_PULSES_PER_FOOT);
-        SmartDashboard.putNumber("left", leftMaster.getSelectedSensorPosition(0) / Constants.DRIVE_PULSES_PER_FOOT);
+        SmartDashboard.putNumber("right", rightMaster.getSelectedSensorPosition(0));
+        SmartDashboard.putNumber("left", leftMaster.getSelectedSensorPosition(0));
+        SmartDashboard.putNumber("Turn Velocity", getTurnVelocity());
     }
 
     public void playMusic(){
@@ -133,10 +141,25 @@ public class Drive extends SubsystemBase {
 //        imu.getYawPitchRoll(ypr);
 //        return -ypr[0];
         return -rightMaster.getSelectedSensorPosition(1) / Constants.DRIVE_PIGEON_UNITS_PER_DEGREE;
+//        return -rightMaster.getSelectedSensorPosition(1);
+    }
+
+    public double getTurnVelocity() {
+        double[] ypr_dps = new double[3];
+        imu.getRawGyro(ypr_dps);
+        return -ypr_dps[2];
     }
 
     public void resetIMU(){
         imu.setYaw(0);
+//        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
+        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
+        rightMaster.setSelectedSensorPosition(0, 1, 20);
+        leftMaster.setSelectedSensorPosition(0, 0, 20);
+//        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, 0, 20);
+        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 20);
+
+
     }
 
     public void stopMusic(){
@@ -226,19 +249,31 @@ public class Drive extends SubsystemBase {
     }
 
     public void turnInPlaceSetup() {
-        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
-        rightMaster.setInverted(false);
-        rightMaster.setSensorPhase(false);
-        rightMaster.follow(leftMaster);
+//        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
+//        rightMaster.configSelectedFeedbackCoefficient(1, 0, 20);
+//        rightMaster.selectProfileSlot(2, 0);
+//        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
+//        rightMaster.setInverted(false);
+//        leftMaster.follow(rightMaster);
+        //        rightMaster.setInverted(false);
+//        leftMaster.setInverted(true);
+//        rightMaster.follow(leftMaster);
     }
 
     public void turnInPlaceCleanup() {
-        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0 , 20);
-        rightMaster.setInverted(true);
-        rightMaster.setSensorPhase(true);
+//        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 20);
+//        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, 0, 20);
+//        rightMaster.selectProfileSlot(0, 0);
+//        rightMaster.configSelectedFeedbackCoefficient(0.5, 0, 20);
+//        rightMaster.setInverted(true);
+//        rightMaster.setInverted(true);
+//        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, 0, 20);
+//        rightMaster.selectProfileSlot(0, 0);
+//        leftMaster.setInverted(false);
+//        rightMaster.setSensorPhase(true);
     }
 
-    public void setLeftMotor(ControlMode mode, double value) {
-        leftMaster.set(mode, value);
+    public void turnInPlace(double angle) {
+        rightMaster.set(ControlMode.MotionMagic, angle);
     }
 }

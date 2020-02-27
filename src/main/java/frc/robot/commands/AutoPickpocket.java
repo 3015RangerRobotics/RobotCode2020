@@ -1,21 +1,33 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.auto_modules.*;
+import frc.robot.subsystems.Limelight;
 
 public class AutoPickpocket extends SequentialCommandGroup {
 
     public AutoPickpocket() {
         super(
-                new ParallelDeadlineGroup(
-                        new DriveStraightAndHarvest(9.4, 10, 6, 5400, -0.75)
-//                        new CG_HomeTurret()
+                new LimelightSwitchLEDMode(Limelight.LEDMode.LED_ON),
+                new DriveMotionProfile(8.15, 12,10),
+                new CG_HarvesterOfBalls().withTimeout(1),
+                new ShooterAutoSpeed(),
+                new TurretTurnToTargetHold(),
+                new ParallelCommandGroup(
+                        new DriveMotionProfile("pp_trench_to_shoot"),
+                        new CG_HarvesterOfBalls().withTimeout(1)
                 ),
-                new HarvestInPlace(-0.75, .5, 5400),
-                new DrivePathAndShooterPrime("pp_trench_to_goal", 5400),
-                new AimAndShoot().withTimeout(3),
-                new DrivePathAndHarvest("pp_goal_to_our_trench", 5400, -0.75)
+                new CG_FireZeMissiles(),
+                new ShooterAutoSpeed(),
+                new TurretTurnToTargetHold(),
+                new DrivePathAndHarvest("pp_shoot_to_balls", -0.75),
+                new CG_HarvesterOfBalls().withTimeout(1),
+//                new DriveStraightAndHarvest(-2, 12,8, -0.75),
+                new CG_FireZeMissiles(),
+                new TurretToDefaultPosition(),
+                new ShooterStop()
         );
     }
 }

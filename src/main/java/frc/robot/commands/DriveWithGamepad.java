@@ -12,7 +12,7 @@ public class DriveWithGamepad extends CommandBase {
 
     @Override
     public void initialize() {
-        RobotContainer.drive.enableBrakeMode();
+//        RobotContainer.drive.enableBrakeMode();
     }
 
     @Override
@@ -32,7 +32,7 @@ public class DriveWithGamepad extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         RobotContainer.drive.setMotorOutputs(ControlMode.PercentOutput, 0, 0);
-        RobotContainer.drive.enableBrakeMode();
+//        RobotContainer.drive.enableCoastMode();
     }
 
     @Override

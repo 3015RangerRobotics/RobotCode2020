@@ -11,6 +11,7 @@ public class CG_FireZeMissiles extends SequentialCommandGroup {
                 new TurretWaitUntilOnTarget(),
                 new WaitCommand(0.2),
                 new ShooterAutoSpeed(false),
+                new ShooterWaitUntilPrimed(),
                 new BallHandlerShoot()
         );
     }
@@ -23,6 +24,7 @@ public class CG_FireZeMissiles extends SequentialCommandGroup {
                 new TurretWaitUntilOnTarget(),
                 new WaitCommand(0.2),
                 new ShooterSetSpeed(shooter),
+                new ShooterWaitUntilPrimed(),
                 new BallHandlerShoot()
         );
     }
