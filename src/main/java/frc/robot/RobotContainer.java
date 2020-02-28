@@ -3,7 +3,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.BallHandler;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -56,6 +58,8 @@ public class RobotContainer {
     public static JoystickButton coDriverStart = new JoystickButton(coDriver, XboxController.Button.kStart.value);
     public static JoystickButton coDriverBack = new JoystickButton(coDriver, XboxController.Button.kBack.value);
 
+    SendableChooser<CommandBase> autoChooser = new SendableChooser<>();
+
     public RobotContainer() {
         ourCompressor = new OurCompressor();
         ourCompressor.setDefaultCommand(new CompressorAuto());
@@ -72,6 +76,12 @@ public class RobotContainer {
         climber = new Climber();
 
         configureButtonBindings();
+
+        autoChooser.setDefaultOption("None",null);
+        autoChooser.addOption("8 Ball Trench", new Auto8BallTrench());
+        autoChooser.addOption("Pick Pocket", new AutoPickpocket());
+
+        SmartDashboard.putData(autoChooser);
     }
 
 
@@ -79,10 +89,10 @@ public class RobotContainer {
         driverB.whileActiveContinuous(new CG_PurgeBalls());
         driverX.whenActive(new TurretHomePosition());
         driverY.whenActive(new CG_ReadyToFireFender()).whenInactive(new CG_ShooterDefault());
-        driverDUp.whenActive(new DriveMotionProfile(1.75, 12,8));
+        driverDUp.whenActive(new DriveMotionProfile(1.75, 12,10));
         driverDLeft.whenActive(new TurretToggleLeftShot());
         driverDDown.whenActive(new CG_OhHeck());
-//        driverDRight.whenActive(new DriveTurnInPlace(90));
+        driverDRight.whenActive(new DriveTurnInPlace(90));
         driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         driverLB.whenActive(new CG_ReadyToFire()).whenInactive(new CG_ShooterDefault());
         driverY.negate().and(driverRB).whileActiveOnce(new CG_FireZeMissiles());
@@ -104,7 +114,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return new AutoPickpocket();
+        return autoChooser.getSelected();
     }
 
     /**

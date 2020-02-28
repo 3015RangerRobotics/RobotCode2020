@@ -9,23 +9,30 @@ import frc.robot.RobotContainer;
 
 public class DriveTurnInPlace extends CommandBase {
     double angle;
+    int counter = 0;
     public DriveTurnInPlace(double angle) {
         addRequirements(RobotContainer.drive);
-        this.angle = angle / 2; // It wont work without this. Its stupid
-        SmartDashboard.putNumber("why", angle * Constants.DRIVE_PIGEON_UNITS_PER_DEGREE);
-    }
+        this.angle = angle;
+        }
 
     @Override
     public void initialize() {
+        counter = 0;
         RobotContainer.drive.resetIMU();
         RobotContainer.drive.turnInPlaceSetup();
     }
 
     @Override
     public void execute() {
-//        RobotContainer.drive.turnInPlace(angle * Constants.DRIVE_PIGEON_UNITS_PER_DEGREE);
-        RobotContainer.drive.setMotorOutputs(ControlMode.MotionMagic, angle * Constants.DRIVE_PIGEON_UNITS_PER_DEGREE,
-                angle * Constants.DRIVE_PIGEON_UNITS_PER_DEGREE);
+        RobotContainer.drive.turnInPlace(angle * Constants.DRIVE_PIGEON_UNITS_PER_DEGREE);
+        System.out.println(angle * Constants.DRIVE_PIGEON_UNITS_PER_DEGREE + "," + RobotContainer.drive.getLeftSensorPosition());
+        if(RobotContainer.drive.isLeftOnTarget()) {
+            counter++;
+        } else {
+            counter = 0;
+        }
+//        RobotContainer.drive.setMotorOutputs(ControlMode.MotionMagic, angle * Constants.DRIVE_PIGEON_UNITS_PER_DEGREE,
+//                angle * Constants.DRIVE_PIGEON_UNITS_PER_DEGREE);
     }
 
     @Override
@@ -36,7 +43,6 @@ public class DriveTurnInPlace extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
-//        return Math.abs(angle) - RobotContainer.drive.getAngle() <= 0.5;
+        return counter >= 10;
     }
 }

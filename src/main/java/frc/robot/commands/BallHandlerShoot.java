@@ -8,24 +8,27 @@ import frc.robot.subsystems.BallHandler.State;
 
 public class BallHandlerShoot extends CommandBase {
     private double delay;
+    private boolean fender;
     BallHandler ballHandler = RobotContainer.ballHandler;
     Timer timer = new Timer();
 
     public BallHandlerShoot() {
         addRequirements(ballHandler);
         this.delay = 0;
+        this.fender = false;
     }
 
-    public BallHandlerShoot(double delay) {
+    public BallHandlerShoot(double delay, boolean fender) {
         addRequirements(ballHandler);
         this.delay = delay;
+        this.fender = fender;
     }
 
     @Override
     public void initialize() {
         ballHandler.setPaused(false);
         ballHandler.setState(BallHandler.State.kShootBall1);//start by shooting first ball
-        RobotContainer.shooter.selectProfileSlot(1);
+        if(!fender) RobotContainer.shooter.selectProfileSlot(1);
         timer.reset();
         timer.start();
     }

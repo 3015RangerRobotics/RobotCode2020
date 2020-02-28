@@ -23,10 +23,10 @@ public final class Constants {
     public static final double DRIVE_I = 0;//0
     public static final double DRIVE_D = 0;//13.724;
     public static final double DRIVE_F = 0;//0
-    public static final double DRIVE_TURN_P = 0.656;
-    public static final double DRIVE_TURN_I = 0.0001;
-    public static final double DRIVE_TURN_D = 0;
-    public static final double DRIVE_TURN_F = 0;//1023.0 / 50 * DRIVE_PIGEON_UNITS_PER_DEGREE;
+    public static final double DRIVE_TURN_P = 0.25;
+    public static final double DRIVE_TURN_I = 0;
+    public static final double DRIVE_TURN_D = 15;
+    public static final double DRIVE_TURN_F = 0;//1023.0 / (50 * DRIVE_PIGEON_UNITS_PER_DEGREE);
     public static final double DRIVE_MP_TURN_P = 0.656; // 2.4 // 1.1 // 0.937 * 0.784
     public static final double DRIVE_MP_TURN_I = 0.0001;
     public static final double DRIVE_MP_TURN_D = 0; // 5
@@ -38,7 +38,9 @@ public final class Constants {
     public static final double DRIVE_MAX_ACCELERATION = 8 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_MAX_MOTION_ERROR = 0.1 * DRIVE_PULSES_PER_FOOT;
     public static final double DRIVE_TURN_MAX_VELOCITY = 360 * DRIVE_PIGEON_UNITS_PER_DEGREE / 10;
-    public static final double DRIVE_TURN_MAX_ACCELLERTAION = 10 * DRIVE_PIGEON_UNITS_PER_DEGREE / 10;
+    public static final double DRIVE_TURN_MAX_ACCELLERTAION = 90 * DRIVE_PIGEON_UNITS_PER_DEGREE / 10;
+    public static final double DRIVE_TURN_ERROR = 0.5 * DRIVE_PIGEON_UNITS_PER_DEGREE;
+    public static final double DRIVE_MIN_OUTPUT = 0.25;
     public static final int DRIVE_PIGEON = 1;
     public static final double DRIVE_NEUTRAL_DEADBAND = 0.001;
 
@@ -81,11 +83,11 @@ public final class Constants {
     public static final int HANDLER_SWITCH3 = 4;
     public static final int HANDLER_SWITCH4 = 5;
     public static final int HANDLER_SWITCH5 = 6;
-    public static final double HANDLER_MOTOR_IN_SPEED1 = 0.3;
-    public static final double HANDLER_MOTOR_IN_SPEED2 = 0.68;
-    public static final double HANDLER_MOTOR_IN_SPEED3 = 0.62;
-    public static final double HANDLER_MOTOR_IN_SPEED4 = 0.55;
-    public static final double HANDLER_MOTOR_IN_SPEED5 = 0.75;
+    public static final double HANDLER_MOTOR_IN_SPEED1 = 0.5;
+    public static final double HANDLER_MOTOR_IN_SPEED2 = 0.5;
+    public static final double HANDLER_MOTOR_IN_SPEED3 = 0.5;
+    public static final double HANDLER_MOTOR_IN_SPEED4 = 0.5;
+    public static final double HANDLER_MOTOR_IN_SPEED5 = 0.5;//.75
     public static final double HANDLER_MOTOR_OUT_SPEED1 = -0.5;
     public static final double HANDLER_MOTOR_OUT_SPEED2 = -0.55;
     public static final double HANDLER_MOTOR_OUT_SPEED3 = -0.62;
@@ -107,7 +109,7 @@ public final class Constants {
     public static final int HOOD_SOLENOID_FORWARD = 1;
     public static final int HOOD_SOLENOID_REVERSE = 7;
 
-    //CLimber Constants
+    //Climber Constants
     public static final int CLIMBER_MOTOR = 7;
     public static final int CLIMBER_LATCH_RELEASE1 = 2;
     public static final int CLIMBER_LATCH_RELEASE2 = 5;
@@ -117,4 +119,6 @@ public final class Constants {
     public static final double LL_TARGET_HEIGHT = 7.58;
     public static final double LL_MOUNT_HEIGHT = 1.75; //TODO: Update this if redoing speed calculation, it is currently wrong
     public static final double LL_MOUNT_ANGLE = 20;
+
+    public static final int PRESSURE_SENSOR = 0;
 }

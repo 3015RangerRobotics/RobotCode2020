@@ -64,19 +64,19 @@ public class Drive extends SubsystemBase {
 
         rightMaster.configAllSettings(rightConfig);
 
-//        TalonFXConfiguration leftConfig = new TalonFXConfiguration();
-//        leftConfig.remoteFilter0.remoteSensorDeviceID = imu.getDeviceID();
-//        leftConfig.remoteFilter0.remoteSensorSource = RemoteSensorSource.Pigeon_Yaw;
-//        leftConfig.neutralDeadband = Constants.DRIVE_NEUTRAL_DEADBAND;
-//        leftConfig.primaryPID.selectedFeedbackCoefficient = 1;
-//        leftConfig.slot0.kP = Constants.DRIVE_TURN_P;
-//        leftConfig.slot0.kI = Constants.DRIVE_TURN_I;
-//        leftConfig.slot0.kD = Constants.DRIVE_TURN_D;
-//        leftConfig.slot0.kF = Constants.DRIVE_TURN_F;
-//        leftConfig.motionCruiseVelocity = (int) Math.round(Constants.DRIVE_TURN_MAX_VELOCITY);
-//        leftConfig.motionAcceleration = (int) Math.round(Constants.DRIVE_TURN_MAX_ACCELLERTAION);
-//
-//        leftMaster.configAllSettings(leftConfig);
+        TalonFXConfiguration leftConfig = new TalonFXConfiguration();
+        leftConfig.remoteFilter0.remoteSensorDeviceID = imu.getDeviceID();
+        leftConfig.remoteFilter0.remoteSensorSource = RemoteSensorSource.Pigeon_Yaw;
+        leftConfig.neutralDeadband = Constants.DRIVE_NEUTRAL_DEADBAND;
+        leftConfig.slot0.kP = Constants.DRIVE_TURN_P;
+        leftConfig.slot0.kI = Constants.DRIVE_TURN_I;
+        leftConfig.slot0.kD = Constants.DRIVE_TURN_D;
+        leftConfig.slot0.kF = Constants.DRIVE_TURN_F;
+        leftConfig.motionCruiseVelocity = (int) Math.round(Constants.DRIVE_TURN_MAX_VELOCITY);
+        leftConfig.motionAcceleration = (int) Math.round(Constants.DRIVE_TURN_MAX_ACCELLERTAION);
+
+        leftMaster.configAllSettings(leftConfig);
+        leftMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.DRIVE_TURN_ERROR));
 
         rightFollower.follow(rightMaster);
         leftFollower.follow(leftMaster);
@@ -154,7 +154,7 @@ public class Drive extends SubsystemBase {
         imu.setYaw(0);
 //        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
-        rightMaster.setSelectedSensorPosition(0, 1, 20);
+//        rightMaster.setSelectedSensorPosition(0, 1, 20);
         leftMaster.setSelectedSensorPosition(0, 0, 20);
 //        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, 0, 20);
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 20);
@@ -249,31 +249,30 @@ public class Drive extends SubsystemBase {
     }
 
     public void turnInPlaceSetup() {
-//        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
-//        rightMaster.configSelectedFeedbackCoefficient(1, 0, 20);
-//        rightMaster.selectProfileSlot(2, 0);
-//        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
-//        rightMaster.setInverted(false);
-//        leftMaster.follow(rightMaster);
-        //        rightMaster.setInverted(false);
-//        leftMaster.setInverted(true);
-//        rightMaster.follow(leftMaster);
+        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
+        leftMaster.setSelectedSensorPosition(0, 0, 20);
+        leftMaster.setSensorPhase(true);
+        rightMaster.setInverted(false);
+        rightFollower.setInverted(false);
+        rightMaster.follow(leftMaster);
     }
 
     public void turnInPlaceCleanup() {
-//        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 20);
-//        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, 0, 20);
-//        rightMaster.selectProfileSlot(0, 0);
-//        rightMaster.configSelectedFeedbackCoefficient(0.5, 0, 20);
-//        rightMaster.setInverted(true);
-//        rightMaster.setInverted(true);
-//        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, 0, 20);
-//        rightMaster.selectProfileSlot(0, 0);
-//        leftMaster.setInverted(false);
-//        rightMaster.setSensorPhase(true);
+        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 20);
+        leftMaster.setSensorPhase(false);
+        rightMaster.setInverted(true);
+        rightFollower.setInverted(true);
     }
 
     public void turnInPlace(double angle) {
-        rightMaster.set(ControlMode.MotionMagic, angle);
+        leftMaster.set(ControlMode.Position, angle);
+    }
+
+    public boolean isLeftOnTarget() {
+        return Math.abs(leftMaster.getClosedLoopError()) <= Constants.DRIVE_PIGEON_UNITS_PER_DEGREE;
+    }
+
+    public double getLeftSensorPosition() {
+        return leftMaster.getSelectedSensorPosition();
     }
 }

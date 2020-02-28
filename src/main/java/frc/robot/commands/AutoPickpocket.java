@@ -20,11 +20,17 @@ public class AutoPickpocket extends SequentialCommandGroup {
                         new CG_HarvesterOfBalls().withTimeout(1)
                 ),
                 new CG_FireZeMissiles(),
-                new ShooterAutoSpeed(),
+                new TurretToDefaultPosition(),
+                new HarvesterUp(),
+                new DriveMotionProfile("pp_shoot_to_balls"),
                 new TurretTurnToTargetHold(),
-                new DrivePathAndHarvest("pp_shoot_to_balls", -0.75),
+                new ShooterAutoSpeed(),
                 new CG_HarvesterOfBalls().withTimeout(1),
 //                new DriveStraightAndHarvest(-2, 12,8, -0.75),
+                new ParallelCommandGroup(
+                        new DriveMotionProfile("pp_balls_to_shoot"),
+                        new CG_HarvesterOfBalls().withTimeout(1)
+                ),
                 new CG_FireZeMissiles(),
                 new TurretToDefaultPosition(),
                 new ShooterStop()
