@@ -25,6 +25,8 @@ public class BallHandlerHarvest extends CommandBase {
         if (ballHandler.getState() == BallHandler.State.kOff){
             RobotContainer.setDriverRumbleLeft(1);
             RobotContainer.setDriverRumbleRight(1);
+            RobotContainer.setCoDriverRumbleLeft(1);
+            RobotContainer.setCoDriverRumbleRight(1);
         }
     }
 
@@ -33,6 +35,8 @@ public class BallHandlerHarvest extends CommandBase {
     public void end(boolean interrupted) {
         RobotContainer.setDriverRumbleLeft(0);
         RobotContainer.setDriverRumbleRight(0);
+        RobotContainer.setCoDriverRumbleLeft(0);
+        RobotContainer.setCoDriverRumbleRight(0);
     }
 
     @Override

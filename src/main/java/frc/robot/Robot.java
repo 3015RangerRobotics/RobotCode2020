@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Limelight;
 
 public class Robot extends TimedRobot {
     private Command autoCommand;
@@ -31,12 +32,15 @@ public class Robot extends TimedRobot {
             alliance = "blue";
         }
         SmartDashboard.putString("alliance", alliance);
-        SmartDashboard.putNumber("time", DriverStation.getInstance().getMatchTime());
+        SmartDashboard.putNumber("time", (int) DriverStation.getInstance().getMatchTime());
     }
 
     @Override
     public void disabledInit() {
         RobotContainer.drive.enableCoastMode();
+        RobotContainer.shooter.setStateOff();
+        RobotContainer.turret.setStateDefault();
+        RobotContainer.limelight.setLEDMode(Limelight.LEDMode.LED_OFF);
     }
 
     @Override

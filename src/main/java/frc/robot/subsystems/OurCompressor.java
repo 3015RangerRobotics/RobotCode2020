@@ -12,7 +12,7 @@ public class OurCompressor extends SubsystemBase {
 
     public OurCompressor() {
         compressor = new Compressor();
-        pressureSensor = new AnalogPotentiometer(Constants.PRESSURE_SENSOR, 250, -26);
+        pressureSensor = new AnalogPotentiometer(Constants.PRESSURE_SENSOR, 290, -25);
         this.startCompressor();
     }
 

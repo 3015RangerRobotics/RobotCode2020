@@ -69,6 +69,7 @@ public class Limelight extends SubsystemBase {
 
     @Override
     public void periodic() {
+        setStreamingMode(StreamingMode.PIP_SECONDARY);
         SmartDashboard.putNumber("Distance to Target", getRobotToTargetDistance());
         SmartDashboard.putNumber("Launch Velocity", getShooterLaunchVelocity());
     }

@@ -77,11 +77,12 @@ public class RobotContainer {
 
         configureButtonBindings();
 
-        autoChooser.setDefaultOption("None",null);
+        autoChooser.setDefaultOption("No Auto",null);
         autoChooser.addOption("8 Ball Trench", new Auto8BallTrench());
         autoChooser.addOption("Pick Pocket", new AutoPickpocket());
+        autoChooser.addOption("10 Ball Trench", new Auto10Ball());
 
-        SmartDashboard.putData(autoChooser);
+        SmartDashboard.putData("Auto Mode", autoChooser);
     }
 
 
@@ -90,7 +91,7 @@ public class RobotContainer {
         driverX.whenActive(new TurretHomePosition());
         driverY.whenActive(new CG_ReadyToFireFender()).whenInactive(new CG_ShooterDefault());
         driverDUp.whenActive(new DriveMotionProfile(1.75, 12,10));
-        driverDLeft.whenActive(new TurretToggleLeftShot());
+        driverDLeft.whenActive(new CG_ToggleLeftShot());
         driverDDown.whenActive(new CG_OhHeck());
         driverDRight.whenActive(new DriveTurnInPlace(90));
         driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
@@ -106,7 +107,7 @@ public class RobotContainer {
         coDriverDDown.whenActive(new CG_OhHeck());
         coDriverLT.whenActive(new CG_ReadyToFire()).whenInactive(new CG_ShooterDefault());
         coDriverBack.whileActiveContinuous(new ClimberClimbUp());
-        coDriverDLeft.whenActive(new TurretToggleLeftShot());
+        coDriverDLeft.whenActive(new CG_ToggleLeftShot());
         coDriverY.negate().and(coDriverRT).whileActiveOnce(new CG_FireZeMissiles());
         coDriverY.and(coDriverRT).whileActiveOnce(new CG_FireZeMissilesFender());
 

@@ -83,11 +83,11 @@ public final class Constants {
     public static final int HANDLER_SWITCH3 = 4;
     public static final int HANDLER_SWITCH4 = 5;
     public static final int HANDLER_SWITCH5 = 6;
-    public static final double HANDLER_MOTOR_IN_SPEED1 = 0.5;
+    public static final double HANDLER_MOTOR_IN_SPEED1 = 0.3;
     public static final double HANDLER_MOTOR_IN_SPEED2 = 0.5;
     public static final double HANDLER_MOTOR_IN_SPEED3 = 0.5;
     public static final double HANDLER_MOTOR_IN_SPEED4 = 0.5;
-    public static final double HANDLER_MOTOR_IN_SPEED5 = 0.5;//.75
+    public static final double HANDLER_MOTOR_IN_SPEED5 = 1.0;//.75
     public static final double HANDLER_MOTOR_OUT_SPEED1 = -0.5;
     public static final double HANDLER_MOTOR_OUT_SPEED2 = -0.55;
     public static final double HANDLER_MOTOR_OUT_SPEED3 = -0.62;
