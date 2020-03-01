@@ -72,6 +72,7 @@ public class Drive extends SubsystemBase {
         leftConfig.slot0.kI = Constants.DRIVE_TURN_I;
         leftConfig.slot0.kD = Constants.DRIVE_TURN_D;
         leftConfig.slot0.kF = Constants.DRIVE_TURN_F;
+        leftConfig.slot0.integralZone = (int) Math.round(Constants.DRIVE_TURN_I_ZONE);
         leftConfig.motionCruiseVelocity = (int) Math.round(Constants.DRIVE_TURN_MAX_VELOCITY);
         leftConfig.motionAcceleration = (int) Math.round(Constants.DRIVE_TURN_MAX_ACCELLERTAION);
 
@@ -251,6 +252,14 @@ public class Drive extends SubsystemBase {
     public void turnInPlaceSetup() {
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
         leftMaster.setSelectedSensorPosition(0, 0, 20);
+//        leftMaster.configNominalOutputForward(Constants.DRIVE_MIN_OUTPUT,    20);
+//        leftMaster.configNominalOutputReverse(-Constants.DRIVE_MIN_OUTPUT,   20);
+//        leftFollower.configNominalOutputForward(Constants.DRIVE_MIN_OUTPUT,  20);
+//        leftFollower.configNominalOutputReverse(-Constants.DRIVE_MIN_OUTPUT, 20);
+//        rightMaster.configNominalOutputForward(Constants.DRIVE_MIN_OUTPUT,   20);
+//        rightMaster.configNominalOutputReverse(-Constants.DRIVE_MIN_OUTPUT,  20);
+//        rightMaster.configNominalOutputForward(Constants.DRIVE_MIN_OUTPUT,   20);
+//        rightMaster.configNominalOutputReverse(-Constants.DRIVE_MIN_OUTPUT,  20);
         leftMaster.setSensorPhase(true);
         rightMaster.setInverted(false);
         rightFollower.setInverted(false);
@@ -259,6 +268,14 @@ public class Drive extends SubsystemBase {
 
     public void turnInPlaceCleanup() {
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 20);
+//        leftMaster.configNominalOutputForward(0,   20);
+//        leftMaster.configNominalOutputReverse(0,   20);
+//        leftFollower.configNominalOutputForward(0, 20);
+//        leftFollower.configNominalOutputReverse(0, 20);
+//        rightMaster.configNominalOutputForward(0,  20);
+//        rightMaster.configNominalOutputReverse(0,  20);
+//        rightMaster.configNominalOutputForward(0,  20);
+//        rightMaster.configNominalOutputReverse(0,  20);
         leftMaster.setSensorPhase(false);
         rightMaster.setInverted(true);
         rightFollower.setInverted(true);

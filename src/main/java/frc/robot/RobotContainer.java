@@ -81,6 +81,7 @@ public class RobotContainer {
         autoChooser.addOption("8 Ball Trench", new Auto8BallTrench());
         autoChooser.addOption("Pick Pocket", new AutoPickpocket());
         autoChooser.addOption("10 Ball Trench", new Auto10Ball());
+        autoChooser.addOption("~7 Ball Pick Pocket", new AutoMaybe7BallPickpocket());
 
         SmartDashboard.putData("Auto Mode", autoChooser);
     }
@@ -93,7 +94,7 @@ public class RobotContainer {
         driverDUp.whenActive(new DriveMotionProfile(1.75, 12,10));
         driverDLeft.whenActive(new CG_ToggleLeftShot());
         driverDDown.whenActive(new CG_OhHeck());
-        driverDRight.whenActive(new DriveTurnInPlace(90));
+        driverDRight.whenActive(new DriveTurnInPlace(12));
         driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         driverLB.whenActive(new CG_ReadyToFire()).whenInactive(new CG_ShooterDefault());
         driverY.negate().and(driverRB).whileActiveOnce(new CG_FireZeMissiles());

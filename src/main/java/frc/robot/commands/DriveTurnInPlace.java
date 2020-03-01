@@ -43,6 +43,6 @@ public class DriveTurnInPlace extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return counter >= 10;
+        return counter >= 5;
     }
 }

@@ -10,7 +10,7 @@ package frc.robot;
 public final class Constants {
     public static final double MP_TIME_STEP = 0.01;
 
-    public static final double LIMELIGHT_INNER_DISTANCE = 12;
+    public static final double LIMELIGHT_INNER_DISTANCE = 0;
     public static final double LIMELIGHT_ZOOM_DISTANCE = 50;
 
     // Drive Constants
@@ -23,10 +23,11 @@ public final class Constants {
     public static final double DRIVE_I = 0;//0
     public static final double DRIVE_D = 0;//13.724;
     public static final double DRIVE_F = 0;//0
-    public static final double DRIVE_TURN_P = 0.25;
-    public static final double DRIVE_TURN_I = 0;
-    public static final double DRIVE_TURN_D = 15;
+    public static final double DRIVE_TURN_P = 0.3; //0.3
+    public static final double DRIVE_TURN_I = 0.0035; // 0.004
+    public static final double DRIVE_TURN_D = 0;
     public static final double DRIVE_TURN_F = 0;//1023.0 / (50 * DRIVE_PIGEON_UNITS_PER_DEGREE);
+    public static final double DRIVE_TURN_I_ZONE = 10 * DRIVE_PIGEON_UNITS_PER_DEGREE;
     public static final double DRIVE_MP_TURN_P = 0.656; // 2.4 // 1.1 // 0.937 * 0.784
     public static final double DRIVE_MP_TURN_I = 0.0001;
     public static final double DRIVE_MP_TURN_D = 0; // 5
@@ -40,7 +41,7 @@ public final class Constants {
     public static final double DRIVE_TURN_MAX_VELOCITY = 360 * DRIVE_PIGEON_UNITS_PER_DEGREE / 10;
     public static final double DRIVE_TURN_MAX_ACCELLERTAION = 90 * DRIVE_PIGEON_UNITS_PER_DEGREE / 10;
     public static final double DRIVE_TURN_ERROR = 0.5 * DRIVE_PIGEON_UNITS_PER_DEGREE;
-    public static final double DRIVE_MIN_OUTPUT = 0.25;
+    public static final double DRIVE_MIN_OUTPUT = 0.15;
     public static final int DRIVE_PIGEON = 1;
     public static final double DRIVE_NEUTRAL_DEADBAND = 0.001;
 
@@ -63,11 +64,11 @@ public final class Constants {
     public static final double SHOOTER_P = .5;//3.7;//3.7
     public static final double SHOOTER_I = 0; // 0
     public static final double SHOOTER_D = 10; // 46.0
-    public static final double SHOOTER_F = 0.0472; // 0.0468
+    public static final double SHOOTER_F = 0.0468; //0.0472;
     public static final double SHOOTER_PULSES_PER_ROTATION = 2048 * (2.0/3.0);
     public static final double SHOOTER_SHOOT_P = 20;//6
     public static final double SHOOTER_SHOOT_I = 0;
-    public static final double SHOOTER_SHOOT_D = 50;//25
+    public static final double SHOOTER_SHOOT_D = 70;//25
     public static final double SHOOTER_SHOOT_F = SHOOTER_F * 1;
     public static final double SHOOTER_LAUNCH_ANGLE = 53.28;
     public static final double SHOOTER_TOLERANCE = 10;

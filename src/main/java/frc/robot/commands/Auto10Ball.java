@@ -11,8 +11,8 @@ public class Auto10Ball extends SequentialCommandGroup {
     public Auto10Ball() {
         super(
                 new LimelightSwitchLEDMode(Limelight.LEDMode.LED_ON),
-                new DriveMotionProfile("10_line_to_center"),
-                new CG_HarvesterOfBalls().withTimeout(1),
+                new DrivePathAndHarvest("10_line_to_center", -1),
+                new CG_HarvesterOfBalls().withTimeout(0.75),
                 new TurretTurnToTargetHold(),
                 new ShooterAutoSpeed(),
                 new DrivePathAndHarvest("10_center_to_shoot", -1),
@@ -23,12 +23,12 @@ public class Auto10Ball extends SequentialCommandGroup {
                         new DriveMotionProfile("10_five_more"),
                         new BallHandlerHarvest(),
                         new SequentialCommandGroup(
-                                new HarvesterSet(-0.75).withTimeout(3.5),
+                                new HarvesterSet(-0.75).withTimeout(2.85),
                                 new HarvesterUp()
                         )
                 ),
                 new CG_HarvesterOfBalls().withTimeout(1),
-                new DriveStraightAndHarvest(-8, 12, 10, -0.75),
+                new DriveStraightAndHarvest(-8, 12, 12, -0.75),
                 new CG_FireZeMissiles(),
                 new ShooterStop(),
                 new TurretToDefaultPosition()

@@ -25,7 +25,7 @@ public class BallHandlerDefault extends CommandBase {
         if (currentState == BallHandler.State.kFillTo1 || currentState == BallHandler.State.kFillTo2 ||
                 currentState == BallHandler.State.kFillTo3 || currentState == BallHandler.State.kFillTo4 ||
                 currentState == BallHandler.State.kFillTo5) {
-            if (timer.hasPeriodPassed(1.5)) {
+            if (timer.hasElapsed(1.5)) {
                 ballHandler.setPaused(true);
             }
         }

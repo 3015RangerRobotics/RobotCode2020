@@ -21,7 +21,11 @@ public class BallHandler extends SubsystemBase {
     private static boolean isPaused = false;
 
     public enum State {
-        kPurge,
+        kPurgeBall1,
+        kPurgeBall2,
+        kPurgeBall3,
+        kPurgeBall4,
+        kPurgeBall5,
         kShootBall1,
         kShootBall2,
         kShootBall3,
@@ -67,13 +71,57 @@ public class BallHandler extends SubsystemBase {
 
         double[] speeds;
         switch (state) {
-            case kPurge:
-                //Run everything in reverse(spit out balls)
+            case kPurgeBall5:
+                //Fill balls until 1 is pressed
+                speeds = new double[]
+                        {0,0,0,0, Constants.HANDLER_MOTOR_OUT_SPEED1};
+                if (!isSwitch5Pressed()) {
+                    //if switch pressed, change state, and fall through to that state
+                    state = State.kPurgeBall4;
+                } else {
+                    break;
+                }
+            case kPurgeBall4:
+                //Fill balls until 2 is pressed
+                speeds = new double[]
+                        {0,0,0, Constants.HANDLER_MOTOR_OUT_SPEED4, Constants.HANDLER_MOTOR_OUT_SPEED5};
+                if (!isSwitch4Pressed()) {
+                    //if switch pressed, change state, and fall through to that state
+                    state = State.kPurgeBall3;
+                } else {
+                    break;
+                }
+            case kPurgeBall3:
+                //Fill balls until 3 is pressed
+                speeds = new double[]
+                        {0,0, Constants.HANDLER_MOTOR_OUT_SPEED3, Constants.HANDLER_MOTOR_OUT_SPEED4,
+                                Constants.HANDLER_MOTOR_OUT_SPEED5};
+                if (!isSwitch3Pressed()) {
+                    //if switch pressed, change state, and fall through to that state
+                    state = State.kPurgeBall2;
+                } else {
+                    break;
+                }
+
+            case kPurgeBall2:
+                //Fill balls until 4 is pressed
+                speeds = new double[]
+                        {0, Constants.HANDLER_MOTOR_OUT_SPEED2, Constants.HANDLER_MOTOR_OUT_SPEED3,
+                                Constants.HANDLER_MOTOR_OUT_SPEED4, Constants.HANDLER_MOTOR_OUT_SPEED5};
+                if (!isSwitch2Pressed()) {
+                    //if switch pressed, change state, and fall through to that state
+                    state = State.kPurgeBall1;
+                } else {
+                    break;
+                }
+                // break;
+            case kPurgeBall1:
+                //Fill balls until 5 is pressed
                 speeds = new double[]
                         {Constants.HANDLER_MOTOR_OUT_SPEED1, Constants.HANDLER_MOTOR_OUT_SPEED2,
                                 Constants.HANDLER_MOTOR_OUT_SPEED3, Constants.HANDLER_MOTOR_OUT_SPEED4,
                                 Constants.HANDLER_MOTOR_OUT_SPEED5};
-                break;
+                    break;
             case kShootBall1:
                 //Fires the first ball
                 speeds = new double[]

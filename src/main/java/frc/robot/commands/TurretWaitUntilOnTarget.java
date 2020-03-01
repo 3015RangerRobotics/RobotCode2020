@@ -28,6 +28,6 @@ public class TurretWaitUntilOnTarget extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return RobotContainer.turret.isOnTarget() && timer.hasPeriodPassed(0.1);
+        return RobotContainer.turret.isOnTarget() && timer.hasElapsed(0.1);
     }
 }

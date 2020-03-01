@@ -13,7 +13,7 @@ public class BallHandlerPurge extends CommandBase {
 
     @Override
     public void initialize() {
-        ballHandler.setState(BallHandler.State.kPurge);
+        ballHandler.setState(BallHandler.State.kPurgeBall5);
         ballHandler.setPaused(false);
     }
 

@@ -10,7 +10,7 @@ public class Auto8BallTrench extends SequentialCommandGroup {
         super(
                 new TurretHomePosition(),
                 new LimelightSwitchLEDMode(Limelight.LEDMode.LED_ON),
-                new DriveStraightAndHarvest(9.25, 12, 10, -0.75),
+                new DriveStraightAndHarvest(10, 12, 8, -0.75),
                 new ShooterAutoSpeed(),
                 new TurretTurnToTargetHold(),
                 new CG_HarvesterOfBalls().withTimeout(0.5),
@@ -18,7 +18,7 @@ public class Auto8BallTrench extends SequentialCommandGroup {
                 new ShooterAutoSpeed(),
                 new TurretTurnToTargetHold(),
                 new ParallelDeadlineGroup(
-                        new DriveMotionProfile(9.3,12,10),
+                        new DriveMotionProfile(7.9,12,8),
                         new BallHandlerHarvest(),
                         new SequentialCommandGroup(
                                 new HarvesterSet(-0.75).withTimeout(1.5),
@@ -26,10 +26,11 @@ public class Auto8BallTrench extends SequentialCommandGroup {
                         )
                 ),
                 new CG_HarvesterOfBalls().withTimeout(0.5),
-                new DriveStraightAndHarvest(-8, 12, 10, -0.75),
+                new DriveStraightAndHarvest(-8, 12, 8, -0.75),
                 new CG_FireZeMissiles(),
                 new TurretToPosition(0),
-                new ShooterStop()
+                new ShooterStop(),
+                new DriveMotionProfile(10, 12,10)
         );
     }
 }
