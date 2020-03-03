@@ -8,11 +8,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Limelight;
+import lib.fsr.Interlink402;
 
 public class Robot extends TimedRobot {
     private Command autoCommand;
 
     private RobotContainer robotContainer;
+    Interlink402 test = new Interlink402(0);
 
     @Override
     public void robotInit() {
@@ -33,6 +35,7 @@ public class Robot extends TimedRobot {
         }
         SmartDashboard.putString("alliance", alliance);
         SmartDashboard.putNumber("time", (int) DriverStation.getInstance().getMatchTime());
+        SmartDashboard.putNumber("fsr", test.getForce());
     }
 
     @Override
