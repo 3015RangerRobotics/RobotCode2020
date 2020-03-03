@@ -160,9 +160,9 @@ public class BallHandler extends SubsystemBase {
             case kFillTo1:
                 //Fill balls until 1 is pressed
                 speeds = new double[]
-                        {Constants.HANDLER_MOTOR_IN_SPEED1, Constants.HANDLER_MOTOR_IN_SPEED2,
-                                Constants.HANDLER_MOTOR_IN_SPEED3, Constants.HANDLER_MOTOR_IN_SPEED4,
-                                Constants.HANDLER_MOTOR_IN_SPEED5};
+                        {0.25, 1,
+                                1, 1,
+                                1};
                 if (isSwitch1Pressed()) {
                     //if switch pressed, change state, and fall through to that state
                     state = State.kFillTo2;
@@ -172,9 +172,9 @@ public class BallHandler extends SubsystemBase {
             case kFillTo2:
                 //Fill balls until 2 is pressed
                 speeds = new double[]
-                        {Constants.HANDLER_MOTOR_OFF_SPEED, Constants.HANDLER_MOTOR_IN_SPEED2,
-                                Constants.HANDLER_MOTOR_IN_SPEED3, Constants.HANDLER_MOTOR_IN_SPEED4,
-                                Constants.HANDLER_MOTOR_IN_SPEED5};
+                        {0, .25,
+                                1, 1,
+                                1};
                 if (isSwitch2Pressed()) {
                     //if switch pressed, change state, and fall through to that state
                     state = State.kFillTo3;
@@ -184,9 +184,9 @@ public class BallHandler extends SubsystemBase {
             case kFillTo3:
                 //Fill balls until 3 is pressed
                 speeds = new double[]
-                        {Constants.HANDLER_MOTOR_OFF_SPEED, Constants.HANDLER_MOTOR_OFF_SPEED,
-                                Constants.HANDLER_MOTOR_IN_SPEED3, Constants.HANDLER_MOTOR_IN_SPEED4,
-                                Constants.HANDLER_MOTOR_IN_SPEED5};
+                        {0, 0,
+                                .25, 1,
+                                1};
                 if (isSwitch3Pressed()) {
                     //if switch pressed, change state, and fall through to that state
                     state = State.kFillTo4;
@@ -197,9 +197,9 @@ public class BallHandler extends SubsystemBase {
             case kFillTo4:
                 //Fill balls until 4 is pressed
                 speeds = new double[]
-                        {Constants.HANDLER_MOTOR_OFF_SPEED, Constants.HANDLER_MOTOR_OFF_SPEED,
-                                Constants.HANDLER_MOTOR_OFF_SPEED, Constants.HANDLER_MOTOR_IN_SPEED4,
-                                Constants.HANDLER_MOTOR_IN_SPEED5};
+                        {0, 0,
+                                0, .25,
+                                1};
                 if (isSwitch4Pressed()) {
                     //if switch pressed, change state, and fall through to that state
                     state = State.kFillTo5;
@@ -210,9 +210,9 @@ public class BallHandler extends SubsystemBase {
             case kFillTo5:
                 //Fill balls until 5 is pressed
                 speeds = new double[]
-                        {Constants.HANDLER_MOTOR_OFF_SPEED, Constants.HANDLER_MOTOR_OFF_SPEED,
-                                Constants.HANDLER_MOTOR_OFF_SPEED, Constants.HANDLER_MOTOR_OFF_SPEED,
-                                Constants.HANDLER_MOTOR_IN_SPEED5};
+                        {0, 0,
+                                0, 0,
+                                .25};
                 if (isSwitch5Pressed()) {
                     //if switch pressed, change state, and fall through to that state
                     state = State.kOff;
