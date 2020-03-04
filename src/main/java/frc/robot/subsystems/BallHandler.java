@@ -18,6 +18,8 @@ public class BallHandler extends SubsystemBase {
     private DigitalInput switch4;
     private DigitalInput switch5;
 
+    private int ballCounter = 0;
+
     private static boolean isPaused = false;
 
     public enum State {
@@ -159,65 +161,90 @@ public class BallHandler extends SubsystemBase {
                 break;
             case kFillTo1:
                 //Fill balls until 1 is pressed
-                speeds = new double[]
-                        {0.25, 1,
-                                1, 1,
-                                1};
-                if (isSwitch1Pressed()) {
-                    //if switch pressed, change state, and fall through to that state
+                if (ballCounter >= 1){
                     state = State.kFillTo2;
-                } else {
-                    break;
+                }else {
+                    speeds = new double[]
+                            {Constants.HANDLER_MOTOR_IN_SPEED1, 1,
+                                    1, 1,
+                                    1};
+                    if (isSwitch1Pressed()) {
+                        //if switch pressed, change state, and fall through to that state
+                        ballCounter = 1;
+                        state = State.kFillTo2;
+                    } else {
+                        break;
+                    }
                 }
             case kFillTo2:
-                //Fill balls until 2 is pressed
-                speeds = new double[]
-                        {0, .25,
-                                1, 1,
-                                1};
-                if (isSwitch2Pressed()) {
-                    //if switch pressed, change state, and fall through to that state
+                if (ballCounter >= 2){
                     state = State.kFillTo3;
-                } else {
-                    break;
+                }else {
+                    //Fill balls until 2 is pressed
+                    speeds = new double[]
+                            {0, .4,
+                                    1, 1,
+                                    1};
+                    if (isSwitch2Pressed()) {
+                        ballCounter = 2;
+                        //if switch pressed, change state, and fall through to that state
+                        state = State.kFillTo3;
+                    } else {
+                        break;
+                    }
                 }
             case kFillTo3:
-                //Fill balls until 3 is pressed
-                speeds = new double[]
-                        {0, 0,
-                                .25, 1,
-                                1};
-                if (isSwitch3Pressed()) {
-                    //if switch pressed, change state, and fall through to that state
+                if (ballCounter >= 3){
                     state = State.kFillTo4;
-                } else {
-                    break;
+                }else {
+                    //Fill balls until 3 is pressed
+                    speeds = new double[]
+                            {0, 0,
+                                    .4, 1,
+                                    1};
+                    if (isSwitch3Pressed()) {
+                        ballCounter = 3;
+                        //if switch pressed, change state, and fall through to that state
+                        state = State.kFillTo4;
+                    } else {
+                        break;
+                    }
                 }
 
             case kFillTo4:
-                //Fill balls until 4 is pressed
-                speeds = new double[]
-                        {0, 0,
-                                0, .25,
-                                1};
-                if (isSwitch4Pressed()) {
-                    //if switch pressed, change state, and fall through to that state
+                if (ballCounter >=4){
                     state = State.kFillTo5;
-                } else {
-                    break;
+                }else {
+                    //Fill balls until 4 is pressed
+                    speeds = new double[]
+                            {0, 0,
+                                    0, .4,
+                                    1};
+                    if (isSwitch4Pressed()) {
+                        ballCounter = 4;
+                        //if switch pressed, change state, and fall through to that state
+                        state = State.kFillTo5;
+                    } else {
+                        break;
+                    }
                 }
                 // break;
             case kFillTo5:
-                //Fill balls until 5 is pressed
-                speeds = new double[]
-                        {0, 0,
-                                0, 0,
-                                .25};
-                if (isSwitch5Pressed()) {
-                    //if switch pressed, change state, and fall through to that state
+                if(ballCounter >= 5){
                     state = State.kOff;
-                } else {
-                    break;
+                }else {
+                    //Fill balls until 5 is pressed
+                    speeds = new double[]
+                            {0, 0,
+                                    0, 0,
+                                    .3};
+                    if (isSwitch5Pressed()) {
+                        ballCounter = 5;
+                        //if switch pressed, change state, and fall through to that state
+                        state = State.kOff;
+                    } else {
+                        break;
+                    }
                 }
             case kOff:
                 //Turns all motors off
@@ -250,6 +277,10 @@ public class BallHandler extends SubsystemBase {
      */
     public void setState(State newState) {
         this.state = newState;
+    }
+
+    public void setBallCounter(int ballCounter){
+        this.ballCounter = ballCounter;
     }
 
     /**

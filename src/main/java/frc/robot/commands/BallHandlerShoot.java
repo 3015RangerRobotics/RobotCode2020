@@ -31,6 +31,7 @@ public class BallHandlerShoot extends CommandBase {
         if(!fender) RobotContainer.shooter.selectProfileSlot(1);
         timer.reset();
         timer.start();
+        ballHandler.setBallCounter(0);
     }
 
     @Override

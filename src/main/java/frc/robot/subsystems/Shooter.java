@@ -126,8 +126,8 @@ public class Shooter extends SubsystemBase {
         if(RobotContainer.limelight.hasTarget()) {
             double d = RobotContainer.limelight.getRobotToTargetDistance();
             double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
-           double rpm = 7430.1186 + (-255.07933*d) + (7.2472131*d*d); //Perfect ball
-//            double rpm = 4222.866701 + (110.34724 * d) + (-1.51320429 * d * d)); //Average ball
+//           double rpm = 7430.1186 + (-255.07933*d) + (7.2472131*d*d); //Perfect ball
+            double rpm = 4222.866701 + (110.34724 * d) + (-1.51320429 * d * d); //Average ball
             return rpm;
         } else {
             return 5400;

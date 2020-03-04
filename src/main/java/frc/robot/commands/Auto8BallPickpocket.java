@@ -2,17 +2,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.auto_modules.DrivePathAndHarvest;
 import frc.robot.commands.auto_modules.DriveStraightAndHarvest;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
-public class AutoMaybe7BallPickpocket extends SequentialCommandGroup {
+public class Auto8BallPickpocket extends SequentialCommandGroup {
 
-    public AutoMaybe7BallPickpocket() {
+    public Auto8BallPickpocket() {
         super(
                 new LimelightSwitchLEDMode(Limelight.LEDMode.LED_ON),
-                new DriveMotionProfile(7.7, 12,10),
-                new CG_HarvesterOfBalls().withTimeout(1),
+                new TurretHomePosition(),
+                new DriveStraightAndHarvest(7.7, 12,10, -1.0),
                 new ShooterAutoSpeed(),
                 new TurretTurnToTargetHold(),
                 new ParallelCommandGroup(
@@ -20,10 +21,12 @@ public class AutoMaybe7BallPickpocket extends SequentialCommandGroup {
                         new CG_HarvesterOfBalls().withTimeout(1)
                 ),
                 new CG_FireZeMissiles(),
-                new DriveStraightAndHarvest(2.3,7,3, -0.6),
+                new DriveStraightAndHarvest(2.3,7,3, -1.0),
                 new ShooterAutoSpeed(),
                 new TurretTurnToTargetHold(),
-                new DriveStraightAndHarvest(-2, 12, 10, -0.6),
+                new DrivePathAndHarvest("pp_scoot", -1.0),
+                new DriveStraightAndHarvest(1.5, 12, 10, -1.0),
+                new DriveStraightAndHarvest(-2, 12, 10, -1.0),
                 new CG_FireZeMissiles(),
                 new ShooterStop(),
                 new TurretToDefaultPosition()

@@ -9,7 +9,7 @@ public class CG_HarvesterOfBalls extends SequentialCommandGroup {
                 new HarvesterDown(),
                 new ParallelCommandGroup(
                         new BallHandlerHarvest(),
-                        new HarvesterSet(-0.75)
+                        new HarvesterSet(-1)
                 )
         );
     }

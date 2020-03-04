@@ -14,7 +14,7 @@ public class Robot extends TimedRobot {
     private Command autoCommand;
 
     private RobotContainer robotContainer;
-    Interlink402 test = new Interlink402(0);
+//    Interlink402 test = new Interlink402();
 
     @Override
     public void robotInit() {
@@ -35,7 +35,6 @@ public class Robot extends TimedRobot {
         }
         SmartDashboard.putString("alliance", alliance);
         SmartDashboard.putNumber("time", (int) DriverStation.getInstance().getMatchTime());
-        SmartDashboard.putNumber("fsr", test.getForce());
     }
 
     @Override

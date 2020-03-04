@@ -79,9 +79,8 @@ public class RobotContainer {
 
         autoChooser.setDefaultOption("No Auto",null);
         autoChooser.addOption("8 Ball Trench", new Auto8BallTrench());
-        autoChooser.addOption("Pick Pocket", new AutoPickpocket());
         autoChooser.addOption("10 Ball Trench", new Auto10Ball());
-        autoChooser.addOption("~7 Ball Pick Pocket", new AutoMaybe7BallPickpocket());
+        autoChooser.addOption("8 Ball Pick Pocket", new Auto8BallPickpocket());
 
         SmartDashboard.putData("Auto Mode", autoChooser);
     }
