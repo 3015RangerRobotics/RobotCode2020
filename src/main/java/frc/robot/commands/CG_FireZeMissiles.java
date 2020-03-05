@@ -13,7 +13,7 @@ public class CG_FireZeMissiles extends SequentialCommandGroup {
                 new ShooterAutoSpeed(false),
                 new ShooterWaitUntilPrimed(),
                 new ParallelDeadlineGroup(
-                        new BallHandlerShoot(),
+                        new BallHandlerShoot(0.05,false),
                         new HarvesterSet(-0.75)
                 )
         );

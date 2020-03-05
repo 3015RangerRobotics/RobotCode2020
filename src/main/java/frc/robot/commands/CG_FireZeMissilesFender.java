@@ -8,7 +8,7 @@ public class CG_FireZeMissilesFender extends SequentialCommandGroup {
         super(
                 // new LimelightWaitForTarget(),
                 new ShooterWaitUntilPrimed(),
-                new BallHandlerShoot(0, true)
+                new BallHandlerShoot(0.05, true)
         );
     }
 }
