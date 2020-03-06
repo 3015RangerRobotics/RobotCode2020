@@ -99,6 +99,7 @@ public class RobotContainer {
         driverY.negate().and(driverRB).whileActiveOnce(new CG_FireZeMissiles());
         driverY.and(driverRB).whileActiveOnce(new CG_FireZeMissilesFender());
         driverBack.whileActiveOnce(new ClimberClimbUp());
+        driverRT.whileActiveContinuous(new HarvesterSet(1));
 
         coDriverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         coDriverB.whileActiveContinuous(new CG_PurgeBalls());

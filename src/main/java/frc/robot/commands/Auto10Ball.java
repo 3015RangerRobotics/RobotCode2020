@@ -27,21 +27,21 @@ public class Auto10Ball extends SequentialCommandGroup {
                 new CG_FireZeMissiles(),
                 new TurretTurnToTargetHold(),
                 new ShooterAutoSpeed(),
-                new ParallelDeadlineGroup(
-                        new SequentialCommandGroup(
-                                new DriveMotionProfile("10_five_more"),
+//                new ParallelDeadlineGroup(
+//                        new SequentialCommandGroup(
+                                new DrivePathAndHarvest("10_five_more", -1),
 //                                new WaitCommand(0.5),
-                                new DriveMotionProfile(-8, 12, 12)
-                                ),
-                        new BallHandlerHarvest(),
-                        new SequentialCommandGroup(
-                                new HarvesterSet(-0.75).withTimeout(2.85),
-                                new HarvesterUp(),
-                                new WaitCommand(0.5),
-                                new HarvesterDown(),
-                                new HarvesterSet(-0.75)
-                         )
-                ),
+                                new DriveStraightAndHarvest(-8, 12, 12, -1),
+//                                ),
+//                        new BallHandlerHarvest(),
+//                        new SequentialCommandGroup(
+//                                new HarvesterSet(-0.75).withTimeout(2.85),
+//                                new HarvesterUp(),
+//                                new WaitCommand(0.5),
+//                                new HarvesterDown(),
+//                                new HarvesterSet(-0.75)
+//                         )
+//                ),
                 new CG_FireZeMissiles(),
                 new ShooterStop(),
                 new TurretToDefaultPosition()
