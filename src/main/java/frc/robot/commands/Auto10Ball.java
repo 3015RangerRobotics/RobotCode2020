@@ -30,7 +30,7 @@ public class Auto10Ball extends SequentialCommandGroup {
 //                new ParallelDeadlineGroup(
 //                        new SequentialCommandGroup(
                                 new DrivePathAndHarvest("10_five_more", -1),
-//                                new WaitCommand(0.5),
+                                new WaitCommand(0.25),
                                 new DriveStraightAndHarvest(-8, 12, 12, -1),
 //                                ),
 //                        new BallHandlerHarvest(),

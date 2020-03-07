@@ -9,7 +9,6 @@ public class CG_FireZeMissiles extends SequentialCommandGroup {
                 new ShooterAutoSpeed(),
                 new TurretTurnToTarget(),
                 new TurretWaitUntilOnTarget(),
-                new WaitCommand(0.2),
                 new ShooterAutoSpeed(false),
                 new ShooterWaitUntilPrimed(),
                 new ParallelDeadlineGroup(

@@ -71,7 +71,7 @@ public final class Constants {
     public static final double SHOOTER_SHOOT_D = 70;//25
     public static final double SHOOTER_SHOOT_F = SHOOTER_F * 1;
     public static final double SHOOTER_LAUNCH_ANGLE = 53.28;
-    public static final double SHOOTER_TOLERANCE = 10;
+    public static final double SHOOTER_TOLERANCE = 25;
 
     // Ball Handler Constants
     public static final int HANDLER_MOTOR1 = 2;

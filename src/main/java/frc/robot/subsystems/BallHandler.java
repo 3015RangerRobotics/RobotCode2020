@@ -182,7 +182,7 @@ public class BallHandler extends SubsystemBase {
                 }else {
                     //Fill balls until 2 is pressed
                     speeds = new double[]
-                            {0, .4,
+                            {0, .3,
                                     1, 1,
                                     1};
                     if (isSwitch2Pressed()) {
@@ -200,7 +200,7 @@ public class BallHandler extends SubsystemBase {
                     //Fill balls until 3 is pressed
                     speeds = new double[]
                             {0, 0,
-                                    .4, 1,
+                                    .3, 1,
                                     1};
                     if (isSwitch3Pressed()) {
                         ballCounter = 3;
@@ -218,7 +218,7 @@ public class BallHandler extends SubsystemBase {
                     //Fill balls until 4 is pressed
                     speeds = new double[]
                             {0, 0,
-                                    0, .4,
+                                    0, .3,
                                     1};
                     if (isSwitch4Pressed()) {
                         ballCounter = 4;
@@ -237,7 +237,7 @@ public class BallHandler extends SubsystemBase {
                     speeds = new double[]
                             {0, 0,
                                     0, 0,
-                                    .3};
+                                    0.3};
                     if (isSwitch5Pressed()) {
                         ballCounter = 5;
                         //if switch pressed, change state, and fall through to that state

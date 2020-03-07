@@ -136,7 +136,7 @@ public class Shooter extends SubsystemBase {
 
     public boolean isPrimed() {
         double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
-        return Math.abs(setSpeed + (2 * Math.abs(turretPos))) - getRPM() <= Constants.SHOOTER_TOLERANCE;
+        return Math.abs(setSpeed + (2 * Math.abs(turretPos)) - getRPM()) <= Constants.SHOOTER_TOLERANCE;
     }
 }
 
