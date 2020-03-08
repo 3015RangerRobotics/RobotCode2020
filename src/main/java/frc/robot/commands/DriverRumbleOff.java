@@ -12,6 +12,8 @@ public class DriverRumbleOff extends CommandBase {
     public void initialize() {
         RobotContainer.setDriverRumbleLeft(0.0);
         RobotContainer.setDriverRumbleRight(0.0);
+        RobotContainer.setCoDriverRumbleLeft(0.0);
+        RobotContainer.setCoDriverRumbleRight(0.0);
     }
 
     @Override

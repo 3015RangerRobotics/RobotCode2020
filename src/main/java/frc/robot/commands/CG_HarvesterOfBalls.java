@@ -13,4 +13,14 @@ public class CG_HarvesterOfBalls extends SequentialCommandGroup {
                 )
         );
     }
+
+    public CG_HarvesterOfBalls(double speed) {
+        super(
+                new HarvesterDown(),
+                new ParallelCommandGroup(
+                        new BallHandlerHarvest(),
+                        new HarvesterSet(speed)
+                )
+        );
+    }
 }

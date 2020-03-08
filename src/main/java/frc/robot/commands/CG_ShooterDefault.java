@@ -8,7 +8,8 @@ public class CG_ShooterDefault extends SequentialCommandGroup {
         addCommands(
                 new HoodDown(),
                 new TurretToDefaultPosition(),
-                new ShooterStop()
+                new ShooterStop(),
+                new DriverRumbleOff()
         );
     }
 }

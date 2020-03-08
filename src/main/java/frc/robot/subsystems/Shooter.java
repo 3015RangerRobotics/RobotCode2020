@@ -14,6 +14,7 @@ public class Shooter extends SubsystemBase {
     private enum State {
         kSetSpeed,
         kAutoSpeed,
+        kAutoSpeedFender,
         kOff
     }
 
@@ -63,13 +64,28 @@ public class Shooter extends SubsystemBase {
             case kSetSpeed:
                 speed = (setSpeed + (2 * Math.abs(turretPos)));
                 set(ControlMode.Velocity, speed * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
-                System.out.println("shooter," + speed + "," + getRPM());
+//                System.out.println("shooter," + speed + "," + getRPM());
                 break;
             case kAutoSpeed:
-                setSpeed = getAutoSpeed();
+                setSpeed = getAutoSpeed(false);
                 speed = (setSpeed + (2 * Math.abs(turretPos)));
                 set(ControlMode.Velocity, speed * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
-                System.out.println("shooter," + speed + "," + getRPM());
+//                System.out.println("shooter," + speed + "," + getRPM());
+                break;
+            case kAutoSpeedFender:
+                if(!RobotContainer.limelight.hasTarget()){
+                    RobotContainer.setDriverRumbleLeft(1);
+                    RobotContainer.setDriverRumbleRight(1);
+                    RobotContainer.setCoDriverRumbleLeft(1);
+                    RobotContainer.setCoDriverRumbleRight(1);
+                }else{
+                    RobotContainer.setDriverRumbleLeft(0);
+                    RobotContainer.setDriverRumbleRight(0);
+                    RobotContainer.setCoDriverRumbleLeft(0);
+                    RobotContainer.setCoDriverRumbleRight(0);
+                }
+                setSpeed = getAutoSpeed(true);
+                set(ControlMode.Velocity, setSpeed * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
                 break;
             case kOff:
             default:
@@ -118,19 +134,35 @@ public class Shooter extends SubsystemBase {
         state = State.kAutoSpeed;
     }
 
+    public void setStateAutoSpeedFender() {
+        state = State.kAutoSpeedFender;
+    }
+
     public void setStateOff() {
         state = State.kOff;
     }
 
-    public double getAutoSpeed() {
+    public double getAutoSpeed(boolean isFender) {
         if(RobotContainer.limelight.hasTarget()) {
             double d = RobotContainer.limelight.getRobotToTargetDistance();
-            double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
+            if(!isFender) {
 //           double rpm = 7430.1186 + (-255.07933*d) + (7.2472131*d*d); //Perfect ball
-            double rpm = 4222.866701 + (110.34724 * d) + (-1.51320429 * d * d); //Average ball
-            return rpm;
+                return 4222.866701 + (110.34724 * d) + (-1.51320429 * d * d); //Average ball
+            }else{
+
+                if(d <= 8){
+                    return 7000;
+                }else if(d <= 10){
+                    return 5000;
+                }else if(d <= 20){
+                    return 3300;
+                }else if(d <= 25){
+                    return 3100;
+                }
+                return 3300;
+            }
         } else {
-            return 5400;
+            return isFender ? 3300 : 5400;
         }
     }
 

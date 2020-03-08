@@ -3,15 +3,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class ShooterAutoSpeed extends CommandBase {
+public class ShooterAutoSpeedFender extends CommandBase {
     boolean constantUpdate;
 
-    public ShooterAutoSpeed() {
+    public ShooterAutoSpeedFender() {
         addRequirements(RobotContainer.shooter);
         constantUpdate = true;
     }
 
-    public ShooterAutoSpeed(boolean constantUpdate) {
+    public ShooterAutoSpeedFender(boolean constantUpdate) {
         addRequirements(RobotContainer.shooter);
         this.constantUpdate = constantUpdate;
     }
@@ -19,9 +19,9 @@ public class ShooterAutoSpeed extends CommandBase {
     @Override
     public void initialize() {
         if(constantUpdate) {
-            RobotContainer.shooter.setStateAutoSpeed();
+            RobotContainer.shooter.setStateAutoSpeedFender();
         } else {
-            RobotContainer.shooter.setStateSpeed(RobotContainer.shooter.getAutoSpeed(false));
+            RobotContainer.shooter.setStateSpeed(RobotContainer.shooter.getAutoSpeed(true));
         }
     }
 

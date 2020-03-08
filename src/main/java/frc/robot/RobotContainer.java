@@ -90,7 +90,7 @@ public class RobotContainer {
         driverB.whileActiveContinuous(new CG_PurgeBalls());
         driverX.whenActive(new TurretHomePosition());
         driverY.whenActive(new CG_ReadyToFireFender()).whenInactive(new CG_ShooterDefault());
-        driverDUp.whenActive(new DriveMotionProfile(1.75, 12,10));
+        driverDUp.whenActive(new DriveMotionProfile(1.95, 12,10));
         driverDLeft.whenActive(new CG_ToggleLeftShot());
         driverDDown.whenActive(new CG_OhHeck());
         driverDRight.whenActive(new DriveTurnInPlace(12));
