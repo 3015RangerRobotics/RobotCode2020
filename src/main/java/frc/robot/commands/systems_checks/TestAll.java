@@ -8,7 +8,8 @@ public class TestAll extends SequentialCommandGroup {
                 new TestDrive(),
                 new TestIntake(),
                 new TestTurret(),
-                new TestHood()
+                new TestHood(),
+                new TestCarousel()
         );
     }
 }

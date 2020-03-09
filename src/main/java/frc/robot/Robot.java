@@ -38,6 +38,14 @@ public class Robot extends TimedRobot {
     public static NetworkTableEntry hoodUp;
     public static NetworkTableEntry hoodDown;
 
+    public static NetworkTableEntry carouselMotor1;
+    public static NetworkTableEntry carouselMotor2;
+    public static NetworkTableEntry carouselMotor3;
+    public static NetworkTableEntry carouselMotor4;
+    public static NetworkTableEntry carouselMotor5;
+
+
+
     private RobotContainer robotContainer;
 //    Interlink402 test = new Interlink402();
 
@@ -56,6 +64,7 @@ public class Robot extends TimedRobot {
         testCommands.add(new TestIntake());
         testCommands.add(new TestTurret());
         testCommands.add(new TestHood());
+        testCommands.add(new TestCarousel());
 
         Shuffleboard.getTab("Systems Check").add(new TestAll()).withSize(2, 1).withPosition(9, 0);
 
@@ -70,21 +79,29 @@ public class Robot extends TimedRobot {
 
         ShuffleboardLayout intakeValues = Shuffleboard.getTab("Systems Check").getLayout("Intake", BuiltInLayouts.kList)
                 .withSize(2, 3).withPosition(2, 0);
-        intakeMotor = intakeValues.add("Intake Motor", false).getEntry();
-        intakeUp = intakeValues.add("Intake Up", false).getEntry();
-        intakeDown = intakeValues.add("Intake Down", false).getEntry();
+        intakeMotor = intakeValues.add("Motor", false).getEntry();
+        intakeUp = intakeValues.add("Up", false).getEntry();
+        intakeDown = intakeValues.add("Down", false).getEntry();
 
         ShuffleboardLayout turretValues = Shuffleboard.getTab("Systems Check").getLayout("Turret", BuiltInLayouts.kList)
                 .withSize(2, 4).withPosition(4, 0);
-        turretMotor = turretValues.add("Turret Motor", false).getEntry();
-        turretLeftLimit = turretValues.add("Turret Left Limit", false).getEntry();
-        turretRightLimit = turretValues.add("Turret Right Limit", false).getEntry();
-        turretEncoder = turretValues.add("Turret Encoder", false).getEntry();
+        turretMotor = turretValues.add("Motor", false).getEntry();
+        turretLeftLimit = turretValues.add("Left Limit", false).getEntry();
+        turretRightLimit = turretValues.add("Right Limit", false).getEntry();
+        turretEncoder = turretValues.add("Encoder", false).getEntry();
 
         ShuffleboardLayout hoodValues = Shuffleboard.getTab("Systems Check").getLayout("Hood", BuiltInLayouts.kList)
                 .withSize(2, 2).withPosition(2, 3);
         hoodUp = hoodValues.add("Hood Up", false).getEntry();
         hoodDown = hoodValues.add("Hood Down", false).getEntry();
+
+        ShuffleboardLayout carouselValues = Shuffleboard.getTab("Systems Check").getLayout("Carousel", BuiltInLayouts.kList)
+                .withSize(2, 5).withPosition(6, 0);
+        carouselMotor1= carouselValues.add("Motor 1", false).getEntry();
+        carouselMotor2 = carouselValues.add("Motor 2", false).getEntry();
+        carouselMotor3= carouselValues.add("Motor 3", false).getEntry();
+        carouselMotor4 = carouselValues.add("Motor 4", false).getEntry();
+        carouselMotor5= carouselValues.add("Motor 5", false).getEntry();
     }
 
     @Override
