@@ -30,18 +30,18 @@ public class TestIntake extends CommandBase {
 
     @Override
     public void execute() {
-        if (!timer.hasElapsed(0.1)){
+        if (!timer.hasElapsed(0.75)){
             RobotContainer.harvester.harvesterDown();
         }else if(!intakeDownChecked){
             Robot.intakeDown.setBoolean(true);
             intakeDownChecked = true;
-        }else if(!timer.hasElapsed(0.6)) {
+        }else if(!timer.hasElapsed(1.5)) {
             RobotContainer.harvester.harvesterSet(-1);
         }else if(!motorsChecked){
             Robot.intakeMotor.setBoolean(Robot.pdp.getCurrent(3) >= 5);
             motorsChecked = true;
             RobotContainer.harvester.harvesterStop();
-        }else if(!timer.hasElapsed(.7)){
+        }else if(!timer.hasElapsed(2.25)){
             RobotContainer.harvester.harvesterUp();
         }else if(!intakeUpChecked){
             Robot.intakeUp.setBoolean(true);

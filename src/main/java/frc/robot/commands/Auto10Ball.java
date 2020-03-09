@@ -13,7 +13,7 @@ public class Auto10Ball extends SequentialCommandGroup {
     public Auto10Ball() {
         super(
                 new LimelightSwitchLEDMode(Limelight.LEDMode.LED_ON),
-                new LimelightSwitchPipeline(1),
+//                new LimelightSwitchPipeline(1),
                 new HarvesterDown(),
                 new TurretHomePosition(),
                 new ParallelDeadlineGroup(
@@ -32,8 +32,8 @@ public class Auto10Ball extends SequentialCommandGroup {
                 new DrivePathAndHarvest("10_trench_to_shoot2", -1),
                 new CG_FireZeMissiles(),
                 new ShooterStop(),
-                new TurretToDefaultPosition(),
-                new LimelightSwitchPipeline(0)
+                new TurretToDefaultPosition()
+//                new LimelightSwitchPipeline(0)
         );
     }
 }

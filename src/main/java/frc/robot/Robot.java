@@ -10,9 +10,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.systems_checks.TestAll;
-import frc.robot.commands.systems_checks.TestDrive;
-import frc.robot.commands.systems_checks.TestIntake;
+import frc.robot.commands.systems_checks.*;
 import frc.robot.subsystems.Limelight;
 
 import java.util.Map;
@@ -32,6 +30,14 @@ public class Robot extends TimedRobot {
     public static NetworkTableEntry intakeUp;
     public static NetworkTableEntry intakeDown;
 
+    public static NetworkTableEntry turretMotor;
+    public static NetworkTableEntry turretLeftLimit;
+    public static NetworkTableEntry turretRightLimit;
+    public static NetworkTableEntry turretEncoder;
+
+    public static NetworkTableEntry hoodUp;
+    public static NetworkTableEntry hoodDown;
+
     private RobotContainer robotContainer;
 //    Interlink402 test = new Interlink402();
 
@@ -48,6 +54,8 @@ public class Robot extends TimedRobot {
                 .withProperties(Map.of("Label position", "HIDDEN"));
         testCommands.add(new TestDrive());
         testCommands.add(new TestIntake());
+        testCommands.add(new TestTurret());
+        testCommands.add(new TestHood());
 
         Shuffleboard.getTab("Systems Check").add(new TestAll()).withSize(2, 1).withPosition(9, 0);
 
@@ -65,6 +73,18 @@ public class Robot extends TimedRobot {
         intakeMotor = intakeValues.add("Intake Motor", false).getEntry();
         intakeUp = intakeValues.add("Intake Up", false).getEntry();
         intakeDown = intakeValues.add("Intake Down", false).getEntry();
+
+        ShuffleboardLayout turretValues = Shuffleboard.getTab("Systems Check").getLayout("Turret", BuiltInLayouts.kList)
+                .withSize(2, 4).withPosition(4, 0);
+        turretMotor = turretValues.add("Turret Motor", false).getEntry();
+        turretLeftLimit = turretValues.add("Turret Left Limit", false).getEntry();
+        turretRightLimit = turretValues.add("Turret Right Limit", false).getEntry();
+        turretEncoder = turretValues.add("Turret Encoder", false).getEntry();
+
+        ShuffleboardLayout hoodValues = Shuffleboard.getTab("Systems Check").getLayout("Hood", BuiltInLayouts.kList)
+                .withSize(2, 2).withPosition(2, 3);
+        hoodUp = hoodValues.add("Hood Up", false).getEntry();
+        hoodDown = hoodValues.add("Hood Down", false).getEntry();
     }
 
     @Override

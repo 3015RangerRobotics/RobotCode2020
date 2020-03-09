@@ -20,7 +20,8 @@ public class Turret extends SubsystemBase {
         kToPosition,
         kTurnHold,
         kHoming,
-        kDefault
+        kDefault,
+        kTesting
     }
 
     State state = State.kDefault;
@@ -87,6 +88,8 @@ public class Turret extends SubsystemBase {
                     setEncoder(Constants.TURRET_HOMING_POSITION);
                     state = State.kDefault;
                 }
+                break;
+            case kTesting:
                 break;
             case kDefault:
             default:
@@ -182,5 +185,10 @@ public class Turret extends SubsystemBase {
 
     public void setStateHoming() {
         state = State.kHoming;
+    }
+
+    public void setStateTesting() {
+        state = State.kTesting;
+        set(ControlMode.PercentOutput, 0);
     }
 }

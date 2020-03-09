@@ -53,7 +53,7 @@ public final class Constants {
     public static final double TURRET_F = 0; // 0
     public static final double TURRET_DEGREES_PER_PULSE = 1 / (5600.0 / 90.0);
     public static final double TURRET_MAX_SPEED = 0.7;
-    public static final double TURRET_MIN_SPEED = 0.08;
+    public static final double TURRET_MIN_SPEED = 0.1;
     public static final double TURRET_DEGREE_MARGIN = Math.round((1 / Constants.TURRET_DEGREES_PER_PULSE) * 1);
     public static final int TURRET_LEFT_LIMIT = 1;
     public static final int TURRET_RIGHT_LIMIT = 0;
@@ -66,9 +66,9 @@ public final class Constants {
     public static final double SHOOTER_D = 10; // 46.0
     public static final double SHOOTER_F = 0.0468; //0.0472;
     public static final double SHOOTER_PULSES_PER_ROTATION = 2048 * (2.0/3.0);
-    public static final double SHOOTER_SHOOT_P = 20;//6
+    public static final double SHOOTER_SHOOT_P = 25;//20
     public static final double SHOOTER_SHOOT_I = 0;
-    public static final double SHOOTER_SHOOT_D = 70;//25
+    public static final double SHOOTER_SHOOT_D = 50;//70
     public static final double SHOOTER_SHOOT_F = SHOOTER_F * 1;
     public static final double SHOOTER_LAUNCH_ANGLE = 53.28;
     public static final double SHOOTER_TOLERANCE = 25;

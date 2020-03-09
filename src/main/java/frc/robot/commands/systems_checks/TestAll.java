@@ -6,7 +6,9 @@ public class TestAll extends SequentialCommandGroup {
     public TestAll(){
         super(
                 new TestDrive(),
-                new TestIntake()
+                new TestIntake(),
+                new TestTurret(),
+                new TestHood()
         );
     }
 }
