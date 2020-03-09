@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class BallHandler extends SubsystemBase {
     private VictorSP motor1;
@@ -19,6 +20,7 @@ public class BallHandler extends SubsystemBase {
     private DigitalInput switch5;
 
     private int ballCounter = 0;
+    private boolean settleCheck = true;
 
     private static boolean isPaused = false;
 
@@ -33,6 +35,15 @@ public class BallHandler extends SubsystemBase {
         kShootBall3,
         kShootBall4,
         kShootBall5,
+        kShootBall1Fast,
+        kShootBall2Fast,
+        kShootBall3Fast,
+        kShootBall4Fast,
+        kShootBall5Fast,
+        kSettleTo4,
+        kSettleTo3,
+        kSettleTo2,
+        kSettleTo1,
         kFillTo1,
         kFillTo2,
         kFillTo3,
@@ -41,7 +52,15 @@ public class BallHandler extends SubsystemBase {
         kOff
     }
 
+    public enum SettleState {
+        kBall2,
+        kBall3,
+        kBall4,
+        kBall5
+    }
+
     public State state = State.kOff;
+    public SettleState settleState = SettleState.kBall2;
 
     public BallHandler() {
         motor1 = new VictorSP(Constants.HANDLER_MOTOR1); //Motor closest to shooter, used to push balls up to turret
@@ -61,6 +80,7 @@ public class BallHandler extends SubsystemBase {
         motor3.setInverted(false);
         motor4.setInverted(true);
         motor5.setInverted(true);
+
     }
 
     @Override
@@ -71,7 +91,7 @@ public class BallHandler extends SubsystemBase {
         SmartDashboard.putBoolean("switch4", isSwitch4Pressed());
         SmartDashboard.putBoolean("switch5", isSwitch5Pressed());
 
-        double[] speeds;
+        double[] speeds = new double[]{0,0,0,0,0};
         switch (state) {
             case kPurgeBall5:
                 //Fill balls until 1 is pressed
@@ -124,40 +144,49 @@ public class BallHandler extends SubsystemBase {
                                 Constants.HANDLER_MOTOR_OUT_SPEED3, Constants.HANDLER_MOTOR_OUT_SPEED4,
                                 Constants.HANDLER_MOTOR_OUT_SPEED5};
                     break;
-            case kShootBall1:
+            case kShootBall1Fast:
                 //Fires the first ball
                 speeds = new double[]
                         {Constants.HANDLER_MOTOR_SHOOT_SPEED1, Constants.HANDLER_MOTOR_OFF_SPEED,
                                 Constants.HANDLER_MOTOR_OFF_SPEED, Constants.HANDLER_MOTOR_OFF_SPEED,
                                 Constants.HANDLER_MOTOR_OFF_SPEED};
                 break;
-            case kShootBall2:
+            case kShootBall2Fast:
                 //Fires balls 1 and 2
                 speeds = new double[]
                         {Constants.HANDLER_MOTOR_SHOOT_SPEED1, Constants.HANDLER_MOTOR_SHOOT_SPEED2,
                                 Constants.HANDLER_MOTOR_OFF_SPEED, Constants.HANDLER_MOTOR_OFF_SPEED,
                                 Constants.HANDLER_MOTOR_OFF_SPEED};
                 break;
-            case kShootBall3:
+            case kShootBall3Fast:
                 //Fires balls 1 - 3
                 speeds = new double[]
                         {Constants.HANDLER_MOTOR_SHOOT_SPEED1, Constants.HANDLER_MOTOR_SHOOT_SPEED2,
                                 Constants.HANDLER_MOTOR_SHOOT_SPEED3, Constants.HANDLER_MOTOR_OFF_SPEED,
                                 Constants.HANDLER_MOTOR_OFF_SPEED};
                 break;
-            case kShootBall4:
+            case kShootBall4Fast:
                 //Fires balls 1-4
                 speeds = new double[]
                         {Constants.HANDLER_MOTOR_SHOOT_SPEED1, Constants.HANDLER_MOTOR_SHOOT_SPEED2,
                                 Constants.HANDLER_MOTOR_SHOOT_SPEED3, Constants.HANDLER_MOTOR_SHOOT_SPEED4,
                                 Constants.HANDLER_MOTOR_OFF_SPEED};
                 break;
-            case kShootBall5:
+            case kShootBall5Fast:
                 //Fires 1-5
                 speeds = new double[]
                         {Constants.HANDLER_MOTOR_SHOOT_SPEED1, Constants.HANDLER_MOTOR_SHOOT_SPEED2,
                                 Constants.HANDLER_MOTOR_SHOOT_SPEED3, Constants.HANDLER_MOTOR_SHOOT_SPEED4,
                                 Constants.HANDLER_MOTOR_SHOOT_SPEED5};
+                break;
+            case kShootBall1:
+                RobotContainer.shooter.setBadBall(!RobotContainer.ballQuality.isBall1Good());
+                if(RobotContainer.shooter.isPrimed()) {
+                    speeds = new double[]
+                            {Constants.HANDLER_MOTOR_SHOOT_SPEED1, Constants.HANDLER_MOTOR_OFF_SPEED,
+                                    Constants.HANDLER_MOTOR_OFF_SPEED, Constants.HANDLER_MOTOR_OFF_SPEED,
+                                    Constants.HANDLER_MOTOR_OFF_SPEED};
+                }
                 break;
             case kFillTo1:
                 //Fill balls until 1 is pressed
@@ -246,13 +275,55 @@ public class BallHandler extends SubsystemBase {
                         break;
                     }
                 }
+            case kSettleTo1:
+                if(isSwitch1Pressed()) {
+                    state = State.kSettleTo2;
+                    settleCheck = true;
+                } else {
+                    if(!isSwitch2Pressed() && settleCheck) {
+                        state = State.kOff;
+                    } else {
+                        speeds = new double[] {0.3, 0.5, 0, 0, 0};
+                        settleCheck = false;
+                        break;
+                    }
+                }
+            case kSettleTo2:
+                if(isSwitch2Pressed()) {
+                    state = State.kSettleTo3;
+                    settleCheck = true;
+                } else {
+                    if(!isSwitch3Pressed() && settleCheck) {
+                        state = State.kOff;
+                    } else {
+                        speeds = new double[] {0, 0.25, 0.5, 0, 0};
+                        break;
+                    }
+                }
+            case kSettleTo3:
+                if(isSwitch3Pressed()) {
+                    state = State.kSettleTo4;
+                    settleCheck = true;
+                } else {
+                    if(!isSwitch4Pressed() && settleCheck) {
+                        state = State.kOff;
+                    } else {
+                        speeds = new double[] {0, 0, 0.25, 0.5, 0};
+                        break;
+                    }
+                }
+            case kSettleTo4:
+                if(isSwitch4Pressed()) {
+                    state = State.kOff;
+                } else {
+                    if(!isSwitch5Pressed() && settleCheck) {
+                        state = State.kOff;
+                    } else {
+                        speeds = new double[] {0, 0, 0, 0.25, 0.5};
+                        break;
+                    }
+                }
             case kOff:
-                //Turns all motors off
-                speeds = new double[]
-                        {Constants.HANDLER_MOTOR_OFF_SPEED, Constants.HANDLER_MOTOR_OFF_SPEED,
-                                Constants.HANDLER_MOTOR_OFF_SPEED, Constants.HANDLER_MOTOR_OFF_SPEED,
-                                Constants.HANDLER_MOTOR_OFF_SPEED};
-                break;
             default:
                 //Turns all motors off
                 speeds = new double[]
@@ -267,7 +338,6 @@ public class BallHandler extends SubsystemBase {
                             Constants.HANDLER_MOTOR_OFF_SPEED};
         }
         setAllMotors(speeds);
-
     }
 
     /**
@@ -277,6 +347,9 @@ public class BallHandler extends SubsystemBase {
      */
     public void setState(State newState) {
         this.state = newState;
+        if(newState == State.kSettleTo1) {
+            settleCheck = true;
+        }
     }
 
     public void setBallCounter(int ballCounter){

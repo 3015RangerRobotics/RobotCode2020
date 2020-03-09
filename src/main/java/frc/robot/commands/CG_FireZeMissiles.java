@@ -19,6 +19,22 @@ public class CG_FireZeMissiles extends SequentialCommandGroup {
         );
     }
 
+    public CG_FireZeMissiles(SequentialCommandGroup shootRoutine) {
+        super(
+                // new LimelightWaitForTarget(),
+//                new WaitCommand(0.2),
+                new ShooterAutoSpeed(),
+                new TurretTurnToTarget(),
+                new TurretWaitUntilOnTarget(),
+                new ShooterAutoSpeed(false),
+                new ShooterWaitUntilPrimed(),
+                new ParallelDeadlineGroup(
+                        shootRoutine,
+                        new HarvesterSet(-0.75)
+                )
+        );
+    }
+
     public CG_FireZeMissiles(double shooter) {
         super(
                 // new LimelightWaitForTarget(),

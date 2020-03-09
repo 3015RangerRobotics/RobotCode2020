@@ -21,6 +21,8 @@ public class Shooter extends SubsystemBase {
     public Shooter.State state = Shooter.State.kOff;
 
     private double setSpeed;
+    public boolean badBall;
+    private double badBallFactor = 1.05;
 
     public Shooter() {
         shooter = new TalonFX(Constants.SHOOTER_MOTOR);
@@ -62,7 +64,11 @@ public class Shooter extends SubsystemBase {
         double speed;
         switch(state) {
             case kSetSpeed:
-                speed = (setSpeed + (2 * Math.abs(turretPos)));
+                if(badBall) {
+                    speed = (setSpeed + (2 * Math.abs(turretPos))) * badBallFactor;
+                } else {
+                    speed = (setSpeed + (2 * Math.abs(turretPos)));
+                }
                 set(ControlMode.Velocity, speed * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
 //                System.out.println("shooter," + speed + "," + getRPM());
                 break;
@@ -168,7 +174,14 @@ public class Shooter extends SubsystemBase {
 
     public boolean isPrimed() {
         double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
+        if(state == State.kSetSpeed && badBall) {
+            return Math.abs((setSpeed + (2 * Math.abs(turretPos)) * badBallFactor) - getRPM()) <= Constants.SHOOTER_TOLERANCE;
+        }
         return Math.abs(setSpeed + (2 * Math.abs(turretPos)) - getRPM()) <= Constants.SHOOTER_TOLERANCE;
+    }
+
+    public void setBadBall(boolean badBall) {
+        this.badBall = badBall;
     }
 }
 

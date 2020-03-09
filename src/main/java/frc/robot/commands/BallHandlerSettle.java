@@ -3,35 +3,38 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.BallHandler;
-import frc.robot.subsystems.BallQuality;
+import frc.robot.subsystems.BallHandler.State;
 
-public class BallHandlerPurge extends CommandBase {
+public class BallHandlerSettle extends CommandBase {
     BallHandler ballHandler = RobotContainer.ballHandler;
-    BallQuality ballQuality = RobotContainer.ballQuality;
+    private boolean quality;
 
-    public BallHandlerPurge() {
+    public BallHandlerSettle() {
         addRequirements(ballHandler);
+    }
+
+    public BallHandlerSettle(boolean quality) {
+        this.quality = quality;
     }
 
     @Override
     public void initialize() {
-        ballHandler.setState(BallHandler.State.kPurgeBall5);
-        ballHandler.setPaused(false);
-        ballHandler.setBallCounter(0);
-        ballQuality.resetBallCounter();
+        ballHandler.setState(State.kSettleTo1);
+        RobotContainer.shooter.setBadBall(!quality);
     }
 
     @Override
     public void execute() {
+
     }
 
     @Override
     public void end(boolean interrupted) {
-        ballHandler.setState(BallHandler.State.kOff);
+        ballHandler.setState(State.kOff);
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return ballHandler.getState() == State.kOff;
     }
 }
