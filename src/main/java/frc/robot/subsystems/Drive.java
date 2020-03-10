@@ -131,6 +131,8 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("right", rightMaster.getSelectedSensorPosition(0));
         SmartDashboard.putNumber("left", leftMaster.getSelectedSensorPosition(0));
         SmartDashboard.putNumber("Turn Velocity", getTurnVelocity());
+
+        SmartDashboard.putNumber("IMU Uptime", imu.getUpTime());
     }
 
     public void playMusic(){

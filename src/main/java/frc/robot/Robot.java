@@ -44,7 +44,9 @@ public class Robot extends TimedRobot {
     public static NetworkTableEntry carouselMotor4;
     public static NetworkTableEntry carouselMotor5;
 
-
+    public static NetworkTableEntry shooterMotor;
+    public static NetworkTableEntry shooterEncoder;
+    public static NetworkTableEntry shooterPID;
 
     private RobotContainer robotContainer;
 //    Interlink402 test = new Interlink402();
@@ -65,11 +67,12 @@ public class Robot extends TimedRobot {
         testCommands.add(new TestTurret());
         testCommands.add(new TestHood());
         testCommands.add(new TestCarousel());
+        testCommands.add(new TestShooter());
 
         Shuffleboard.getTab("Systems Check").add(new TestAll()).withSize(2, 1).withPosition(9, 0);
 
         ShuffleboardLayout driveValues = Shuffleboard.getTab("Systems Check").getLayout("Drive", BuiltInLayouts.kList)
-                .withSize(2, 6).withPosition(0, 0);
+                .withSize(2, 3).withPosition(0, 0);
         driveLeftMaster = driveValues.add("Left Master", false).getEntry();
         driveLeftFollower = driveValues.add("Left Follower", false).getEntry();
         driveRightMaster = driveValues.add("Right Master", false).getEntry();
@@ -97,11 +100,17 @@ public class Robot extends TimedRobot {
 
         ShuffleboardLayout carouselValues = Shuffleboard.getTab("Systems Check").getLayout("Carousel", BuiltInLayouts.kList)
                 .withSize(2, 5).withPosition(6, 0);
-        carouselMotor1= carouselValues.add("Motor 1", false).getEntry();
+        carouselMotor1 = carouselValues.add("Motor 1", false).getEntry();
         carouselMotor2 = carouselValues.add("Motor 2", false).getEntry();
-        carouselMotor3= carouselValues.add("Motor 3", false).getEntry();
+        carouselMotor3 = carouselValues.add("Motor 3", false).getEntry();
         carouselMotor4 = carouselValues.add("Motor 4", false).getEntry();
-        carouselMotor5= carouselValues.add("Motor 5", false).getEntry();
+        carouselMotor5 = carouselValues.add("Motor 5", false).getEntry();
+
+        ShuffleboardLayout shooterValues = Shuffleboard.getTab("Systems Check").getLayout("Shooter", BuiltInLayouts.kList)
+                .withSize(2, 3).withPosition(0, 4);
+        shooterMotor = shooterValues.add("Motor", false).getEntry();
+        shooterEncoder = shooterValues.add("Encoder", false).getEntry();
+        shooterPID = shooterValues.add("PID", false).getEntry();
     }
 
     @Override

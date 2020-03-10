@@ -16,7 +16,8 @@ public class TestHood extends CommandBase {
     public void initialize() {
         timer.reset();
         timer.start();
-
+        Robot.hoodUp.setBoolean(false);
+        Robot.hoodDown.setBoolean(false);
     }
 
     @Override

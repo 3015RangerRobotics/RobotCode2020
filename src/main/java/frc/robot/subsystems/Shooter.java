@@ -15,7 +15,8 @@ public class Shooter extends SubsystemBase {
         kSetSpeed,
         kAutoSpeed,
         kAutoSpeedFender,
-        kOff
+        kOff,
+        kTesting
     }
 
     public Shooter.State state = Shooter.State.kOff;
@@ -87,6 +88,8 @@ public class Shooter extends SubsystemBase {
                 setSpeed = getAutoSpeed(true);
                 set(ControlMode.Velocity, setSpeed * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
                 break;
+            case kTesting:
+                break;
             case kOff:
             default:
                 setSpeed = 0;
@@ -128,6 +131,11 @@ public class Shooter extends SubsystemBase {
     public void setStateSpeed(double speed) {
         setSpeed = speed;
         state = State.kSetSpeed;
+    }
+
+    public void setStateTesting() {
+        state = State.kTesting;
+        set(ControlMode.PercentOutput, 0);
     }
 
     public void setStateAutoSpeed() {

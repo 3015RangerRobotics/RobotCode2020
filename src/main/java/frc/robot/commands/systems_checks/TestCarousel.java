@@ -9,7 +9,8 @@ import frc.robot.subsystems.BallHandler;
 
 public class TestCarousel extends CommandBase {
     Timer timer = new Timer();
-    boolean motorsChecked= false;
+    boolean motorsChecked = false;
+    boolean sensorsChecked = false;
 
 
     public TestCarousel() {
@@ -21,6 +22,7 @@ public class TestCarousel extends CommandBase {
         timer.reset();
         timer.start();
         motorsChecked = false;
+        sensorsChecked = false;
     }
 
     @Override

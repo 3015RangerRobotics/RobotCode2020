@@ -9,7 +9,8 @@ public class TestAll extends SequentialCommandGroup {
                 new TestIntake(),
                 new TestTurret(),
                 new TestHood(),
-                new TestCarousel()
+                new TestCarousel(),
+                new TestShooter()
         );
     }
 }
