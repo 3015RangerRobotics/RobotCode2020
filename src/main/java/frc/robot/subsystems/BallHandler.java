@@ -31,10 +31,6 @@ public class BallHandler extends SubsystemBase {
         kPurgeBall4,
         kPurgeBall5,
         kShootBall1,
-        kShootBall2,
-        kShootBall3,
-        kShootBall4,
-        kShootBall5,
         kShootBall1Fast,
         kShootBall2Fast,
         kShootBall3Fast,
@@ -52,15 +48,7 @@ public class BallHandler extends SubsystemBase {
         kOff
     }
 
-    public enum SettleState {
-        kBall2,
-        kBall3,
-        kBall4,
-        kBall5
-    }
-
     public State state = State.kOff;
-    public SettleState settleState = SettleState.kBall2;
 
     public BallHandler() {
         motor1 = new VictorSP(Constants.HANDLER_MOTOR1); //Motor closest to shooter, used to push balls up to turret
@@ -180,7 +168,6 @@ public class BallHandler extends SubsystemBase {
                                 Constants.HANDLER_MOTOR_SHOOT_SPEED5};
                 break;
             case kShootBall1:
-                RobotContainer.shooter.setBadBall(!RobotContainer.ballQuality.isBall1Good());
                 if(RobotContainer.shooter.isPrimed()) {
                     speeds = new double[]
                             {Constants.HANDLER_MOTOR_SHOOT_SPEED1, Constants.HANDLER_MOTOR_OFF_SPEED,

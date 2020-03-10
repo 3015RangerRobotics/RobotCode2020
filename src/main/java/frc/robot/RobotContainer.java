@@ -27,7 +27,6 @@ public class RobotContainer {
     public static Harvester harvester;
     public static Hood hood;
     public static Climber climber;
-    public static BallQuality ballQuality;
 
     public static JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
     public static JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
@@ -75,7 +74,6 @@ public class RobotContainer {
         driverRumble = new DriverRumble();
         hood = new Hood();
         climber = new Climber();
-        ballQuality = new BallQuality();
 
         configureButtonBindings();
 

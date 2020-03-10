@@ -21,7 +21,7 @@ public class Auto8BallPickpocket extends SequentialCommandGroup {
                         new CG_HarvesterOfBalls().withTimeout(1)
                 ),
                 new CG_FireZeMissiles(),
-                new DriveStraightAndHarvest(3.5,12,6, -1.0),
+                new DriveStraightAndHarvest(3.4,12,6, -1.0),
                 new ShooterAutoSpeed(),
                 new TurretTurnToTargetHold(),
                 new DrivePathAndHarvest("pp_scoot", -1.0),

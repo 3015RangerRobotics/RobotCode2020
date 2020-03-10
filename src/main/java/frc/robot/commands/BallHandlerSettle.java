@@ -20,7 +20,6 @@ public class BallHandlerSettle extends CommandBase {
     @Override
     public void initialize() {
         ballHandler.setState(State.kSettleTo1);
-        RobotContainer.shooter.setBadBall(!quality);
     }
 
     @Override

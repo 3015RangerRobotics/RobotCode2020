@@ -3,11 +3,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.BallHandler;
-import frc.robot.subsystems.BallQuality;
 
 public class BallHandlerPurge extends CommandBase {
     BallHandler ballHandler = RobotContainer.ballHandler;
-    BallQuality ballQuality = RobotContainer.ballQuality;
 
     public BallHandlerPurge() {
         addRequirements(ballHandler);
@@ -18,7 +16,6 @@ public class BallHandlerPurge extends CommandBase {
         ballHandler.setState(BallHandler.State.kPurgeBall5);
         ballHandler.setPaused(false);
         ballHandler.setBallCounter(0);
-        ballQuality.resetBallCounter();
     }
 
     @Override
