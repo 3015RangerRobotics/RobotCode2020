@@ -7,7 +7,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.music.Orchestra;
 import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -22,7 +21,6 @@ public class Drive extends SubsystemBase {
     private TalonFX leftMaster;
     private TalonFX leftFollower;
 
-    private Orchestra orchestra;
     private PigeonIMU imu;
 
     public Drive() {
@@ -55,12 +53,6 @@ public class Drive extends SubsystemBase {
         rightConfig.slot1.kI = Constants.DRIVE_MP_TURN_I;
         rightConfig.slot1.kD = Constants.DRIVE_MP_TURN_D;
         rightConfig.slot1.kF = Constants.DRIVE_MP_TURN_F;
-//        rightConfig.slot2.kP = -Constants.DRIVE_TURN_P;
-//        rightConfig.slot2.kI = -Constants.DRIVE_TURN_I;
-//        rightConfig.slot2.kD = -Constants.DRIVE_TURN_D;
-//        rightConfig.slot2.kF = -Constants.DRIVE_TURN_F;
-//        rightConfig.motionCruiseVelocity = (int) Math.round(Constants.DRIVE_TURN_MAX_VELOCITY);
-//        rightConfig.motionAcceleration = (int) Math.round(Constants.DRIVE_TURN_MAX_ACCELLERTAION);
 
         rightMaster.configAllSettings(rightConfig);
 
@@ -74,7 +66,7 @@ public class Drive extends SubsystemBase {
         leftConfig.slot0.kF = Constants.DRIVE_TURN_F;
         leftConfig.slot0.integralZone = (int) Math.round(Constants.DRIVE_TURN_I_ZONE);
         leftConfig.motionCruiseVelocity = (int) Math.round(Constants.DRIVE_TURN_MAX_VELOCITY);
-        leftConfig.motionAcceleration = (int) Math.round(Constants.DRIVE_TURN_MAX_ACCELLERTAION);
+        leftConfig.motionAcceleration = (int) Math.round(Constants.DRIVE_TURN_MAX_ACCELERATION);
 
         leftMaster.configAllSettings(leftConfig);
         leftMaster.configAllowableClosedloopError(0, (int) Math.round(Constants.DRIVE_TURN_ERROR));
@@ -112,14 +104,6 @@ public class Drive extends SubsystemBase {
         rightMaster.setSensorPhase(true);
         leftMaster.setSensorPhase(false);
 
-        ArrayList<TalonFX> instruments = new ArrayList<>();
-        instruments.add(RobotContainer.shooter.shooter);
-        instruments.add(leftMaster);
-        instruments.add(rightMaster);
-
-        orchestra = new Orchestra(instruments);
-        orchestra.loadMusic("jeopardy.chrp");
-
         resetEncoders();
         resetIMU();
         enableBrakeMode();
@@ -130,53 +114,40 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("gyro", getAngle());
         SmartDashboard.putNumber("right", rightMaster.getSelectedSensorPosition(0));
         SmartDashboard.putNumber("left", leftMaster.getSelectedSensorPosition(0));
-        SmartDashboard.putNumber("Turn Velocity", getTurnVelocity());
 
         SmartDashboard.putNumber("IMU Uptime", imu.getUpTime());
     }
 
-    public void playMusic(){
-        orchestra.play();
-    }
-
+    /**
+     * Get the angle from the IMU
+     * @return The angle of the robot in degrees
+     */
     public double getAngle(){
-//        double[] ypr = new double[3];
-//        imu.getYawPitchRoll(ypr);
-//        return -ypr[0];
         return -rightMaster.getSelectedSensorPosition(1) / Constants.DRIVE_PIGEON_UNITS_PER_DEGREE;
-//        return -rightMaster.getSelectedSensorPosition(1);
-    }
-
-    public double getTurnVelocity() {
-        double[] ypr_dps = new double[3];
-        imu.getRawGyro(ypr_dps);
-        return -ypr_dps[2];
-    }
-
-    public void resetIMU(){
-        imu.setYaw(0);
-//        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
-        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
-//        rightMaster.setSelectedSensorPosition(0, 1, 20);
-        leftMaster.setSelectedSensorPosition(0, 0, 20);
-//        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor1, 0, 20);
-        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 20);
-
-
-    }
-
-    public void stopMusic(){
-        orchestra.stop();
     }
 
     /**
-     * Reset the drive encoders to 0
+     * Reset the IMU
+     */
+    public void resetIMU(){
+        imu.setYaw(0);
+        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
+        leftMaster.setSelectedSensorPosition(0, 0, 20);
+        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 20);
+        rightMaster.setSelectedSensorPosition(0, 1, 20);
+    }
+
+    /**
+     * Reset the drive encoders
      */
     public void resetEncoders() {
         leftMaster.getSensorCollection().setIntegratedSensorPosition(0, 20);
         rightMaster.getSensorCollection().setIntegratedSensorPosition(0, 20);
     }
 
+    /**
+     * Enable coast mode
+     */
     public void enableCoastMode(){
         rightMaster.setNeutralMode(NeutralMode.Coast);
         rightFollower.setNeutralMode(NeutralMode.Coast);
@@ -184,19 +155,14 @@ public class Drive extends SubsystemBase {
         leftFollower.setNeutralMode(NeutralMode.Coast);
     }
 
+    /**
+     * Enable brake mode
+     */
     public void enableBrakeMode(){
         rightMaster.setNeutralMode(NeutralMode.Brake);
         rightFollower.setNeutralMode(NeutralMode.Brake);
         leftMaster.setNeutralMode(NeutralMode.Brake);
         leftFollower.setNeutralMode(NeutralMode.Brake);
-    }
-
-    /**
-     * Get the current control mode of the drive motors
-     * @return The current control mode
-     */
-    public ControlMode getControlMode() {
-        return leftMaster.getControlMode();
     }
 
     /**
@@ -254,14 +220,6 @@ public class Drive extends SubsystemBase {
     public void turnInPlaceSetup() {
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, 0, 20);
         leftMaster.setSelectedSensorPosition(0, 0, 20);
-//        leftMaster.configNominalOutputForward(Constants.DRIVE_MIN_OUTPUT,    20);
-//        leftMaster.configNominalOutputReverse(-Constants.DRIVE_MIN_OUTPUT,   20);
-//        leftFollower.configNominalOutputForward(Constants.DRIVE_MIN_OUTPUT,  20);
-//        leftFollower.configNominalOutputReverse(-Constants.DRIVE_MIN_OUTPUT, 20);
-//        rightMaster.configNominalOutputForward(Constants.DRIVE_MIN_OUTPUT,   20);
-//        rightMaster.configNominalOutputReverse(-Constants.DRIVE_MIN_OUTPUT,  20);
-//        rightMaster.configNominalOutputForward(Constants.DRIVE_MIN_OUTPUT,   20);
-//        rightMaster.configNominalOutputReverse(-Constants.DRIVE_MIN_OUTPUT,  20);
         leftMaster.setSensorPhase(true);
         rightMaster.setInverted(false);
         rightFollower.setInverted(false);
@@ -270,14 +228,6 @@ public class Drive extends SubsystemBase {
 
     public void turnInPlaceCleanup() {
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 20);
-//        leftMaster.configNominalOutputForward(0,   20);
-//        leftMaster.configNominalOutputReverse(0,   20);
-//        leftFollower.configNominalOutputForward(0, 20);
-//        leftFollower.configNominalOutputReverse(0, 20);
-//        rightMaster.configNominalOutputForward(0,  20);
-//        rightMaster.configNominalOutputReverse(0,  20);
-//        rightMaster.configNominalOutputForward(0,  20);
-//        rightMaster.configNominalOutputReverse(0,  20);
         leftMaster.setSensorPhase(false);
         rightMaster.setInverted(true);
         rightFollower.setInverted(true);

@@ -7,7 +7,7 @@ public class CG_ToggleLeftShot extends SequentialCommandGroup {
 
     public CG_ToggleLeftShot() {
         addCommands(
-                new HarvesterDown(),
+                new IntakeDown(),
                 new WaitCommand(0.1),
                 new TurretToggleLeftShot()
         );

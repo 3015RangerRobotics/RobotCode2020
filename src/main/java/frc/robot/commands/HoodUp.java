@@ -5,15 +5,13 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Hood;
 
 public class HoodUp extends CommandBase {
-    Hood hood = RobotContainer.hood;
-
     public HoodUp() {
-        addRequirements(hood);
+        addRequirements( RobotContainer.hood);
     }
 
     @Override
     public void initialize() {
-        hood.hoodUp();
+        RobotContainer.hood.hoodUp();
     }
 
     @Override

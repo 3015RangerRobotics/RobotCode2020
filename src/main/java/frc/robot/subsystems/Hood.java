@@ -16,10 +16,17 @@ public class Hood extends SubsystemBase {
     public void periodic() {
 
     }
+
+    /**
+     * Put the hood up for fender shot
+     */
     public void hoodUp() {
         hoodControl.set(DoubleSolenoid.Value.kForward);
     }
 
+    /**
+     * Put the hood down for long shot
+     */
     public void hoodDown() {
         hoodControl.set(DoubleSolenoid.Value.kReverse);
     }

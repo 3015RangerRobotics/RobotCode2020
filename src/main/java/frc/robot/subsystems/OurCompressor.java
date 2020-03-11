@@ -35,6 +35,10 @@ public class OurCompressor extends SubsystemBase {
         compressor.stop();
     }
 
+    /**
+     * Get the reading from the pressure sensor
+     * @return The pressure in our air tanks in PSI
+     */
     public double getPressure() {
         return pressureSensor.get();
     }

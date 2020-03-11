@@ -15,6 +15,7 @@ public class Turret extends SubsystemBase {
     private DigitalInput leftLimit;
     private DigitalInput rightLimit;
     private boolean isLeftShot = false;
+    private double toPosition = 0;
 
     private enum State {
         kToPosition,
@@ -24,9 +25,7 @@ public class Turret extends SubsystemBase {
         kTesting
     }
 
-    State state = State.kDefault;
-
-    double toPosition;
+    private State state = State.kDefault;
 
     public Turret() {
         this.turretMotor = new TalonSRX(Constants.TURRET_MOTOR);
@@ -42,13 +41,11 @@ public class Turret extends SubsystemBase {
 
         turretMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
-        //TODO: add this back in case hardware switch breaks (+1 degree from switch)
+         turretMotor.configForwardSoftLimitEnable(true);
+         turretMotor.configForwardSoftLimitThreshold(Constants.TURRET_HOMING_POSITION_RIGHT + (int) (3 / Constants.TURRET_DEGREES_PER_PULSE));
 
-        // turretMotor.configForwardSoftLimitEnable(true);
-        // turretMotor.configForwardSoftLimitThreshold((int) Math.round(Constants.TURRET_SOFT_LIMIT_FORWARD / Constants.TURRET_DEGREES_PER_PULSE));
-
-        // turretMotor.configReverseSoftLimitEnable(true);
-        // turretMotor.configReverseSoftLimitThreshold((int) Math.round(Constants.TURRET_SOFT_LIMIT_REVERSE / Constants.TURRET_DEGREES_PER_PULSE));
+         turretMotor.configReverseSoftLimitEnable(true);
+         turretMotor.configReverseSoftLimitThreshold(Constants.TURRET_HOMING_POSITION_LEFT - (int) (3 / Constants.TURRET_DEGREES_PER_PULSE));
 
         turretMotor.setInverted(false);
         turretMotor.setSelectedSensorPosition(0);
@@ -59,7 +56,7 @@ public class Turret extends SubsystemBase {
         turretMotor.configNominalOutputForward(Constants.TURRET_MIN_SPEED);
         turretMotor.configNominalOutputReverse(-Constants.TURRET_MIN_SPEED);
 
-        turretMotor.configAllowableClosedloopError(0, (int) Constants.TURRET_DEGREE_MARGIN);
+        turretMotor.configAllowableClosedloopError(0, (int) Constants.TURRET_ALLOWABLE_ERROR);
 
         turretMotor.config_kP(0, Constants.TURRET_P);
         turretMotor.config_kI(0, Constants.TURRET_I);
@@ -78,19 +75,23 @@ public class Turret extends SubsystemBase {
             case kToPosition:
                 set(ControlMode.Position, toPosition / Constants.TURRET_DEGREES_PER_PULSE);
                 break;
+
             case kTurnHold:
                 toPosition = getPosition() + RobotContainer.limelight.getTargetAngleX();
                 set(ControlMode.Position, toPosition / Constants.TURRET_DEGREES_PER_PULSE);
                 break;
+
             case kHoming:
                 set(ControlMode.PercentOutput, 0.25);
                 if(getRightLimit()) {
-                    setEncoder(Constants.TURRET_HOMING_POSITION);
+                    setEncoder(Constants.TURRET_HOMING_POSITION_RIGHT);
                     state = State.kDefault;
                 }
                 break;
+
             case kTesting:
                 break;
+
             case kDefault:
             default:
                 toPosition = isLeftShot() ? -90 : 0;
@@ -99,10 +100,17 @@ public class Turret extends SubsystemBase {
         }
     }
 
+    /**
+     * Is the turret in left shot mode
+     * @return True if the turret is in left shot mode
+     */
     public boolean isLeftShot() {
         return isLeftShot;
     }
 
+    /**
+     * Toggle the left shot mode
+     */
     public void toggleLeftShot() {
         isLeftShot = !isLeftShot;
     }
@@ -166,27 +174,47 @@ public class Turret extends SubsystemBase {
         return !rightLimit.get();
     }
 
+    /**
+     * Is the turret on target
+     * @return True if the turret is within allowable error of the target
+     */
     public boolean isOnTarget() {
-        return Math.abs(turretMotor.getClosedLoopError()) <= Constants.TURRET_DEGREE_MARGIN;
+        return Math.abs(turretMotor.getClosedLoopError()) <= Constants.TURRET_ALLOWABLE_ERROR;
     }
 
+    /**
+     * Put the turret into the default position state
+     */
     public void setStateDefault() {
         state = State.kDefault;
     }
 
+    /**
+     * Put the turret in a set position state
+     * @param position The position in degrees to go to
+     */
     public void setStateToPosition(double position) {
         toPosition = position;
         state = State.kToPosition;
     }
 
+    /**
+     * Put the turret into a hold on target state
+     */
     public void setStateTurnHold() {
         state = State.kTurnHold;
     }
 
+    /**
+     * Put the turret in its homing state
+     */
     public void setStateHoming() {
         state = State.kHoming;
     }
 
+    /**
+     * Put the turret in its testing state
+     */
     public void setStateTesting() {
         state = State.kTesting;
         set(ControlMode.PercentOutput, 0);

@@ -9,7 +9,8 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class Shooter extends SubsystemBase {
-    public TalonFX shooter;
+    private TalonFX shooter;
+    private double setSpeed;
 
     private enum State {
         kSetSpeed,
@@ -19,9 +20,7 @@ public class Shooter extends SubsystemBase {
         kTesting
     }
 
-    public Shooter.State state = Shooter.State.kOff;
-
-    private double setSpeed;
+    public State state = State.kOff;
 
     public Shooter() {
         shooter = new TalonFX(Constants.SHOOTER_MOTOR);
@@ -39,8 +38,6 @@ public class Shooter extends SubsystemBase {
         shooter.setSelectedSensorPosition(0);
         shooter.setSensorPhase(false);
 
-        setRampRate(true);
-
         shooter.config_kP(0, Constants.SHOOTER_P);
         shooter.config_kI(0, Constants.SHOOTER_I);
         shooter.config_kD(0, Constants.SHOOTER_D);
@@ -56,23 +53,24 @@ public class Shooter extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("shooter speed", setSpeed);
+
         if(getRPM() >= 7500){
-            shooter.set(ControlMode.PercentOutput, 0);
+            state = State.kOff;
         }
+
         double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
-        double speed;
+        double turretOffset = 2 * Math.abs(turretPos);
+
         switch(state) {
             case kSetSpeed:
-                speed = (setSpeed + (2 * Math.abs(turretPos)));
-                set(ControlMode.Velocity, speed * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
-//                System.out.println("shooter," + speed + "," + getRPM());
+                set(ControlMode.Velocity, (setSpeed + turretOffset) * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
                 break;
+
             case kAutoSpeed:
                 setSpeed = getAutoSpeed(false);
-                speed = (setSpeed + (2 * Math.abs(turretPos)));
-                set(ControlMode.Velocity, speed * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
-//                System.out.println("shooter," + speed + "," + getRPM());
+                set(ControlMode.Velocity, (setSpeed + turretOffset) * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
                 break;
+
             case kAutoSpeedFender:
                 if(!RobotContainer.limelight.hasTarget()){
                     RobotContainer.setDriverRumbleLeft(1);
@@ -88,8 +86,10 @@ public class Shooter extends SubsystemBase {
                 setSpeed = getAutoSpeed(true);
                 set(ControlMode.Velocity, setSpeed * Constants.SHOOTER_PULSES_PER_ROTATION / 600);
                 break;
+
             case kTesting:
                 break;
+
             case kOff:
             default:
                 setSpeed = 0;
@@ -114,48 +114,71 @@ public class Shooter extends SubsystemBase {
         shooter.set(mode, value);
     }
 
+    /**
+     * Select which pid profile to use
+     * @param id The ID of the profile (0 - Prime PID, 1 - Shooting PID)
+     */
     public void selectProfileSlot(int id){
         shooter.selectProfileSlot(id, 0);
     }
 
-    public boolean isRunning()
-    {
-        return shooter.getControlMode() == ControlMode.Velocity;
-
+    /**
+     * Is the shooter currently running
+     * @return True if the shooter is running
+     */
+    public boolean isRunning() {
+        return shooter.getMotorOutputPercent() > 0;
     }
 
-    public void setRampRate(boolean enabled) {
-        shooter.configClosedloopRamp(enabled ? 0 : 0);
-    }
-
+    /**
+     * Put the shooter in a set speed state
+     * @param speed The speed in RPM to go to
+     */
     public void setStateSpeed(double speed) {
         setSpeed = speed;
         state = State.kSetSpeed;
     }
 
+    /**
+     * Put the shooter in a testing state
+     */
     public void setStateTesting() {
         state = State.kTesting;
         set(ControlMode.PercentOutput, 0);
     }
 
+    /**
+     * Put the shooter in the auto speed state
+     */
     public void setStateAutoSpeed() {
         state = State.kAutoSpeed;
     }
 
+    /**
+     * Put the shooter in the auto speed state for the fender shot
+     */
     public void setStateAutoSpeedFender() {
         state = State.kAutoSpeedFender;
     }
 
+    /**
+     * Put the shooter in the off state
+     */
     public void setStateOff() {
         state = State.kOff;
     }
 
+    /**
+     * Get the auto speed
+     * @param isFender Is the speed for fender shot
+     * @return The calculated speed for the shooter in RPM
+     */
     public double getAutoSpeed(boolean isFender) {
         if(RobotContainer.limelight.hasTarget()) {
             double d = RobotContainer.limelight.getRobotToTargetDistance();
             if(!isFender) {
 //           double rpm = 7430.1186 + (-255.07933*d) + (7.2472131*d*d); //Perfect ball
-                return 4222.866701 + (110.34724 * d) + (-1.51320429 * d * d); //Average ball
+                return (4222.866701 + (110.34724 * d) + (-1.51320429 * d * d)) * Constants.SHOOTER_BALL_QUALITY_FACTOR; //Average ball
             }else{
 
                 if(d <= 8){
@@ -174,16 +197,13 @@ public class Shooter extends SubsystemBase {
         }
     }
 
+    /**
+     * Is the shooter primed and ready to fire
+     * @return True if the shooter is primed
+     */
     public boolean isPrimed() {
         double turretPos = RobotContainer.turret.getPosition() + RobotContainer.limelight.getTargetAngleX();
-//        if(state == State.kSetSpeed && badBall) {
-//            return Math.abs((setSpeed + (2 * Math.abs(turretPos)) * badBallFactor) - getRPM()) <= Constants.SHOOTER_TOLERANCE;
-//        }
         return Math.abs(setSpeed + (2 * Math.abs(turretPos)) - getRPM()) <= Constants.SHOOTER_TOLERANCE;
     }
-
-//    public void setBadBall(boolean badBall) {
-//        this.badBall = badBall;
-//    }
 }
 

@@ -1,6 +1,5 @@
 package frc.robot.commands.systems_checks;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
@@ -13,7 +12,7 @@ public class TestIntake extends CommandBase {
     boolean intakeUpChecked = false;
 
     public TestIntake() {
-        addRequirements(RobotContainer.harvester);
+        addRequirements(RobotContainer.intake);
     }
 
     @Override
@@ -31,18 +30,18 @@ public class TestIntake extends CommandBase {
     @Override
     public void execute() {
         if (!timer.hasElapsed(0.75)){
-            RobotContainer.harvester.harvesterDown();
+            RobotContainer.intake.intakeDown();
         }else if(!intakeDownChecked){
             Robot.intakeDown.setBoolean(true);
             intakeDownChecked = true;
         }else if(!timer.hasElapsed(1.5)) {
-            RobotContainer.harvester.harvesterSet(-1);
+            RobotContainer.intake.intakeSet(-1);
         }else if(!motorsChecked){
             Robot.intakeMotor.setBoolean(Robot.pdp.getCurrent(3) >= 5);
             motorsChecked = true;
-            RobotContainer.harvester.harvesterStop();
+            RobotContainer.intake.intakeStop();
         }else if(!timer.hasElapsed(2.25)){
-            RobotContainer.harvester.harvesterUp();
+            RobotContainer.intake.intakeUp();
         }else if(!intakeUpChecked){
             Robot.intakeUp.setBoolean(true);
             intakeUpChecked = true;
@@ -51,7 +50,7 @@ public class TestIntake extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        RobotContainer.harvester.harvesterStop();
+        RobotContainer.intake.intakeStop();
     }
 
     @Override

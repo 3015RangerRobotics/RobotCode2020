@@ -1,12 +1,13 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.BallHandler;
+import frc.robot.subsystems.Carousel;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,14 +18,16 @@ public class RobotContainer {
     public static XboxController driver = new XboxController(0);
     public static XboxController coDriver = new XboxController(1);
 
-    public static BallHandler ballHandler;
+    public static PowerDistributionPanel pdp = new PowerDistributionPanel(0);
+
+    public static Carousel carousel;
     public static Drive drive;
     public static Turret turret;
     public static Limelight limelight;
     public static DriverRumble driverRumble;
     public static Shooter shooter;
     public static OurCompressor ourCompressor;
-    public static Harvester harvester;
+    public static Intake intake;
     public static Hood hood;
     public static Climber climber;
 
@@ -68,9 +71,9 @@ public class RobotContainer {
         drive.setDefaultCommand(new DriveWithGamepad());
         turret = new Turret();
         limelight = new Limelight();
-        ballHandler = new BallHandler();
-        ballHandler.setDefaultCommand(new BallHandlerDefault());
-        harvester = new Harvester();
+        carousel = new Carousel();
+        carousel.setDefaultCommand(new CarouselDefault());
+        intake = new Intake();
         driverRumble = new DriverRumble();
         hood = new Hood();
         climber = new Climber();
@@ -79,39 +82,41 @@ public class RobotContainer {
 
         autoChooser.setDefaultOption("No Auto",null);
         autoChooser.addOption("8 Ball Trench", new Auto8BallTrench());
-        autoChooser.addOption("10 Ball Trench", new Auto10Ball());
+        autoChooser.addOption("10 Ball Trench", new Auto10BallTrench());
         autoChooser.addOption("8 Ball Pick Pocket", new Auto8BallPickpocket());
 
         SmartDashboard.putData("Auto Mode", autoChooser);
+        SmartDashboard.putData("PDP", pdp);
     }
 
 
     private void configureButtonBindings() {
+        driverA.whileActiveContinuous(new CG_IntakeBalls());
         driverB.whileActiveContinuous(new CG_PurgeBalls());
         driverX.whenActive(new TurretHomePosition());
         driverY.whenActive(new CG_ReadyToFireFender()).whenInactive(new CG_ShooterDefault());
         driverDUp.whenActive(new DriveMotionProfile(1.95, 12,10));
         driverDLeft.whenActive(new CG_ToggleLeftShot());
         driverDDown.whenActive(new CG_OhHeck());
-        driverDRight.whenActive(new DriveTurnInPlace(12));
-        driverA.whileActiveContinuous(new CG_HarvesterOfBalls());
         driverLB.whenActive(new CG_ReadyToFire()).whenInactive(new CG_ShooterDefault());
-        driverY.negate().and(driverRB).whileActiveOnce(new CG_FireZeMissiles());
-        driverY.and(driverRB).whileActiveOnce(new CG_FireZeMissilesFender());
-        driverBack.whileActiveOnce(new ClimberClimbUp());
-        driverRT.whileActiveContinuous(new HarvesterSet(1));
+        driverRB.and(driverY.negate()).whileActiveOnce(new CG_FireZeMissiles());
+        driverRB.and(driverY).whileActiveOnce(new CG_FireZeMissilesFender());
+        driverRB.whenInactive(new CG_ShooterDefault());
+        driverRT.whileActiveContinuous(new IntakeSet(1));
+        driverBack.whileActiveContinuous(new ClimberClimbUp());
 
-        coDriverA.whileActiveContinuous(new CG_HarvesterOfBalls());
+        coDriverA.whileActiveContinuous(new CG_IntakeBalls());
         coDriverB.whileActiveContinuous(new CG_PurgeBalls());
         coDriverX.whenActive(new TurretHomePosition());
         coDriverY.whenActive(new CG_ReadyToFireFender()).whenInactive(new CG_ShooterDefault());
         coDriverDDown.whenActive(new CG_OhHeck());
-        coDriverLT.whenActive(new CG_ReadyToFire()).whenInactive(new CG_ShooterDefault());
-        coDriverBack.whileActiveContinuous(new ClimberClimbUp());
         coDriverDLeft.whenActive(new CG_ToggleLeftShot());
-        coDriverY.negate().and(coDriverRT).whileActiveOnce(new CG_FireZeMissiles());
-        coDriverY.and(coDriverRT).whileActiveOnce(new CG_FireZeMissilesFender());
-        coDriverRB.whileActiveContinuous(new HarvesterSet(1));
+        coDriverRB.whileActiveContinuous(new IntakeSet(1));
+        coDriverLT.whenActive(new CG_ReadyToFire()).whenInactive(new CG_ShooterDefault());
+        coDriverRT.and(coDriverY.negate()).whileActiveOnce(new CG_FireZeMissiles());
+        coDriverRT.and(coDriverY).whileActiveOnce(new CG_FireZeMissilesFender());
+        coDriverRT.whenInactive(new CG_ShooterDefault());
+        coDriverBack.whileActiveContinuous(new ClimberClimbUp());
 
         driverStart.and(coDriverStart).whenActive(new ClimberRelease()).whenInactive(new ClimberLatch());
     }

@@ -15,7 +15,7 @@ public class TestTurret extends CommandBase {
 
 
     public TestTurret() {
-        addRequirements(RobotContainer.turret, RobotContainer.harvester);
+        addRequirements(RobotContainer.turret, RobotContainer.intake);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class TestTurret extends CommandBase {
         Robot.turretLeftLimit.setBoolean(false);
         Robot.turretEncoder.setBoolean(false);
         RobotContainer.turret.setStateTesting();
-        RobotContainer.harvester.harvesterDown();
+        RobotContainer.intake.intakeDown();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class TestTurret extends CommandBase {
             if(RobotContainer.turret.getRightLimit()){
                 rightLimitChecked = true;
                 Robot.turretRightLimit.setBoolean(true);
-                RobotContainer.turret.setEncoder(Constants.TURRET_HOMING_POSITION);
+                RobotContainer.turret.setEncoder(Constants.TURRET_HOMING_POSITION_RIGHT);
             }
         }else if(!leftLimitChecked){
             RobotContainer.turret.set(ControlMode.PercentOutput, -0.40);

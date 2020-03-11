@@ -1,11 +1,10 @@
 package frc.robot.commands.systems_checks;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.BallHandler;
+import frc.robot.subsystems.Carousel;
 
 public class TestCarousel extends CommandBase {
     Timer timer = new Timer();
@@ -14,7 +13,7 @@ public class TestCarousel extends CommandBase {
 
 
     public TestCarousel() {
-        addRequirements(RobotContainer.ballHandler, RobotContainer.harvester);
+        addRequirements(RobotContainer.carousel, RobotContainer.intake);
     }
 
     @Override
@@ -33,15 +32,15 @@ public class TestCarousel extends CommandBase {
         Robot.carouselBall3.setBoolean(false);
         Robot.carouselBall4.setBoolean(false);
         Robot.carouselBall5.setBoolean(false);
-        RobotContainer.harvester.harvesterDown();
-        RobotContainer.harvester.harvesterSet(-1);
+        RobotContainer.intake.intakeDown();
+        RobotContainer.intake.intakeSet(-1);
     }
 
     @Override
     public void execute() {
         if (!timer.hasElapsed(0.1) && !sensorsChecked){
-            RobotContainer.ballHandler.setState(BallHandler.State.kPurgeBall1);
-            RobotContainer.ballHandler.setBallCounter(0);
+            RobotContainer.carousel.setState(Carousel.State.kPurgeBall1);
+            RobotContainer.carousel.setBallCounter(0);
         }else if(!motorsChecked){
             Robot.carouselMotor1.setBoolean(Robot.pdp.getCurrent(4) >= 2);
             Robot.carouselMotor2.setBoolean(Robot.pdp.getCurrent(11) >= 2);
@@ -49,37 +48,37 @@ public class TestCarousel extends CommandBase {
             Robot.carouselMotor4.setBoolean(Robot.pdp.getCurrent(9) >= 2);
             Robot.carouselMotor5.setBoolean(Robot.pdp.getCurrent(8) >= 2);
             motorsChecked = true;
-            RobotContainer.ballHandler.setState(BallHandler.State.kFillTo1);
+            RobotContainer.carousel.setState(Carousel.State.kFillTo1);
         }else if(!sensorsChecked) {
-            if(RobotContainer.ballHandler.isSwitch1Pressed()){
+            if(RobotContainer.carousel.isBall1Present()){
                 Robot.carouselBall1.setBoolean(true);
-            }else if(RobotContainer.ballHandler.isSwitch2Pressed()){
+            }else if(RobotContainer.carousel.isBall2Present()){
                 Robot.carouselBall2.setBoolean(true);
-            }else if(RobotContainer.ballHandler.isSwitch3Pressed()){
+            }else if(RobotContainer.carousel.isBall3Present()){
                 Robot.carouselBall3.setBoolean(true);
-            }else if(RobotContainer.ballHandler.isSwitch4Pressed()){
+            }else if(RobotContainer.carousel.isBall4Present()){
                 Robot.carouselBall4.setBoolean(true);
-            }else if(RobotContainer.ballHandler.isSwitch5Pressed()){
+            }else if(RobotContainer.carousel.isBall5Present()){
                 Robot.carouselBall5.setBoolean(true);
             }
 
-            if(RobotContainer.ballHandler.getState() == BallHandler.State.kFillTo2){
+            if(RobotContainer.carousel.getState() == Carousel.State.kFillTo2){
                 sensorsChecked = true;
                 timer.reset();
                 timer.start();
             }
         }else{
-            RobotContainer.harvester.harvesterUp();
-            RobotContainer.harvester.harvesterStop();
-            RobotContainer.ballHandler.setState(BallHandler.State.kPurgeBall1);
+            RobotContainer.intake.intakeUp();
+            RobotContainer.intake.intakeStop();
+            RobotContainer.carousel.setState(Carousel.State.kPurgeBall1);
         }
     }
 
     @Override
     public void end(boolean interrupted) {
-        RobotContainer.harvester.harvesterUp();
-        RobotContainer.harvester.harvesterStop();
-        RobotContainer.ballHandler.setState(BallHandler.State.kOff);
+        RobotContainer.intake.intakeUp();
+        RobotContainer.intake.intakeStop();
+        RobotContainer.carousel.setState(Carousel.State.kOff);
     }
 
     @Override

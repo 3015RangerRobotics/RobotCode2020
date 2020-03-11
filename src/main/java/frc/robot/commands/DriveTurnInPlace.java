@@ -31,8 +31,6 @@ public class DriveTurnInPlace extends CommandBase {
         } else {
             counter = 0;
         }
-//        RobotContainer.drive.setMotorOutputs(ControlMode.MotionMagic, angle * Constants.DRIVE_PIGEON_UNITS_PER_DEGREE,
-//                angle * Constants.DRIVE_PIGEON_UNITS_PER_DEGREE);
     }
 
     @Override

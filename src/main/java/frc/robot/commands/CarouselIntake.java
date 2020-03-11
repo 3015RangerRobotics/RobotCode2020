@@ -2,27 +2,25 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.BallHandler;
+import frc.robot.subsystems.Carousel;
 
-public class BallHandlerHarvest extends CommandBase {
-    BallHandler ballHandler = RobotContainer.ballHandler;
-
-    public BallHandlerHarvest() {
-        addRequirements(ballHandler);
+public class CarouselIntake extends CommandBase {
+    public CarouselIntake() {
+        addRequirements(RobotContainer.carousel);
     }
 
     @Override
     public void initialize() {
-        if (ballHandler.isPaused()) {
-            ballHandler.setPaused(false);
+        if (RobotContainer.carousel.isPaused()) {
+            RobotContainer.carousel.setPaused(false);
         } else {
-            ballHandler.setState(BallHandler.State.kFillTo1); //Starts the switch in ball handler, fills the "carousel" with balls
+            RobotContainer.carousel.setState(Carousel.State.kFillTo1);
         }
     }
 
     @Override
     public void execute() {
-        if (ballHandler.getState() == BallHandler.State.kOff){
+        if (RobotContainer.carousel.getState() == Carousel.State.kOff){
             RobotContainer.setDriverRumbleLeft(1);
             RobotContainer.setDriverRumbleRight(1);
             RobotContainer.setCoDriverRumbleLeft(1);

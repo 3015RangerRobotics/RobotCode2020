@@ -7,9 +7,9 @@ public class CG_PurgeBalls extends SequentialCommandGroup {
 
     public CG_PurgeBalls() {
         addCommands(
-                new HarvesterUp(),
+                new IntakeUp(),
                 new WaitCommand(0.25),
-                new BallHandlerPurge()
+                new CarouselPurge()
         );
     }
 }

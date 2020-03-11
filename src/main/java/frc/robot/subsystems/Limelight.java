@@ -10,7 +10,7 @@ import frc.robot.Constants;
 public class Limelight extends SubsystemBase {
     NetworkTable limelight;
 
-    public static enum LEDMode {
+    public enum LEDMode {
         PIPELINE(0),
         LED_OFF(1),
         LED_BLINK(2),
@@ -27,7 +27,7 @@ public class Limelight extends SubsystemBase {
         }
     }
 
-    public static enum StreamingMode {
+    public enum StreamingMode {
         STANDARD(0),
         PIP_MAIN(1),
         PIP_SECONDARY(2);
@@ -43,7 +43,7 @@ public class Limelight extends SubsystemBase {
         }
     }
 
-    public static enum CameraMode {
+    public enum CameraMode {
         VISION_PROCESSING(0),
         DRIVER_CAMERA(1);
 
@@ -69,9 +69,7 @@ public class Limelight extends SubsystemBase {
 
     @Override
     public void periodic() {
-        setStreamingMode(StreamingMode.PIP_SECONDARY);
         SmartDashboard.putNumber("Distance to Target", getRobotToTargetDistance());
-        SmartDashboard.putNumber("Launch Velocity", getShooterLaunchVelocity());
     }
 
     /**

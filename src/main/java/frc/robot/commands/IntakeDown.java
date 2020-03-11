@@ -2,18 +2,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Harvester;
 
-public class HarvesterUp extends CommandBase {
-    Harvester harvester = RobotContainer.harvester;
+public class IntakeDown extends CommandBase {
 
-    public HarvesterUp() {
-        addRequirements(harvester);
+    public IntakeDown() {
+        addRequirements(RobotContainer.intake);
     }
 
     @Override
     public void initialize() {
-        harvester.harvesterUp();
+        RobotContainer.intake.intakeDown();
     }
 
     @Override

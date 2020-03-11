@@ -2,19 +2,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Harvester;
 import frc.robot.subsystems.Hood;
 
 public class HoodDown extends CommandBase {
-    Hood hood = RobotContainer.hood;
-
     public HoodDown() {
-        addRequirements(hood);
+        addRequirements( RobotContainer.hood);
     }
 
     @Override
     public void initialize() {
-        hood.hoodDown();
+        RobotContainer.hood.hoodDown();
     }
 
     @Override
