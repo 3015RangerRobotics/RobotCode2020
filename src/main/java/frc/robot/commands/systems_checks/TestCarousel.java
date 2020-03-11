@@ -13,7 +13,6 @@ public class TestCarousel extends CommandBase {
     boolean sensorsChecked = false;
 
 
-
     public TestCarousel() {
         addRequirements(RobotContainer.ballHandler, RobotContainer.harvester);
     }
@@ -42,16 +41,16 @@ public class TestCarousel extends CommandBase {
     public void execute() {
         if (!timer.hasElapsed(0.1) && !sensorsChecked){
             RobotContainer.ballHandler.setState(BallHandler.State.kPurgeBall1);
+            RobotContainer.ballHandler.setBallCounter(0);
         }else if(!motorsChecked){
-            Robot.carouselMotor1.setBoolean(Robot.pdp.getCurrent(14) >= 5);
-            Robot.carouselMotor2.setBoolean(Robot.pdp.getCurrent(15) >= 5);
-            Robot.carouselMotor3.setBoolean(Robot.pdp.getCurrent(0) >= 5);
-            Robot.carouselMotor4.setBoolean(Robot.pdp.getCurrent(1) >= 5);
-            Robot.carouselMotor5.setBoolean(Robot.pdp.getCurrent(1) >= 5);
+            Robot.carouselMotor1.setBoolean(Robot.pdp.getCurrent(4) >= 2);
+            Robot.carouselMotor2.setBoolean(Robot.pdp.getCurrent(11) >= 2);
+            Robot.carouselMotor3.setBoolean(Robot.pdp.getCurrent(10) >= 2);
+            Robot.carouselMotor4.setBoolean(Robot.pdp.getCurrent(9) >= 2);
+            Robot.carouselMotor5.setBoolean(Robot.pdp.getCurrent(8) >= 2);
             motorsChecked = true;
-        }else if(!sensorsChecked) {
             RobotContainer.ballHandler.setState(BallHandler.State.kFillTo1);
-
+        }else if(!sensorsChecked) {
             if(RobotContainer.ballHandler.isSwitch1Pressed()){
                 Robot.carouselBall1.setBoolean(true);
             }else if(RobotContainer.ballHandler.isSwitch2Pressed()){
@@ -69,7 +68,7 @@ public class TestCarousel extends CommandBase {
                 timer.reset();
                 timer.start();
             }
-        }else if(!timer.hasElapsed(2)){
+        }else{
             RobotContainer.harvester.harvesterUp();
             RobotContainer.harvester.harvesterStop();
             RobotContainer.ballHandler.setState(BallHandler.State.kPurgeBall1);

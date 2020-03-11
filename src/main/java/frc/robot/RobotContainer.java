@@ -111,6 +111,7 @@ public class RobotContainer {
         coDriverDLeft.whenActive(new CG_ToggleLeftShot());
         coDriverY.negate().and(coDriverRT).whileActiveOnce(new CG_FireZeMissiles());
         coDriverY.and(coDriverRT).whileActiveOnce(new CG_FireZeMissilesFender());
+        coDriverRB.whileActiveContinuous(new HarvesterSet(1));
 
         driverStart.and(coDriverStart).whenActive(new ClimberRelease()).whenInactive(new ClimberLatch());
     }

@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
 //        camera.setFPS(24);
 
         ShuffleboardLayout testCommands = Shuffleboard.getTab("Systems Check")
-                .getLayout("Test Commands", BuiltInLayouts.kList).withSize(2, 2).withPosition(9, 1)
+                .getLayout("Test Commands", BuiltInLayouts.kList).withSize(1, 3).withPosition(10, 2)
                 .withProperties(Map.of("Label position", "HIDDEN"));
         testCommands.add(new TestDrive());
         testCommands.add(new TestIntake());
@@ -80,14 +80,11 @@ public class Robot extends TimedRobot {
         testCommands.add(new TestShooter());
         testCommands.add(new TestClimber());
 
-        ShuffleboardLayout fullTest = Shuffleboard.getTab("Systems Check")
-                .getLayout("Full Test", BuiltInLayouts.kList).withSize(2, 1).withPosition(9, 0)
-                .withProperties(Map.of("Label position", "HIDDEN"));
-        fullTest.add("TestAllWithClimber", new TestAll(true));
-        fullTest.add("TestAllWithoutClimber", new TestAll(false));
+        Shuffleboard.getTab("Systems Check").add(new TestAll()).withSize(1, 1).withPosition(10, 0);
+        Shuffleboard.getTab("Systems Check").add(new TestAllWithoutClimber()).withSize(1, 1).withPosition(10, 1);
 
         ShuffleboardLayout driveValues = Shuffleboard.getTab("Systems Check").getLayout("Drive", BuiltInLayouts.kList)
-                .withSize(2, 3).withPosition(0, 0);
+                .withSize(2, 5).withPosition(0, 0);
         driveLeftMaster = driveValues.add("Left Master", false).getEntry();
         driveLeftFollower = driveValues.add("Left Follower", false).getEntry();
         driveRightMaster = driveValues.add("Right Master", false).getEntry();
@@ -96,20 +93,20 @@ public class Robot extends TimedRobot {
         driveIMU = driveValues.add("IMU", false).getEntry();
 
         ShuffleboardLayout intakeValues = Shuffleboard.getTab("Systems Check").getLayout("Intake", BuiltInLayouts.kList)
-                .withSize(2, 3).withPosition(2, 0);
+                .withSize(2, 2).withPosition(2, 0);
         intakeMotor = intakeValues.add("Motor", false).getEntry();
         intakeUp = intakeValues.add("Up", false).getEntry();
         intakeDown = intakeValues.add("Down", false).getEntry();
 
         ShuffleboardLayout turretValues = Shuffleboard.getTab("Systems Check").getLayout("Turret", BuiltInLayouts.kList)
-                .withSize(2, 4).withPosition(4, 0);
+                .withSize(2, 3).withPosition(2, 2);
         turretMotor = turretValues.add("Motor", false).getEntry();
         turretLeftLimit = turretValues.add("Left Limit", false).getEntry();
         turretRightLimit = turretValues.add("Right Limit", false).getEntry();
         turretEncoder = turretValues.add("Encoder", false).getEntry();
 
         ShuffleboardLayout hoodValues = Shuffleboard.getTab("Systems Check").getLayout("Hood", BuiltInLayouts.kList)
-                .withSize(2, 2).withPosition(2, 3);
+                .withSize(2, 2).withPosition(4, 0);
         hoodUp = hoodValues.add("Hood Up", false).getEntry();
         hoodDown = hoodValues.add("Hood Down", false).getEntry();
 
@@ -127,13 +124,13 @@ public class Robot extends TimedRobot {
         carouselBall5 = carouselValues.add("Ball 5",false).getEntry();
 
         ShuffleboardLayout shooterValues = Shuffleboard.getTab("Systems Check").getLayout("Shooter", BuiltInLayouts.kList)
-                .withSize(2, 3).withPosition(0, 4);
+                .withSize(2, 2).withPosition(4, 2);
         shooterMotor = shooterValues.add("Motor", false).getEntry();
         shooterEncoder = shooterValues.add("Encoder", false).getEntry();
         shooterPID = shooterValues.add("PID", false).getEntry();
 
         ShuffleboardLayout climberValues = Shuffleboard.getTab("Systems Check").getLayout("Climber", BuiltInLayouts.kList)
-                .withSize(2, 3).withPosition(4, 5);
+                .withSize(2, 3).withPosition(8, 0);
         climberMotor = climberValues.add("Motor", false).getEntry();
         climberRelease = climberValues.add("Release", false).getEntry();
         climberLatch= climberValues.add("Latch", false).getEntry();

@@ -3,6 +3,7 @@ package frc.robot.commands.systems_checks;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
@@ -38,12 +39,14 @@ public class TestShooter extends CommandBase {
             motorChecked = true;
         }else if(!timer.hasElapsed(1.1)){
             RobotContainer.shooter.set(ControlMode.PercentOutput, 0.4);
+            System.out.println(RobotContainer.shooter.getRPM());
         }else if(!encoderChecked){
-            Robot.shooterEncoder.setBoolean(RobotContainer.shooter.getRPM() >= 2000);
+            Robot.shooterEncoder.setBoolean(RobotContainer.shooter.getRPM() >= 2500);
             encoderChecked = true;
-        }else if(!timer.hasElapsed(3.1)){
-            RobotContainer.shooter.set(ControlMode.Velocity, 3000);
+        }else if(!timer.hasElapsed(3)){
+            RobotContainer.shooter.setStateSpeed(3000);
         }else if(!pidChecked){
+//            Robot.shooterPID.setBoolean(Math.abs(RobotContainer.shooter.getRPM() - 5000) <= 100);
             Robot.shooterPID.setBoolean(RobotContainer.shooter.isPrimed());
             pidChecked = true;
         }

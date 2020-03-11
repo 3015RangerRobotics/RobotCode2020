@@ -34,7 +34,7 @@ public class TestClimber extends CommandBase {
         }else if(!timer.hasElapsed(2.2)){
             RobotContainer.climber.climbUp();
         }else if(!motorsChecked){
-            Robot.climberMotor.setBoolean(Robot.pdp.getCurrent(10) >= 5);
+            Robot.climberMotor.setBoolean(Robot.pdp.getCurrent(2) >= 5);
             motorsChecked = true;
         }
 
