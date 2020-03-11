@@ -43,10 +43,20 @@ public class Robot extends TimedRobot {
     public static NetworkTableEntry carouselMotor3;
     public static NetworkTableEntry carouselMotor4;
     public static NetworkTableEntry carouselMotor5;
+    public static NetworkTableEntry carouselBall1;
+    public static NetworkTableEntry carouselBall2;
+    public static NetworkTableEntry carouselBall3;
+    public static NetworkTableEntry carouselBall4;
+    public static NetworkTableEntry carouselBall5;
+
 
     public static NetworkTableEntry shooterMotor;
     public static NetworkTableEntry shooterEncoder;
     public static NetworkTableEntry shooterPID;
+
+    public static NetworkTableEntry climberMotor;
+    public static NetworkTableEntry climberLatch;
+    public static NetworkTableEntry climberRelease;
 
     private RobotContainer robotContainer;
 //    Interlink402 test = new Interlink402();
@@ -68,8 +78,13 @@ public class Robot extends TimedRobot {
         testCommands.add(new TestHood());
         testCommands.add(new TestCarousel());
         testCommands.add(new TestShooter());
+        testCommands.add(new TestClimber());
 
-        Shuffleboard.getTab("Systems Check").add(new TestAll()).withSize(2, 1).withPosition(9, 0);
+        ShuffleboardLayout fullTest = Shuffleboard.getTab("Systems Check")
+                .getLayout("Full Test", BuiltInLayouts.kList).withSize(2, 1).withPosition(9, 0)
+                .withProperties(Map.of("Label position", "HIDDEN"));
+        fullTest.add("TestAllWithClimber", new TestAll(true));
+        fullTest.add("TestAllWithoutClimber", new TestAll(false));
 
         ShuffleboardLayout driveValues = Shuffleboard.getTab("Systems Check").getLayout("Drive", BuiltInLayouts.kList)
                 .withSize(2, 3).withPosition(0, 0);
@@ -105,12 +120,23 @@ public class Robot extends TimedRobot {
         carouselMotor3 = carouselValues.add("Motor 3", false).getEntry();
         carouselMotor4 = carouselValues.add("Motor 4", false).getEntry();
         carouselMotor5 = carouselValues.add("Motor 5", false).getEntry();
+        carouselBall1 = carouselValues.add("Ball 1", false).getEntry();
+        carouselBall2 = carouselValues.add("Ball 2",false).getEntry();
+        carouselBall3 = carouselValues.add("Ball 3",false).getEntry();
+        carouselBall4 = carouselValues.add("Ball 4",false).getEntry();
+        carouselBall5 = carouselValues.add("Ball 5",false).getEntry();
 
         ShuffleboardLayout shooterValues = Shuffleboard.getTab("Systems Check").getLayout("Shooter", BuiltInLayouts.kList)
                 .withSize(2, 3).withPosition(0, 4);
         shooterMotor = shooterValues.add("Motor", false).getEntry();
         shooterEncoder = shooterValues.add("Encoder", false).getEntry();
         shooterPID = shooterValues.add("PID", false).getEntry();
+
+        ShuffleboardLayout climberValues = Shuffleboard.getTab("Systems Check").getLayout("Climber", BuiltInLayouts.kList)
+                .withSize(2, 3).withPosition(4, 5);
+        climberMotor = climberValues.add("Motor", false).getEntry();
+        climberRelease = climberValues.add("Release", false).getEntry();
+        climberLatch= climberValues.add("Latch", false).getEntry();
     }
 
     @Override

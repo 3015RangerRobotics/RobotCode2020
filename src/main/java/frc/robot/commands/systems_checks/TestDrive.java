@@ -46,14 +46,14 @@ public class TestDrive extends CommandBase {
             motorsChecked = true;
         }else if(!timer.hasElapsed(.7)){
             RobotContainer.drive.setMotorOutputs(ControlMode.PercentOutput, 0, 0);
-        }else if(!timer.hasElapsed(1.2)) {
+        }else if(!timer.hasElapsed(0.95)) {
             RobotContainer.drive.setMotorOutputs(ControlMode.PercentOutput, 0.20, -0.20);
         }else if(!gyroChecked){
-            Robot.driveIMU.setBoolean(RobotContainer.drive.getAngle() >= 5);
+            Robot.driveIMU.setBoolean(RobotContainer.drive.getAngle() >= 2);
             gyroChecked = true;
-        }else if(!timer.hasElapsed(1.7)) {
+        }else if(!timer.hasElapsed(1.5)) {
             RobotContainer.drive.setMotorOutputs(ControlMode.PercentOutput, 0, 0);
-        }else if(!timer.hasElapsed(2.2)) {
+        }else if(!timer.hasElapsed(1.75)) {
             RobotContainer.drive.setMotorOutputs(ControlMode.PercentOutput, -0.20, 0.20);
         }else {
             turnedBack = true;
