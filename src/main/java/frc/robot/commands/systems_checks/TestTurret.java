@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class TestTurret extends CommandBase {
@@ -25,10 +24,10 @@ public class TestTurret extends CommandBase {
         motorChecked = false;
         rightLimitChecked = false;
         leftLimitChecked = false;
-        SystemChecks.turretMotor.setBoolean(false);
-        SystemChecks.turretRightLimit.setBoolean(false);
-        SystemChecks.turretLeftLimit.setBoolean(false);
-        SystemChecks.turretEncoder.setBoolean(false);
+        SystemCheckLayout.turretMotor.setBoolean(false);
+        SystemCheckLayout.turretRightLimit.setBoolean(false);
+        SystemCheckLayout.turretLeftLimit.setBoolean(false);
+        SystemCheckLayout.turretEncoder.setBoolean(false);
         RobotContainer.turret.setStateTesting();
         RobotContainer.intake.intakeDown();
     }
@@ -39,20 +38,20 @@ public class TestTurret extends CommandBase {
             RobotContainer.turret.set(ControlMode.PercentOutput, 0.40);
             if(RobotContainer.turret.getRightLimit()){
                 rightLimitChecked = true;
-                SystemChecks.turretRightLimit.setBoolean(true);
+                SystemCheckLayout.turretRightLimit.setBoolean(true);
                 RobotContainer.turret.setEncoder(Constants.TURRET_HOMING_POSITION_RIGHT);
             }
         }else if(!leftLimitChecked){
             RobotContainer.turret.set(ControlMode.PercentOutput, -0.40);
             if(RobotContainer.turret.getLeftLimit()) {
                 leftLimitChecked = true;
-                SystemChecks.turretLeftLimit.setBoolean(true);
-                SystemChecks.turretEncoder.setBoolean(RobotContainer.turret.getPosition() <= -90);
+                SystemCheckLayout.turretLeftLimit.setBoolean(true);
+                SystemCheckLayout.turretEncoder.setBoolean(RobotContainer.turret.getPosition() <= -90);
             }
         }
 
         if (timer.hasElapsed(0.1) && !motorChecked){
-            SystemChecks.turretMotor.setBoolean(RobotContainer.pdp.getCurrent(13) >= 2);
+            SystemCheckLayout.turretMotor.setBoolean(RobotContainer.pdp.getCurrent(13) >= 2);
             motorChecked = true;
         }
     }

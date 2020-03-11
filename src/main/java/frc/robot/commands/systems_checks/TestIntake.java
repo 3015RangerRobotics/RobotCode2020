@@ -2,7 +2,6 @@ package frc.robot.commands.systems_checks;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class TestIntake extends CommandBase {
@@ -22,9 +21,9 @@ public class TestIntake extends CommandBase {
         motorsChecked = false;
         intakeDownChecked = false;
         intakeUpChecked = false;
-        SystemChecks.intakeMotor.setBoolean(false);
-        SystemChecks.intakeUp.setBoolean(false);
-        SystemChecks.intakeDown.setBoolean(false);
+        SystemCheckLayout.intakeMotor.setBoolean(false);
+        SystemCheckLayout.intakeUp.setBoolean(false);
+        SystemCheckLayout.intakeDown.setBoolean(false);
     }
 
     @Override
@@ -32,18 +31,18 @@ public class TestIntake extends CommandBase {
         if (!timer.hasElapsed(0.75)){
             RobotContainer.intake.intakeDown();
         }else if(!intakeDownChecked){
-            SystemChecks.intakeDown.setBoolean(true);
+            SystemCheckLayout.intakeDown.setBoolean(true);
             intakeDownChecked = true;
         }else if(!timer.hasElapsed(1.5)) {
             RobotContainer.intake.intakeSet(-1);
         }else if(!motorsChecked){
-            SystemChecks.intakeMotor.setBoolean(RobotContainer.pdp.getCurrent(3) >= 5);
+            SystemCheckLayout.intakeMotor.setBoolean(RobotContainer.pdp.getCurrent(3) >= 5);
             motorsChecked = true;
             RobotContainer.intake.intakeStop();
         }else if(!timer.hasElapsed(2.25)){
             RobotContainer.intake.intakeUp();
         }else if(!intakeUpChecked){
-            SystemChecks.intakeUp.setBoolean(true);
+            SystemCheckLayout.intakeUp.setBoolean(true);
             intakeUpChecked = true;
         }
     }

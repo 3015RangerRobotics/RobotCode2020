@@ -31,16 +31,16 @@ public class TestCarousel extends CommandBase {
         max3 = 0;
         max4 = 0;
         max5 = 0;
-        SystemChecks.carouselMotor1.setBoolean(false);
-        SystemChecks.carouselMotor2.setBoolean(false);
-        SystemChecks.carouselMotor3.setBoolean(false);
-        SystemChecks.carouselMotor4.setBoolean(false);
-        SystemChecks.carouselMotor5.setBoolean(false);
-        SystemChecks.carouselBall1.setBoolean(false);
-        SystemChecks.carouselBall2.setBoolean(false);
-        SystemChecks.carouselBall3.setBoolean(false);
-        SystemChecks.carouselBall4.setBoolean(false);
-        SystemChecks.carouselBall5.setBoolean(false);
+        SystemCheckLayout.carouselMotor1.setBoolean(false);
+        SystemCheckLayout.carouselMotor2.setBoolean(false);
+        SystemCheckLayout.carouselMotor3.setBoolean(false);
+        SystemCheckLayout.carouselMotor4.setBoolean(false);
+        SystemCheckLayout.carouselMotor5.setBoolean(false);
+        SystemCheckLayout.carouselBall1.setBoolean(false);
+        SystemCheckLayout.carouselBall2.setBoolean(false);
+        SystemCheckLayout.carouselBall3.setBoolean(false);
+        SystemCheckLayout.carouselBall4.setBoolean(false);
+        SystemCheckLayout.carouselBall5.setBoolean(false);
     }
 
     @Override
@@ -54,26 +54,26 @@ public class TestCarousel extends CommandBase {
             if(RobotContainer.pdp.getCurrent(9) > max1) max4 = RobotContainer.pdp.getCurrent(9);
             if(RobotContainer.pdp.getCurrent(8) > max1) max5 = RobotContainer.pdp.getCurrent(8);
         }else if(!motorsChecked){
-            SystemChecks.carouselMotor1.setBoolean(max1 >= 2);
-            SystemChecks.carouselMotor2.setBoolean(max2 >= 2);
-            SystemChecks.carouselMotor3.setBoolean(max3 >= 2);
-            SystemChecks.carouselMotor4.setBoolean(max4 >= 2);
-            SystemChecks.carouselMotor5.setBoolean(max5 >= 2);
+            SystemCheckLayout.carouselMotor1.setBoolean(max1 >= 2);
+            SystemCheckLayout.carouselMotor2.setBoolean(max2 >= 2);
+            SystemCheckLayout.carouselMotor3.setBoolean(max3 >= 2);
+            SystemCheckLayout.carouselMotor4.setBoolean(max4 >= 2);
+            SystemCheckLayout.carouselMotor5.setBoolean(max5 >= 2);
             motorsChecked = true;
             RobotContainer.carousel.setState(Carousel.State.kFillTo1);
             RobotContainer.intake.intakeDown();
             RobotContainer.intake.intakeSet(-1);
         }else if(!sensorsChecked) {
             if(RobotContainer.carousel.isBall1Present()){
-                SystemChecks.carouselBall1.setBoolean(true);
+                SystemCheckLayout.carouselBall1.setBoolean(true);
             }else if(RobotContainer.carousel.isBall2Present()){
-                SystemChecks.carouselBall2.setBoolean(true);
+                SystemCheckLayout.carouselBall2.setBoolean(true);
             }else if(RobotContainer.carousel.isBall3Present()){
-                SystemChecks.carouselBall3.setBoolean(true);
+                SystemCheckLayout.carouselBall3.setBoolean(true);
             }else if(RobotContainer.carousel.isBall4Present()){
-                SystemChecks.carouselBall4.setBoolean(true);
+                SystemCheckLayout.carouselBall4.setBoolean(true);
             }else if(RobotContainer.carousel.isBall5Present()){
-                SystemChecks.carouselBall5.setBoolean(true);
+                SystemCheckLayout.carouselBall5.setBoolean(true);
             }
 
             if(RobotContainer.carousel.getState() == Carousel.State.kFillTo2){

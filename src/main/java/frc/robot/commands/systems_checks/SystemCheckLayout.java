@@ -8,7 +8,7 @@ import frc.robot.commands.systems_checks.*;
 
 import java.util.Map;
 
-public class SystemChecks {
+public class SystemCheckLayout {
     public static NetworkTableEntry driveLeftMaster;
     public static NetworkTableEntry driveLeftFollower;
     public static NetworkTableEntry driveRightMaster;

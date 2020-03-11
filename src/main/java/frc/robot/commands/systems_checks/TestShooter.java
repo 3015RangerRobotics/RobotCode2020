@@ -3,8 +3,6 @@ package frc.robot.commands.systems_checks;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class TestShooter extends CommandBase {
@@ -24,9 +22,9 @@ public class TestShooter extends CommandBase {
         motorChecked = false;
         encoderChecked = false;
         pidChecked = false;
-        SystemChecks.shooterMotor.setBoolean(false);
-        SystemChecks.shooterEncoder.setBoolean(false);
-        SystemChecks.shooterPID.setBoolean(false);
+        SystemCheckLayout.shooterMotor.setBoolean(false);
+        SystemCheckLayout.shooterEncoder.setBoolean(false);
+        SystemCheckLayout.shooterPID.setBoolean(false);
         RobotContainer.shooter.setStateTesting();
     }
 
@@ -35,18 +33,18 @@ public class TestShooter extends CommandBase {
         if (!timer.hasElapsed(.1)){
             RobotContainer.shooter.set(ControlMode.PercentOutput, 0.4);
         }else if(!motorChecked){
-            SystemChecks.shooterMotor.setBoolean(RobotContainer.pdp.getCurrent(12) >= 5);
+            SystemCheckLayout.shooterMotor.setBoolean(RobotContainer.pdp.getCurrent(12) >= 5);
             motorChecked = true;
         }else if(!timer.hasElapsed(1.1)){
             RobotContainer.shooter.set(ControlMode.PercentOutput, 0.4);
             System.out.println(RobotContainer.shooter.getRPM());
         }else if(!encoderChecked){
-            SystemChecks.shooterEncoder.setBoolean(RobotContainer.shooter.getRPM() >= 2500);
+            SystemCheckLayout.shooterEncoder.setBoolean(RobotContainer.shooter.getRPM() >= 2500);
             encoderChecked = true;
         }else if(!timer.hasElapsed(3)){
             RobotContainer.shooter.setStateSpeed(3000);
         }else if(!pidChecked){
-            SystemChecks.shooterPID.setBoolean(RobotContainer.shooter.isPrimed());
+            SystemCheckLayout.shooterPID.setBoolean(RobotContainer.shooter.isPrimed());
             pidChecked = true;
         }
     }

@@ -2,7 +2,6 @@ package frc.robot.commands.systems_checks;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class TestClimber extends CommandBase {
@@ -18,23 +17,23 @@ public class TestClimber extends CommandBase {
         timer.reset();
         timer.start();
         motorsChecked = false;
-        SystemChecks.climberMotor.setBoolean(false);
-        SystemChecks.climberRelease.setBoolean(false);
-        SystemChecks.climberLatch.setBoolean(false);
+        SystemCheckLayout.climberMotor.setBoolean(false);
+        SystemCheckLayout.climberRelease.setBoolean(false);
+        SystemCheckLayout.climberLatch.setBoolean(false);
     }
 
     @Override
     public void execute() {
         if (!timer.hasElapsed(1.5)){
             RobotContainer.climber.releaseLatch();
-            SystemChecks.climberRelease.setBoolean(true);
+            SystemCheckLayout.climberRelease.setBoolean(true);
         }else if(!timer.hasElapsed(2)){
             RobotContainer.climber.closeLatch();
-            SystemChecks.climberLatch.setBoolean(true);
+            SystemCheckLayout.climberLatch.setBoolean(true);
         }else if(!timer.hasElapsed(2.2)){
             RobotContainer.climber.climbUp();
         }else if(!motorsChecked){
-            SystemChecks.climberMotor.setBoolean(RobotContainer.pdp.getCurrent(2) >= 5);
+            SystemCheckLayout.climberMotor.setBoolean(RobotContainer.pdp.getCurrent(2) >= 5);
             motorsChecked = true;
         }
 
