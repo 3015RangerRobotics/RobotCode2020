@@ -18,23 +18,23 @@ public class TestClimber extends CommandBase {
         timer.reset();
         timer.start();
         motorsChecked = false;
-        Robot.climberMotor.setBoolean(false);
-        Robot.climberRelease.setBoolean(false);
-        Robot.climberLatch.setBoolean(false);
+        SystemChecks.climberMotor.setBoolean(false);
+        SystemChecks.climberRelease.setBoolean(false);
+        SystemChecks.climberLatch.setBoolean(false);
     }
 
     @Override
     public void execute() {
         if (!timer.hasElapsed(1.5)){
             RobotContainer.climber.releaseLatch();
-            Robot.climberRelease.setBoolean(true);
+            SystemChecks.climberRelease.setBoolean(true);
         }else if(!timer.hasElapsed(2)){
             RobotContainer.climber.closeLatch();
-            Robot.climberLatch.setBoolean(true);
+            SystemChecks.climberLatch.setBoolean(true);
         }else if(!timer.hasElapsed(2.2)){
             RobotContainer.climber.climbUp();
         }else if(!motorsChecked){
-            Robot.climberMotor.setBoolean(Robot.pdp.getCurrent(2) >= 5);
+            SystemChecks.climberMotor.setBoolean(RobotContainer.pdp.getCurrent(2) >= 5);
             motorsChecked = true;
         }
 

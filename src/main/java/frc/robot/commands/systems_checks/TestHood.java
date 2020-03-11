@@ -16,18 +16,18 @@ public class TestHood extends CommandBase {
     public void initialize() {
         timer.reset();
         timer.start();
-        Robot.hoodUp.setBoolean(false);
-        Robot.hoodDown.setBoolean(false);
+        SystemChecks.hoodUp.setBoolean(false);
+        SystemChecks.hoodDown.setBoolean(false);
     }
 
     @Override
     public void execute() {
         if (!timer.hasElapsed(1)){
             RobotContainer.hood.hoodUp();
-            Robot.hoodUp.setBoolean(true);
+            SystemChecks.hoodUp.setBoolean(true);
         }else if(!timer.hasElapsed(2)){
             RobotContainer.hood.hoodDown();
-            Robot.hoodDown.setBoolean(true);
+            SystemChecks.hoodDown.setBoolean(true);
         }
     }
 

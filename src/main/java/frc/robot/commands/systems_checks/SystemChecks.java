@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.commands.systems_checks;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;

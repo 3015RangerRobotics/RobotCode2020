@@ -24,9 +24,9 @@ public class TestShooter extends CommandBase {
         motorChecked = false;
         encoderChecked = false;
         pidChecked = false;
-        Robot.shooterMotor.setBoolean(false);
-        Robot.shooterEncoder.setBoolean(false);
-        Robot.shooterPID.setBoolean(false);
+        SystemChecks.shooterMotor.setBoolean(false);
+        SystemChecks.shooterEncoder.setBoolean(false);
+        SystemChecks.shooterPID.setBoolean(false);
         RobotContainer.shooter.setStateTesting();
     }
 
@@ -35,19 +35,18 @@ public class TestShooter extends CommandBase {
         if (!timer.hasElapsed(.1)){
             RobotContainer.shooter.set(ControlMode.PercentOutput, 0.4);
         }else if(!motorChecked){
-            Robot.shooterMotor.setBoolean(Robot.pdp.getCurrent(12) >= 5);
+            SystemChecks.shooterMotor.setBoolean(RobotContainer.pdp.getCurrent(12) >= 5);
             motorChecked = true;
         }else if(!timer.hasElapsed(1.1)){
             RobotContainer.shooter.set(ControlMode.PercentOutput, 0.4);
             System.out.println(RobotContainer.shooter.getRPM());
         }else if(!encoderChecked){
-            Robot.shooterEncoder.setBoolean(RobotContainer.shooter.getRPM() >= 2500);
+            SystemChecks.shooterEncoder.setBoolean(RobotContainer.shooter.getRPM() >= 2500);
             encoderChecked = true;
         }else if(!timer.hasElapsed(3)){
             RobotContainer.shooter.setStateSpeed(3000);
         }else if(!pidChecked){
-//            Robot.shooterPID.setBoolean(Math.abs(RobotContainer.shooter.getRPM() - 5000) <= 100);
-            Robot.shooterPID.setBoolean(RobotContainer.shooter.isPrimed());
+            SystemChecks.shooterPID.setBoolean(RobotContainer.shooter.isPrimed());
             pidChecked = true;
         }
     }

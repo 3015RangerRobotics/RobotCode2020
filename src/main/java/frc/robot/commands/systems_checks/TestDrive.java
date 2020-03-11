@@ -25,12 +25,12 @@ public class TestDrive extends CommandBase {
         motorsChecked = false;
         gyroChecked = false;
         turnedBack = false;
-        Robot.driveLeftMaster.setBoolean(false);
-        Robot.driveLeftFollower.setBoolean(false);
-        Robot.driveRightMaster.setBoolean(false);
-        Robot.driveRightFollower.setBoolean(false);
-        Robot.drivePosition.setBoolean(false);
-        Robot.driveIMU.setBoolean(false);
+        SystemChecks.driveLeftMaster.setBoolean(false);
+        SystemChecks.driveLeftFollower.setBoolean(false);
+        SystemChecks.driveRightMaster.setBoolean(false);
+        SystemChecks.driveRightFollower.setBoolean(false);
+        SystemChecks.drivePosition.setBoolean(false);
+        SystemChecks.driveIMU.setBoolean(false);
     }
 
     @Override
@@ -38,18 +38,18 @@ public class TestDrive extends CommandBase {
         if (!timer.hasElapsed(0.2)){
             RobotContainer.drive.setMotorOutputs(ControlMode.PercentOutput, 0.2, 0.2);
         }else if(!motorsChecked){
-            Robot.drivePosition.setBoolean(RobotContainer.drive.getPosition() >= .5);
-            Robot.driveLeftMaster.setBoolean(Robot.pdp.getCurrent(14) >= 5);
-            Robot.driveLeftFollower.setBoolean(Robot.pdp.getCurrent(15) >= 5);
-            Robot.driveRightMaster.setBoolean(Robot.pdp.getCurrent(0) >= 5);
-            Robot.driveRightFollower.setBoolean(Robot.pdp.getCurrent(1) >= 5);
+            SystemChecks.drivePosition.setBoolean(RobotContainer.drive.getPosition() >= .5);
+            SystemChecks.driveLeftMaster.setBoolean(RobotContainer.pdp.getCurrent(14) >= 5);
+            SystemChecks.driveLeftFollower.setBoolean(RobotContainer.pdp.getCurrent(15) >= 5);
+            SystemChecks.driveRightMaster.setBoolean(RobotContainer.pdp.getCurrent(0) >= 5);
+            SystemChecks.driveRightFollower.setBoolean(RobotContainer.pdp.getCurrent(1) >= 5);
             motorsChecked = true;
         }else if(!timer.hasElapsed(.7)){
             RobotContainer.drive.setMotorOutputs(ControlMode.PercentOutput, 0, 0);
         }else if(!timer.hasElapsed(0.95)) {
             RobotContainer.drive.setMotorOutputs(ControlMode.PercentOutput, 0.20, -0.20);
         }else if(!gyroChecked){
-            Robot.driveIMU.setBoolean(RobotContainer.drive.getAngle() >= 2);
+            SystemChecks.driveIMU.setBoolean(RobotContainer.drive.getAngle() >= 2);
             gyroChecked = true;
         }else if(!timer.hasElapsed(1.5)) {
             RobotContainer.drive.setMotorOutputs(ControlMode.PercentOutput, 0, 0);

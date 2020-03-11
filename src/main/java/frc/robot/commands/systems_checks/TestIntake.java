@@ -22,9 +22,9 @@ public class TestIntake extends CommandBase {
         motorsChecked = false;
         intakeDownChecked = false;
         intakeUpChecked = false;
-        Robot.intakeMotor.setBoolean(false);
-        Robot.intakeUp.setBoolean(false);
-        Robot.intakeDown.setBoolean(false);
+        SystemChecks.intakeMotor.setBoolean(false);
+        SystemChecks.intakeUp.setBoolean(false);
+        SystemChecks.intakeDown.setBoolean(false);
     }
 
     @Override
@@ -32,18 +32,18 @@ public class TestIntake extends CommandBase {
         if (!timer.hasElapsed(0.75)){
             RobotContainer.intake.intakeDown();
         }else if(!intakeDownChecked){
-            Robot.intakeDown.setBoolean(true);
+            SystemChecks.intakeDown.setBoolean(true);
             intakeDownChecked = true;
         }else if(!timer.hasElapsed(1.5)) {
             RobotContainer.intake.intakeSet(-1);
         }else if(!motorsChecked){
-            Robot.intakeMotor.setBoolean(Robot.pdp.getCurrent(3) >= 5);
+            SystemChecks.intakeMotor.setBoolean(RobotContainer.pdp.getCurrent(3) >= 5);
             motorsChecked = true;
             RobotContainer.intake.intakeStop();
         }else if(!timer.hasElapsed(2.25)){
             RobotContainer.intake.intakeUp();
         }else if(!intakeUpChecked){
-            Robot.intakeUp.setBoolean(true);
+            SystemChecks.intakeUp.setBoolean(true);
             intakeUpChecked = true;
         }
     }

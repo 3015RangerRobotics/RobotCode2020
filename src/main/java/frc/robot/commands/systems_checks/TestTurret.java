@@ -25,10 +25,10 @@ public class TestTurret extends CommandBase {
         motorChecked = false;
         rightLimitChecked = false;
         leftLimitChecked = false;
-        Robot.turretMotor.setBoolean(false);
-        Robot.turretRightLimit.setBoolean(false);
-        Robot.turretLeftLimit.setBoolean(false);
-        Robot.turretEncoder.setBoolean(false);
+        SystemChecks.turretMotor.setBoolean(false);
+        SystemChecks.turretRightLimit.setBoolean(false);
+        SystemChecks.turretLeftLimit.setBoolean(false);
+        SystemChecks.turretEncoder.setBoolean(false);
         RobotContainer.turret.setStateTesting();
         RobotContainer.intake.intakeDown();
     }
@@ -39,20 +39,20 @@ public class TestTurret extends CommandBase {
             RobotContainer.turret.set(ControlMode.PercentOutput, 0.40);
             if(RobotContainer.turret.getRightLimit()){
                 rightLimitChecked = true;
-                Robot.turretRightLimit.setBoolean(true);
+                SystemChecks.turretRightLimit.setBoolean(true);
                 RobotContainer.turret.setEncoder(Constants.TURRET_HOMING_POSITION_RIGHT);
             }
         }else if(!leftLimitChecked){
             RobotContainer.turret.set(ControlMode.PercentOutput, -0.40);
             if(RobotContainer.turret.getLeftLimit()) {
                 leftLimitChecked = true;
-                Robot.turretLeftLimit.setBoolean(true);
-                Robot.turretEncoder.setBoolean(RobotContainer.turret.getPosition() <= -90);
+                SystemChecks.turretLeftLimit.setBoolean(true);
+                SystemChecks.turretEncoder.setBoolean(RobotContainer.turret.getPosition() <= -90);
             }
         }
 
         if (timer.hasElapsed(0.1) && !motorChecked){
-            Robot.turretMotor.setBoolean(Robot.pdp.getCurrent(13) >= 2);
+            SystemChecks.turretMotor.setBoolean(RobotContainer.pdp.getCurrent(13) >= 2);
             motorChecked = true;
         }
     }
